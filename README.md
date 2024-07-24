@@ -2,7 +2,7 @@
 <p align="center">A CLI for generating typesafe astro routes.</p>
 
 <div align="center">
-  <img src="docs/images/demo.gif" alt="GIF Description">
+  <img src="https://i.imgur.com/Hc32hhK.gif" alt="Usage demo">
 </div>
 
 
