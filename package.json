@@ -20,6 +20,6 @@
     "prettier": "^3.3.3"
   },
   "bin": {
-    "astro-typesafe-routes": "./dist/index.js"
+    "astro-typesafe-routes": "dist/index.js"
   }
 }
