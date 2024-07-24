@@ -1,96 +1,51 @@
-import * as fs from "node:fs/promises";
-import * as path from "path";
-import * as prettier from "prettier";
+#!/usr/bin/env node
 
-export async function listFiles(dir: string) {
-  let results: string[] = [];
-  const entries = await fs.readdir(dir, { withFileTypes: true });
+import { Command } from "commander";
+import {
+  getRoutes,
+  getRouteFileContent,
+  writeRouteFile,
+  formatPrettier,
+  logSuccess,
+} from "./core";
 
-  for (const entry of entries) {
-    const fullPath = path.join(dir, entry.name);
-    if (entry.isDirectory()) {
-      const subdirFiles = await listFiles(fullPath);
-      results = results.concat(
-        subdirFiles.map((file) => path.join(entry.name, file))
-      );
-    } else {
-      results.push(entry.name);
-    }
-  }
+const program = new Command();
 
-  return results;
-}
+type Options = {
+  pagesPath: string;
+  outPath: string;
+  trailingSlash: boolean;
+};
 
-export function filterValidAstroFiles(paths: string[]) {
-  return paths.filter((p) => p.match(/\.(astro|md)$/));
-}
+program
+  .name("astro-typesafe-routes")
+  .description("Codegen CLI for creating typesafe Astro routes")
+  .version("0.1.0");
 
-export function trimRouteFileExtension(paths: string[]) {
-  return paths.map((path) => path.replace(/\.(astro|md)$/, ""));
-}
-
-export function trimIndex(paths: string[]) {
-  return paths.map((path) => path.replace(/index$/, ""));
-}
-
-export function trimTrailingSlash(paths: string[]) {
-  return paths.map((path) => path.replace(/\/$/, ""));
-}
-
-export function addLeadingSlash(paths: string[]) {
-  return paths.map((path) => (path.startsWith("/") ? path : "/" + path));
-}
-
-export type DynamicRoute = { path: string; params: string[] | null };
-
-export function getDynamicRouteInfo(paths: string[]): DynamicRoute[] {
-  return paths.map((path) => {
-    const paramSegments = (path.match(/(\[[^\]]+\])/g) || []).map((segment) =>
-      segment.replace(/[\[\]]/g, "")
+program
+  .command("generate")
+  .description("Generate code for Astro routes")
+  .option("-t, --trailing-slash", "default to adding trailing slash", false)
+  .option(
+    "-p, --pages-path <string>",
+    "path to astro pages directory",
+    "./src/pages"
+  )
+  .option(
+    "-o, --out-path <string>",
+    "path to output",
+    "./src/astro-typesafe-routes.ts"
+  )
+  .action(async (options: Options) => {
+    const routes = await getRoutes(options.pagesPath);
+    const fileContent = await getRouteFileContent(
+      routes,
+      options.trailingSlash
     );
-    return {
-      path,
-      params: paramSegments.length === 0 ? null : paramSegments,
-    };
+    const formattedContent = await formatPrettier(fileContent);
+
+    await writeRouteFile(options.outPath, formattedContent);
+    logSuccess(options.outPath);
   });
-}
 
-export async function getRouteFileContent(routes: DynamicRoute[], trailingSlash: boolean) {
-  const routeEntries = routes.map((route) => [
-    route.path,
-    { params: route.params },
-  ]);
-  const routesObject = Object.fromEntries(routeEntries);
-
-  let template = await fs.readFile(
-    path.join(import.meta.dirname, "./template.ts"),
-    { encoding: "utf-8" }
-  );
-
-  template = template.replace(
-    "export type Routes = {}",
-    `export type Routes = ${JSON.stringify(routesObject)}`
-  );
-
-  if(trailingSlash) {
-    template = template.replace(
-      "const defaultTrailingSlash = false;",
-      "const defaultTrailingSlash = true;"
-    );
-  
-  }
-
-  return template
-}
-
-export async function writeRouteFile(path: string, content: string) {
-  await fs.writeFile(path, content, { encoding: "utf-8" });
-}
-
-export async function formatPrettier(content: string) {
-  return await prettier.format(content, { parser: "typescript" });
-}
-
-export function logSuccess(path: string) {
-  console.log(`✅ TypeSafe Astro route successfully created at ${path}`);
-}
+program.parse();

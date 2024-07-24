@@ -12,6 +12,9 @@ devDependencies:
   '@types/node':
     specifier: ^20.14.12
     version: 20.14.12
+  typescript:
+    specifier: ^5.5.4
+    version: 5.5.4
   vite-node:
     specifier: ^2.0.4
     version: 2.0.4(@types/node@20.14.12)
@@ -491,6 +494,12 @@ packages:
   /tinyrainbow@1.2.0:
     resolution: {integrity: sha512-weEDEq7Z5eTHPDh4xjX789+fHfF+P8boiFB+0vbWzpbnbsEr/GRaohi/uMKxg8RZMXnl1ItAi/IUHWMsjDV7kQ==}
     engines: {node: '>=14.0.0'}
+    dev: true
+
+  /typescript@5.5.4:
+    resolution: {integrity: sha512-Mtq29sKDAEYP7aljRgtPOpTvOfbwRWlS6dPRzwjdE+C0R4brX/GUyhHSecbHMFLNBLcJIPt9nl9yG5TZ1weH+Q==}
+    engines: {node: '>=14.17'}
+    hasBin: true
     dev: true
 
   /undici-types@5.26.5:

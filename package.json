@@ -1,20 +1,25 @@
 {
   "name": "astro-typesafe-routes",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "",
-  "main": "index.js",
+  "main": "./dist/index.js",
   "scripts": {
-    "dev": "vite-node ./src/cli.ts"
+    "dev": "vite-node ./src/index.ts",
+    "build": "tsc"
   },
   "keywords": [],
   "author": "Felix Eklöf",
   "license": "MIT",
   "devDependencies": {
     "@types/node": "^20.14.12",
+    "typescript": "^5.5.4",
     "vite-node": "^2.0.4"
   },
   "dependencies": {
     "commander": "^12.1.0",
     "prettier": "^3.3.3"
+  },
+  "bin": {
+    "astro-typesafe-routes": "./dist/index.js"
   }
 }
