@@ -1,13 +1,7 @@
 #!/usr/bin/env node
 
 import { Command } from "commander";
-import {
-  getRoutes,
-  getRouteFileContent,
-  writeRouteFile,
-  formatPrettier,
-  logSuccess,
-} from "./core";
+import * as core from "./core";
 
 const program = new Command();
 
@@ -15,6 +9,7 @@ type Options = {
   pagesPath: string;
   outPath: string;
   trailingSlash: boolean;
+  name: string;
 };
 
 program
@@ -26,6 +21,7 @@ program
   .command("generate")
   .description("Generate code for Astro routes")
   .option("-t, --trailing-slash", "default to adding trailing slash", false)
+  .option("-n, --name <string>", "name of the generated function", "$path")
   .option(
     "-p, --pages-path <string>",
     "path to astro pages directory",
@@ -37,15 +33,20 @@ program
     "./src/astro-typesafe-routes.ts"
   )
   .action(async (options: Options) => {
-    const routes = await getRoutes(options.pagesPath);
-    const fileContent = await getRouteFileContent(
-      routes,
-      options.trailingSlash
-    );
-    const formattedContent = await formatPrettier(fileContent);
+    if(!core.isValidFunctionName(options.name)) {
+      throw new Error("Invalid function name")
+    }
 
-    await writeRouteFile(options.outPath, formattedContent);
-    logSuccess(options.outPath);
+    const routes = await core.getRoutes(options.pagesPath);
+
+    const fileContent = await core.getRouteFileContent(routes, {
+      trailingSlash: options.trailingSlash,
+      functionName: options.name,
+    });
+    const formattedContent = await core.formatPrettier(fileContent);
+    await core.writeRouteFile(options.outPath, formattedContent);
+    
+    core.logSuccess(options.outPath);
   });
 
 program.parse();

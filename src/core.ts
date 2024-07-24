@@ -55,7 +55,12 @@ export function getDynamicRouteInfo(paths: string[]): DynamicRoute[] {
   });
 }
 
-export async function getRouteFileContent(routes: DynamicRoute[], trailingSlash: boolean) {
+export type GetRouteFileContentOpts = {
+  trailingSlash: boolean;
+  functionName: string;
+}
+
+export async function getRouteFileContent(routes: DynamicRoute[], opts: GetRouteFileContentOpts) {
   const routeEntries = routes.map((route) => [
     route.path,
     { params: route.params },
@@ -65,7 +70,7 @@ export async function getRouteFileContent(routes: DynamicRoute[], trailingSlash:
   return `
     export type Routes = ${JSON.stringify(routesObject)};
 
-    const defaultTrailingSlash = ${trailingSlash};
+    const defaultTrailingSlash = ${opts.trailingSlash};
 
     type Route = keyof Routes;
 
@@ -83,7 +88,7 @@ export async function getRouteFileContent(routes: DynamicRoute[], trailingSlash:
       path: T;
     };
 
-    export function $path<T extends Route>(args: PathParameters<T>) {
+    export function ${opts.functionName}<T extends Route>(args: PathParameters<T>) {
       const trailingSlash = args.trailingSlash ?? defaultTrailingSlash;
 
       let url: string = args.path;
@@ -124,6 +129,11 @@ export async function formatPrettier(content: string) {
 
 export function logSuccess(path: string) {
   console.log(`✅ TypeSafe Astro route successfully created at ${path}`);
+}
+
+export function isValidFunctionName(name: string) {
+  const functionNameRegex = /^[a-zA-Z_$][a-zA-Z0-9_$]*$/;
+  return functionNameRegex.test(name);
 }
 
 export async function getRoutes(pagesPath: string) {
