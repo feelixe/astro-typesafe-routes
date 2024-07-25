@@ -1,5 +1,5 @@
 <h1 align="center">Astro Typesafe Routes</h1>
-<p align="center">A CLI for generating a Typesafe Astro path function.</p>
+<p align="center">A CLI for generating Typesafe URLs in Astro</p>
 
 <div align="center">
   <img src="https://i.imgur.com/Hc32hhK.gif" alt="Usage demo">
