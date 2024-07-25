@@ -1,6 +1,7 @@
 import * as fs from "node:fs/promises";
 import * as path from "path";
 import * as prettier from "prettier";
+import chokidar from "chokidar";
 
 export async function listFiles(dir: string) {
   let results: string[] = [];
@@ -152,4 +153,44 @@ export async function getRoutes(pagesPath: string) {
   const withoutTrailingSlash = trimTrailingSlash(withoutIndex);
   const withLeading = addLeadingSlash(withoutTrailingSlash);
   return getDynamicRouteInfo(withLeading);
+}
+
+export type RunCodeGenOptions = {
+  pagesPath: string;
+  outPath: string;
+  trailingSlash: boolean;
+  name: string;
+};
+
+export async function runCodeGen(options: RunCodeGenOptions) {
+  if (!isValidFunctionName(options.name)) {
+    throw new Error("Invalid function name");
+  }
+
+  const routes = await getRoutes(options.pagesPath);
+
+  const fileContent = await getRouteFileContent(routes, {
+    trailingSlash: options.trailingSlash,
+    functionName: options.name,
+  });
+  const formattedContent = await formatPrettier(fileContent);
+  await writeRouteFile(options.outPath, formattedContent);
+
+  logSuccess(options.outPath);
+}
+
+export function watch(path: string, callback: () => Promise<void>) {
+  let watchPath = path;
+  if (!watchPath.endsWith("/")) {
+    watchPath += "/";
+  }
+  watchPath += "**/*.{astro,md,mdx}";
+
+  const watcher = chokidar.watch(watchPath, {
+    persistent: true,
+    ignoreInitial: true,
+  });
+
+  watcher.on("add", callback);
+  watcher.on("unlink", callback);
 }
