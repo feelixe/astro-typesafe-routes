@@ -4,6 +4,11 @@ import * as prettier from "prettier";
 
 export async function listFiles(dir: string) {
   let results: string[] = [];
+
+  console.log("HEHEHJHEJE");
+
+  const hej = await fs.readdir(".");
+  console.log("HEJH", hej);
   const entries = await fs.readdir(dir, { withFileTypes: true });
 
   for (const entry of entries) {
