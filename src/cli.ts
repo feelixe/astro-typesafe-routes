@@ -10,6 +10,7 @@ type Options = {
   outPath: string;
   trailingSlash: boolean;
   name: string;
+  watch: boolean;
 };
 
 program
@@ -20,6 +21,7 @@ program
 program
   .command("generate")
   .description("Generate code for Astro routes")
+  .option("-w, --watch", "re run codegen on route file change")
   .option("-t, --trailing-slash", "default to adding trailing slash", false)
   .option("-n, --name <string>", "name of the generated function", "$path")
   .option(
@@ -33,20 +35,13 @@ program
     "./src/astro-typesafe-routes.ts",
   )
   .action(async (options: Options) => {
-    if (!core.isValidFunctionName(options.name)) {
-      throw new Error("Invalid function name");
+    await core.runCodeGen(options);
+
+    if (options.watch) {
+      core.watch(options.pagesPath, async () => {
+        await core.runCodeGen(options);
+      });
     }
-
-    const routes = await core.getRoutes(options.pagesPath);
-
-    const fileContent = await core.getRouteFileContent(routes, {
-      trailingSlash: options.trailingSlash,
-      functionName: options.name,
-    });
-    const formattedContent = await core.formatPrettier(fileContent);
-    await core.writeRouteFile(options.outPath, formattedContent);
-
-    core.logSuccess(options.outPath);
   });
 
 program.parse();
