@@ -28,7 +28,7 @@ npm run generate-routes
 Import the generated function and use it as a drop in replacement on links and anywhere else you would use a URL.
 ```typescript
 ---
-import { $path } from "@/astro"
+import { $path } from "../astro-typesafe-routes";
 
 ---
 
