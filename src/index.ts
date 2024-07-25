@@ -11,7 +11,7 @@ export async function listFiles(dir: string) {
     if (entry.isDirectory()) {
       const subdirFiles = await listFiles(fullPath);
       results = results.concat(
-        subdirFiles.map((file) => path.join(entry.name, file))
+        subdirFiles.map((file) => path.join(entry.name, file)),
       );
     } else {
       results.push(entry.name);
@@ -46,7 +46,7 @@ export type DynamicRoute = { path: string; params: string[] | null };
 export function getDynamicRouteInfo(paths: string[]): DynamicRoute[] {
   return paths.map((path) => {
     const paramSegments = (path.match(/(\[[^\]]+\])/g) || []).map((segment) =>
-      segment.replace(/\[|\]/g, '')
+      segment.replace(/\[|\]/g, ""),
     );
     return {
       path,
@@ -58,9 +58,12 @@ export function getDynamicRouteInfo(paths: string[]): DynamicRoute[] {
 export type GetRouteFileContentOpts = {
   trailingSlash: boolean;
   functionName: string;
-}
+};
 
-export async function getRouteFileContent(routes: DynamicRoute[], opts: GetRouteFileContentOpts) {
+export async function getRouteFileContent(
+  routes: DynamicRoute[],
+  opts: GetRouteFileContentOpts,
+) {
   const routeEntries = routes.map((route) => [
     route.path,
     { params: route.params },
@@ -116,7 +119,7 @@ export async function getRouteFileContent(routes: DynamicRoute[], opts: GetRoute
       }
 
       return url;
-    }`
+    }`;
 }
 
 export async function writeRouteFile(path: string, content: string) {

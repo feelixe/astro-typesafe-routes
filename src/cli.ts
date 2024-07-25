@@ -25,16 +25,16 @@ program
   .option(
     "-p, --pages-path <string>",
     "path to astro pages directory",
-    "./src/pages"
+    "./src/pages",
   )
   .option(
     "-o, --out-path <string>",
     "path to output",
-    "./src/astro-typesafe-routes.ts"
+    "./src/astro-typesafe-routes.ts",
   )
   .action(async (options: Options) => {
-    if(!core.isValidFunctionName(options.name)) {
-      throw new Error("Invalid function name")
+    if (!core.isValidFunctionName(options.name)) {
+      throw new Error("Invalid function name");
     }
 
     const routes = await core.getRoutes(options.pagesPath);
@@ -45,7 +45,7 @@ program
     });
     const formattedContent = await core.formatPrettier(fileContent);
     await core.writeRouteFile(options.outPath, formattedContent);
-    
+
     core.logSuccess(options.outPath);
   });
 
