@@ -1,10 +1,10 @@
 {
   "name": "astro-typesafe-routes",
+  "description": "Typesafe Astro path function",
   "version": "0.1.5",
   "keywords": [],
   "author": "Felix Eklöf",
   "license": "MIT",
-  "description": "",
   "main": "./dist/index.js",
   "scripts": {
     "dev": "vite-node ./src/cli.ts",
