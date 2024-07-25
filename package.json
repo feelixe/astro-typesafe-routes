@@ -21,9 +21,11 @@
     "@types/node": "^20.14.12",
     "eslint": "9.x",
     "globals": "^15.8.0",
+    "mock-fs": "^5.2.0",
     "typescript": "^5.5.4",
     "typescript-eslint": "rc-v8",
-    "vite-node": "^2.0.4"
+    "vite-node": "^2.0.4",
+    "vitest": "^2.0.4"
   },
   "dependencies": {
     "chokidar": "^3.6.0",
