@@ -7,7 +7,7 @@
   "description": "",
   "main": "./dist/index.js",
   "scripts": {
-    "dev": "vite-node ./src/index.ts",
+    "dev": "vite-node ./src/cli.ts",
     "build": "tsc"
   },
   "files": [
@@ -21,7 +21,7 @@
     "eslint": "9.x",
     "globals": "^15.8.0",
     "typescript": "^5.5.4",
-    "typescript-eslint": "^7.17.0",
+    "typescript-eslint": "rc-v8",
     "vite-node": "^2.0.4"
   },
   "dependencies": {
