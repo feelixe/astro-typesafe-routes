@@ -10,5 +10,20 @@
 
 ## Installation
 ```
-npm install astro-typesafe-routes
+npm install -D astro-typesafe-routes
 ```
+
+## Usage
+Add script to `package.json`
+```
+"scripts": {
+  "generate-routes": "astro-typesafe-routes generate"
+}
+```
+
+## Commands
+- `generate` - Run code generation.
+  - `-t, --trailing-slash` - Default to adding trailing slash to urls.
+  - `-p, --pages-path <string>` - Path to Astro pages directory.
+  - `-o, --out-path <string>` - Path to codegen to.
+  - `-h, --help` - Show help
