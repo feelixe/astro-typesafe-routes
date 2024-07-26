@@ -6,10 +6,6 @@ import chokidar from "chokidar";
 export async function listFiles(dir: string) {
   let results: string[] = [];
 
-  console.log("HEHEHJHEJE");
-
-  const hej = await fs.readdir(".");
-  console.log("HEJH", hej);
   const entries = await fs.readdir(dir, { withFileTypes: true });
 
   for (const entry of entries) {
@@ -28,11 +24,11 @@ export async function listFiles(dir: string) {
 }
 
 export function filterValidAstroFiles(paths: string[]) {
-  return paths.filter((p) => p.match(/\.(astro|md)$/));
+  return paths.filter((p) => p.match(/\.(astro|md|mdx|html)$/));
 }
 
 export function trimRouteFileExtension(paths: string[]) {
-  return paths.map((path) => path.replace(/\.(astro|md)$/, ""));
+  return paths.map((path) => path.replace(/\.(astro|md|mdx|html)$/, ""));
 }
 
 export function trimIndex(paths: string[]) {
@@ -133,7 +129,10 @@ export async function writeRouteFile(path: string, content: string) {
 }
 
 export async function formatPrettier(content: string) {
-  return await prettier.format(content, { parser: "typescript" });
+  return await prettier.format(content, {
+    parser: "typescript",
+    plugins: [],
+  });
 }
 
 export function logSuccess(path: string) {
@@ -177,6 +176,8 @@ export async function runCodeGen(options: RunCodeGenOptions) {
   await writeRouteFile(options.outPath, formattedContent);
 
   logSuccess(options.outPath);
+
+  return routes;
 }
 
 export function watch(path: string, callback: () => Promise<void>) {
@@ -184,7 +185,7 @@ export function watch(path: string, callback: () => Promise<void>) {
   if (!watchPath.endsWith("/")) {
     watchPath += "/";
   }
-  watchPath += "**/*.{astro,md,mdx}";
+  watchPath += "**/*.{astro,md,mdx,html}";
 
   const watcher = chokidar.watch(watchPath, {
     persistent: true,
