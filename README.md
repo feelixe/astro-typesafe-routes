@@ -19,7 +19,7 @@ npm install -D astro-typesafe-routes
   "generate-routes": "astro-typesafe-routes generate"
 }
 ```
-3. Execute the script to run codegeneration
+3. Execute the script to run code generation
 ```sh
 npm run generate-routes
 ```
@@ -60,8 +60,9 @@ import { $path } from "../astro-typesafe-routes";
 
 ## CLI Options
 - `generate` - Run code generation.
-  - `-n, --name` - Name of the generated function, defaults to `$path`. 
+  - `-n, --name <string>` - Name of the generated function, defaults to `$path`. 
   - `-t, --trailing-slash` - Default to adding trailing slash to URLs.
   - `-p, --pages-path <string>` - Path to Astro pages directory.
   - `-o, --out-path <string>` - Path to codegen to.
-  - `-h, --help` - Show help
+  - `-w, --watch` - Watch for changes in pages folder.
+  - `-h, --help` - Show help.
