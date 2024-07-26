@@ -16,7 +16,7 @@ type Options = {
 program
   .name("astro-typesafe-routes")
   .description("Codegen CLI for creating typesafe Astro routes")
-  .version("0.1.0");
+  .version("0.1.7");
 
 program
   .command("generate")
