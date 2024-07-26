@@ -8,7 +8,9 @@
   "main": "./dist/index.js",
   "scripts": {
     "dev": "vite-node ./src/cli.ts",
-    "build": "tsc"
+    "build": "tsc",
+    "test": "vitest run",
+    "test:dev": "vitest"
   },
   "files": [
     "dist",

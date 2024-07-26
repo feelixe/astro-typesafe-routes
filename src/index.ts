@@ -27,8 +27,8 @@ export function filterValidAstroFiles(paths: string[]) {
   return paths.filter((p) => p.match(/\.(astro|md|mdx|html)$/));
 }
 
-export function trimRouteFileExtension(paths: string[]) {
-  return paths.map((path) => path.replace(/\.(astro|md|mdx|html)$/, ""));
+export function trimFileExtensions(paths: string[]) {
+  return paths.map((path) => path.replace(/\.([^.]+)$/, ""));
 }
 
 export function trimIndex(paths: string[]) {
@@ -147,7 +147,7 @@ export function isValidFunctionName(name: string) {
 export async function getRoutes(pagesPath: string) {
   const files = await listFiles(pagesPath);
   const astroFiles = filterValidAstroFiles(files);
-  const withoutExtension = trimRouteFileExtension(astroFiles);
+  const withoutExtension = trimFileExtensions(astroFiles);
   const withoutIndex = trimIndex(withoutExtension);
   const withoutTrailingSlash = trimTrailingSlash(withoutIndex);
   const withLeading = addLeadingSlash(withoutTrailingSlash);
