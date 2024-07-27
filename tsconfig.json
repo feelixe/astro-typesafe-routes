@@ -1,49 +1,49 @@
 {
-    "compilerOptions": {
-      "target": "esnext",
-      "module": "commonjs",
-      "moduleResolution": "node",
-      "strict": true,
-      "esModuleInterop": true,
-      "skipLibCheck": true,
-      "forceConsistentCasingInFileNames": true,
-      "declaration": true,
-      "outDir": "./dist",
-      "baseUrl": "./src",
-      "types": [
-        "node"
-      ],
-      "typeRoots": [
-        "./node_modules/@types",
-        "./src/@types"
-      ],
-      "allowSyntheticDefaultImports": true,
-      "strictNullChecks": true,
-      "strictFunctionTypes": true,
-      "noImplicitThis": true,
-      "noImplicitReturns": true,
-      "noUnusedLocals": true,
-      "noUnusedParameters": true,
-      "noFallthroughCasesInSwitch": true,
-      "resolveJsonModule": true,
-      "isolatedModules": true,
-      "emitDecoratorMetadata": true,
-      "experimentalDecorators": true,
-      "strictBindCallApply": true,
-      "strictPropertyInitialization": true,
-      "downlevelIteration": true,
-      "declarationMap": true,
-      "sourceMap": true
-    },
+  "compilerOptions": {
     "paths": {
       "~/*": [
         "./src/*"
       ],
     },
-    "include": [
-      "src/**/*"
+    "target": "esnext",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "declaration": true,
+    "outDir": "./dist",
+    "baseUrl": "./src",
+    "types": [
+      "node"
     ],
-    "exclude": [
-      "node_modules"
-    ]
-  }
+    "typeRoots": [
+      "./node_modules/@types",
+      "./src/@types"
+    ],
+    "allowSyntheticDefaultImports": true,
+    "strictNullChecks": true,
+    "strictFunctionTypes": true,
+    "noImplicitThis": true,
+    "noImplicitReturns": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "strictBindCallApply": true,
+    "strictPropertyInitialization": true,
+    "downlevelIteration": true,
+    "declarationMap": true,
+    "sourceMap": true
+  },
+  "include": [
+    "src/**/*"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}
