@@ -28,11 +28,11 @@ npm run generate-routes
 Import the generated function and use it as a drop in replacement on links and anywhere else you would use a URL.
 ```typescript
 ---
-import { $path } from "../astro-typesafe-routes";
+import { $path } from "astro-typesafe-routes";
 
 ---
 
-<a href={$path({ path: "/posts/[postId]", params: { postId: "1" } })}>
+<a href={$path("/posts/[postId]", { params: { postId: "1" } })}>
   Blog Post
 </a>
 ```
@@ -41,15 +41,14 @@ The generated function also accepts the fields `search`, `hash` and `trailingSla
 
 ```typescript
 ---
-import { $path } from "../astro-typesafe-routes";
+import { $path } from "astro-typesafe-routes";
 ---
 
 <a
-  href={$path({
-    path: "/posts/[postId]",
+  href={$path("/posts/[postId]", {
     params: { postId: "1" },
-    hash: "body",
-    search: new URLSearchParams({ filter: "recent" }),
+    hash: "header",
+    search: { filter: "recent" },
     trailingSlash: true
   })}
 >
@@ -60,8 +59,6 @@ import { $path } from "../astro-typesafe-routes";
 
 ## CLI Options
 - `generate` - Run code generation.
-  - `-n, --name <string>` - Name of the generated function, defaults to `$path`. 
-  - `-t, --trailing-slash` - Default to adding trailing slash to URLs.
   - `-p, --pages-path <string>` - Path to Astro pages directory.
   - `-o, --out-path <string>` - Path to codegen to.
   - `-w, --watch` - Watch for changes in pages folder.
