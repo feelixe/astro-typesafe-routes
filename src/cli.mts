@@ -1,15 +1,13 @@
 #!/usr/bin/env node
 
 import { Command } from "commander";
-import * as core from ".";
+import * as core from "./index.mjs";
 
 const program = new Command();
 
 type Options = {
   pagesPath: string;
   outPath: string;
-  trailingSlash: boolean;
-  name: string;
   watch: boolean;
 };
 
@@ -22,8 +20,6 @@ program
   .command("generate")
   .description("Generate code for Astro routes")
   .option("-w, --watch", "re run codegen on route file change")
-  .option("-t, --trailing-slash", "default to adding trailing slash", false)
-  .option("-n, --name <string>", "name of the generated function", "$path")
   .option(
     "-p, --pages-path <string>",
     "path to astro pages directory",
@@ -32,7 +28,7 @@ program
   .option(
     "-o, --out-path <string>",
     "path to output",
-    "./src/astro-typesafe-routes.ts",
+    "./src/astro-typesafe-routes.d.ts",
   )
   .action(async (options: Options) => {
     await core.runCodeGen(options);
