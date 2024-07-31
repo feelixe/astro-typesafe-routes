@@ -62,10 +62,7 @@ export type GetRouteFileContentOpts = {
   functionName: string;
 };
 
-export async function getRouteFileContent(
-  routes: DynamicRoute[],
-  opts: GetRouteFileContentOpts,
-) {
+export async function getRouteFileContent(routes: DynamicRoute[]) {
   const routeEntries = routes.map((route) => [
     route.path,
     { params: route.params },
@@ -73,52 +70,33 @@ export async function getRouteFileContent(
   const routesObject = Object.fromEntries(routeEntries);
 
   return `
+  declare module "astro-typesafe-routes" {
     export type Routes = ${JSON.stringify(routesObject)};
-
-    const defaultTrailingSlash = ${opts.trailingSlash};
-
+  
     type Route = keyof Routes;
-
+  
     type ParamsRecord<T extends Route> =
       Routes[T]["params"] extends Array<string>
         ? { [key in Routes[T]["params"][number]]: string }
         : null;
-
-    type PathParameters<T extends Route> = (Routes[T]["params"] extends null
-      ? { path: T }
-      : { params: ParamsRecord<T>; path: T }) & {
+  
+    type Options = {
       search?: ConstructorParameters<typeof URLSearchParams>[0];
       hash?: string;
       trailingSlash?: boolean;
-      path: T;
     };
 
-    export function ${opts.functionName}<T extends Route>(args: PathParameters<T>) {
-      const trailingSlash = args.trailingSlash ?? defaultTrailingSlash;
+    type PathParameters<T extends Route> = Routes[T]["params"] extends null
+      ? [pathName: T, options?: Options]
+      : [
+          pathName: T,
+          options: Options & {
+            params: ParamsRecord<T>;
+          },
+        ];
 
-      let url: string = args.path;
-
-      if(trailingSlash) {
-        url += "/";
-      }
-
-      if ("params" in args && args.params !== null) {
-        for (const [paramKey, paramValue] of Object.entries<string>(args.params)) {
-          url = url.replace(\`[\${paramKey}]\`, paramValue);
-        }
-      }
-
-      const search = new URLSearchParams(args.search);
-      if (search.size > 0) {
-        url += \`?\${search.toString()}\`;
-      }
-
-      if (args.hash !== undefined) {
-        url += \`#\${args.hash}\`;
-      }
-
-      return url;
-    }`;
+    export function $path<T extends Route>(...args: PathParameters<T>): string;
+  }`;
 }
 
 export async function writeRouteFile(path: string, content: string) {
@@ -136,11 +114,6 @@ export function logSuccess(path: string) {
   console.log(`✅ TypeSafe Astro route successfully created at ${path}`);
 }
 
-export function isValidFunctionName(name: string) {
-  const functionNameRegex = /^[a-zA-Z_$][a-zA-Z0-9_$]*$/;
-  return functionNameRegex.test(name);
-}
-
 export async function getRoutes(pagesPath: string) {
   const files = await listFiles(pagesPath);
   const astroFiles = filterValidAstroFiles(files);
@@ -154,21 +127,12 @@ export async function getRoutes(pagesPath: string) {
 export type RunCodeGenOptions = {
   pagesPath: string;
   outPath: string;
-  trailingSlash: boolean;
-  name: string;
 };
 
 export async function runCodeGen(options: RunCodeGenOptions) {
-  if (!isValidFunctionName(options.name)) {
-    throw new Error("Invalid function name");
-  }
-
   const routes = await getRoutes(options.pagesPath);
 
-  const fileContent = await getRouteFileContent(routes, {
-    trailingSlash: options.trailingSlash,
-    functionName: options.name,
-  });
+  const fileContent = await getRouteFileContent(routes);
   const formattedContent = await formatPrettier(fileContent);
   await writeRouteFile(options.outPath, formattedContent);
 
@@ -191,4 +155,44 @@ export function watch(path: string, callback: () => Promise<void>) {
 
   watcher.on("add", callback);
   watcher.on("unlink", callback);
+}
+
+type PathParameters = [
+  pathName: string,
+  options?: {
+    params?: Record<string, string>;
+    trailingSlash?: boolean;
+    search?: ConstructorParameters<typeof URLSearchParams>[0];
+    hash?: string;
+  },
+];
+
+export function $path(...args: PathParameters) {
+  const [pathName, options] = args;
+  const trailingSlash = options?.trailingSlash ?? false;
+
+  let url: string = pathName;
+
+  if (trailingSlash) {
+    url += "/";
+  }
+
+  if (options?.params !== undefined) {
+    for (const [paramKey, paramValue] of Object.entries<string>(
+      options.params,
+    )) {
+      url = url.replace(`[${paramKey}]`, paramValue);
+    }
+  }
+
+  const search = new URLSearchParams(options?.search);
+  if (search.size > 0) {
+    url += `?${search.toString()}`;
+  }
+
+  if (options?.hash !== undefined) {
+    url += `#${options.hash}`;
+  }
+
+  return url;
 }

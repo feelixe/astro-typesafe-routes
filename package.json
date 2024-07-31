@@ -5,9 +5,9 @@
   "keywords": [],
   "author": "Felix Eklöf",
   "license": "MIT",
-  "main": "./dist/index.js",
+  "main": "./dist/index.mjs",
   "scripts": {
-    "dev": "vite-node ./src/cli.ts",
+    "dev": "vite-node ./src/cli.mts",
     "build": "tsc",
     "test": "vitest run",
     "test:dev": "vitest"
@@ -34,6 +34,6 @@
     "prettier": "^3.3.3"
   },
   "bin": {
-    "astro-typesafe-routes": "dist/cli.js"
+    "astro-typesafe-routes": "dist/cli.mjs"
   }
 }
