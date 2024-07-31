@@ -87,7 +87,7 @@ export async function getRouteFileContent(
     type PathParameters<T extends Route> = (Routes[T]["params"] extends null
       ? { path: T }
       : { params: ParamsRecord<T>; path: T }) & {
-      search?: string | URLSearchParams;
+      search?: ConstructorParameters<typeof URLSearchParams>[0];
       hash?: string;
       trailingSlash?: boolean;
       path: T;
@@ -108,11 +108,8 @@ export async function getRouteFileContent(
         }
       }
 
-      if (args.search !== undefined) {
-        const search =
-          typeof args.search === "string"
-            ? new URLSearchParams(args.search)
-            : args.search;
+      const search = new URLSearchParams(args.search);
+      if (search.size > 0) {
         url += \`?\${search.toString()}\`;
       }
 
