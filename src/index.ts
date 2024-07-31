@@ -85,8 +85,8 @@ export async function getRouteFileContent(
         : null;
 
     type PathParameters<T extends Route> = (Routes[T]["params"] extends null
-      ? void
-      : { params: ParamsRecord<T> }) & {
+      ? { path: T }
+      : { params: ParamsRecord<T>; path: T }) & {
       search?: string | URLSearchParams;
       hash?: string;
       trailingSlash?: boolean;
