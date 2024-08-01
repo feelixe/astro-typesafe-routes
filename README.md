@@ -30,7 +30,7 @@ export default defineConfig({
 ```
 
 ## Usage
-Import the path function and use it as a drop in replacement on links and anywhere else you would use a URL.
+Import the path function and use it as a drop-in replacement on links and anywhere else you would use a URL.
 ```typescript
 ---
 import { $path } from "astro-typesafe-routes";
@@ -62,7 +62,7 @@ import { $path } from "astro-typesafe-routes";
 ```
 
 ## Options
-The Astro integration accepts the some optional options.
+The Astro integration accepts some optional options.
 - `outputPath` - Path to the declaration file that will be generated (defaults to `./node_modules/astro-typesafe-routes.d.ts`).
 - `pagesDir` - Directory of your Astro pages (defaults to `./src/pages`).
 
