@@ -8,6 +8,11 @@
 ---
 
 ## Installation
+```sh
+npx astro add astro-typesafe-routes
+```
+
+## Manual Installation
 1. Install package
 ```sh
 npm install -D astro-typesafe-routes
@@ -15,7 +20,7 @@ npm install -D astro-typesafe-routes
 2. Add integration to `astro.config.mjs`
 ```javascript
 import { defineConfig } from 'astro/config';
-import { astroTypesafeRoutes } from "astro-typesafe-routes"
+import astroTypesafeRoutes from "astro-typesafe-routes"
 
 export default defineConfig({
     integrations: [

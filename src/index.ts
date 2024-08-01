@@ -179,7 +179,7 @@ export type AstroTypesafeRoutesParameters = {
   pagesDir: string;
 };
 
-export const astroTypesafeRoutes = (
+const astroTypesafeRoutes = (
   opts?: AstroTypesafeRoutesParameters,
 ): AstroIntegration => {
   const codeGenOptions = {
@@ -225,3 +225,5 @@ export const astroTypesafeRoutes = (
     },
   };
 };
+
+export default astroTypesafeRoutes;

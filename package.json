@@ -3,7 +3,9 @@
   "type": "module",
   "description": "Astro Integration for typesafe URLs",
   "version": "2.0.1",
-  "keywords": [],
+  "keywords": [
+    "astro-integration"
+  ],
   "author": "Felix Eklöf",
   "license": "MIT",
   "main": "./dist/index.js",
