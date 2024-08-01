@@ -2,9 +2,8 @@
 <p align="center">A CLI for generating Typesafe URLs in Astro</p>
 
 <div align="center">
-  <img src="https://i.imgur.com/Hc32hhK.gif" alt="Usage demo">
+  <img src="https://i.imgur.com/aSNlJ7O.gif" alt="Usage demo">
 </div>
-
 
 ---
 

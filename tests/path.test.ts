@@ -37,4 +37,18 @@ describe("$path", () => {
       "/test?key=value#hash",
     );
   });
+
+  it("adds a trailing slash", () => {
+    expect($path("/test", { trailingSlash: true })).toBe("/test/");
+  });
+
+  it("handles all options at once correctly", () => {
+    expect(
+      $path("/test", {
+        trailingSlash: true,
+        search: { key: "value" },
+        hash: "hash",
+      }),
+    ).toBe("/test/?key=value#hash");
+  });
 });
