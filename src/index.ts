@@ -1,7 +1,7 @@
 import * as fs from "node:fs/promises";
 import * as path from "path";
 import * as prettier from "prettier";
-import chokidar from "chokidar";
+import { AstroIntegration } from "astro";
 
 export async function listFiles(dir: string) {
   let results: string[] = [];
@@ -110,12 +110,8 @@ export async function formatPrettier(content: string) {
   });
 }
 
-export function logSuccess(path: string) {
-  console.log(`✅ TypeSafe Astro route successfully created at ${path}`);
-}
-
-export async function getRoutes(pagesPath: string) {
-  const files = await listFiles(pagesPath);
+export async function getRoutes(pagesDir: string) {
+  const files = await listFiles(pagesDir);
   const astroFiles = filterValidAstroFiles(files);
   const withoutExtension = trimFileExtensions(astroFiles);
   const withoutIndex = trimIndex(withoutExtension);
@@ -125,39 +121,20 @@ export async function getRoutes(pagesPath: string) {
 }
 
 export type RunCodeGenOptions = {
-  pagesPath: string;
-  outPath: string;
+  pagesDir: string;
+  outputPath: string;
 };
 
 export async function runCodeGen(options: RunCodeGenOptions) {
-  const routes = await getRoutes(options.pagesPath);
+  const routes = await getRoutes(options.pagesDir);
 
   const fileContent = await getRouteFileContent(routes);
   const formattedContent = await formatPrettier(fileContent);
-  await writeRouteFile(options.outPath, formattedContent);
-
-  logSuccess(options.outPath);
-
+  await writeRouteFile(options.outputPath, formattedContent);
   return routes;
 }
 
-export function watch(path: string, callback: () => Promise<void>) {
-  let watchPath = path;
-  if (!watchPath.endsWith("/")) {
-    watchPath += "/";
-  }
-  watchPath += "**/*.{astro,md,mdx,html}";
-
-  const watcher = chokidar.watch(watchPath, {
-    persistent: true,
-    ignoreInitial: true,
-  });
-
-  watcher.on("add", callback);
-  watcher.on("unlink", callback);
-}
-
-type PathParameters = [
+export type PathParameters = [
   pathName: string,
   options?: {
     params?: Record<string, string>;
@@ -196,3 +173,55 @@ export function $path(...args: PathParameters) {
 
   return url;
 }
+
+export type AstroTypesafeRoutesParameters = {
+  outputPath?: string;
+  pagesDir: string;
+};
+
+export const astroTypesafeRoutes = (
+  opts?: AstroTypesafeRoutesParameters,
+): AstroIntegration => {
+  const codeGenOptions = {
+    pagesDir: "./src/pages",
+    outputPath: "./node_modules/astro-typesafe-routes.d.ts",
+    ...opts,
+  };
+
+  return {
+    name: "astro-typesafe-routes",
+    hooks: {
+      "astro:config:done": async () => {
+        await runCodeGen(codeGenOptions);
+      },
+      "astro:config:setup": async (args) => {
+        args.logger.info(
+          `Generated route type to ${codeGenOptions.outputPath}`,
+        );
+        args.updateConfig({
+          vite: {
+            plugins: [
+              {
+                name: "astro-typesafe-routes",
+                configureServer: (server) => {
+                  server.watcher.on("add", async () => {
+                    await runCodeGen(codeGenOptions);
+                    args.logger.info(
+                      `Generated route type to ${codeGenOptions.outputPath}`,
+                    );
+                  });
+                  server.watcher.on("unlink", async () => {
+                    await runCodeGen(codeGenOptions);
+                    args.logger.info(
+                      `Generated route type to ${codeGenOptions.outputPath}`,
+                    );
+                  });
+                },
+              },
+            ],
+          },
+        });
+      },
+    },
+  };
+};

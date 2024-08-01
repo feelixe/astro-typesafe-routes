@@ -1,13 +1,14 @@
 {
   "name": "astro-typesafe-routes",
+  "type": "module",
   "description": "Typesafe Astro path function",
   "version": "1.0.0",
   "keywords": [],
   "author": "Felix Eklöf",
   "license": "MIT",
-  "main": "./dist/index.mjs",
+  "main": "./dist/index.js",
   "scripts": {
-    "dev": "vite-node ./src/cli.mts",
+    "dev": "tsc -w",
     "build": "tsc",
     "test": "vitest run",
     "test:dev": "vitest"
@@ -18,9 +19,13 @@
     "LICENSE",
     "package.json"
   ],
+  "peerDependencies": {
+    "astro": "^4.0.0"
+  },
   "devDependencies": {
     "@eslint/js": "^9.7.0",
     "@types/node": "^20.14.12",
+    "astro": "^4.0.0",
     "eslint": "9.x",
     "globals": "^15.8.0",
     "typescript": "^5.5.4",
@@ -29,8 +34,6 @@
     "vitest": "^2.0.4"
   },
   "dependencies": {
-    "chokidar": "^3.6.0",
-    "commander": "^12.1.0",
     "prettier": "^3.3.3"
   },
   "bin": {

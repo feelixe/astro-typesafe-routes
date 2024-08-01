@@ -1,5 +1,5 @@
 <h1 align="center">Astro Typesafe Routes</h1>
-<p align="center">A CLI for generating Typesafe URLs in Astro</p>
+<p align="center">Astro Integration for typesafe URLs</p>
 
 <div align="center">
   <img src="https://i.imgur.com/aSNlJ7O.gif" alt="Usage demo">
@@ -12,23 +12,23 @@
 ```sh
 npm install -D astro-typesafe-routes
 ```
-2. Add script to `package.json`
-```json
-"scripts": {
-  "generate-routes": "astro-typesafe-routes generate"
-}
-```
-3. Execute the script to run code generation
-```sh
-npm run generate-routes
+2. Add integration to `astro.config.mjs`
+```javascript
+import { defineConfig } from 'astro/config';
+import { astroTypesafeRoutes } from "astro-typesafe-routes"
+
+export default defineConfig({
+    integrations: [
+        astroTypesafeRoutes()
+    ]
+});
 ```
 
 ## Usage
-Import the generated function and use it as a drop in replacement on links and anywhere else you would use a URL.
+Import the path function and use it as a drop in replacement on links and anywhere else you would use a URL.
 ```typescript
 ---
 import { $path } from "astro-typesafe-routes";
-
 ---
 
 <a href={$path("/posts/[postId]", { params: { postId: "1" } })}>
@@ -56,9 +56,11 @@ import { $path } from "astro-typesafe-routes";
 
 ```
 
-## CLI Options
-- `generate` - Run code generation.
-  - `-p, --pages-path <string>` - Path to Astro pages directory.
-  - `-o, --out-path <string>` - Path to codegen to.
-  - `-w, --watch` - Watch for changes in pages folder.
-  - `-h, --help` - Show help.
+## Options
+The Astro integration accepts the some optional options.
+- `outputPath` - Path to the declaration file that will be generated (defaults to `./node_modules/astro-typesafe-routes.d.ts`).
+- `pagesDir` - Directory of your Astro pages (defaults to `./src/pages`).
+
+
+## Credit
+Inspiration taken from [yesmeck/remix-routes](https://github.com/yesmeck/remix-routes).
