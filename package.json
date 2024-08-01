@@ -1,7 +1,7 @@
 {
   "name": "astro-typesafe-routes",
   "type": "module",
-  "description": "Typesafe Astro path function",
+  "description": "Astro Integration for typesafe URLs",
   "version": "2.0.0",
   "keywords": [],
   "author": "Felix Eklöf",
