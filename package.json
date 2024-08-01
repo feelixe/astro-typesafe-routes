@@ -8,6 +8,11 @@
   ],
   "author": "Felix Eklöf",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/feelixe/astro-typesafe-routes"
+  },
+  "homepage": "https://github.com/feelixe/astro-typesafe-routes",
   "main": "./dist/index.js",
   "scripts": {
     "dev": "tsc -w",
