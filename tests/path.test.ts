@@ -1,6 +1,6 @@
 import { it } from "vitest";
 import { describe } from "vitest";
-import { $path } from "../src/index.mjs";
+import { $path } from "../src";
 import { expect } from "vitest";
 
 describe("$path", () => {

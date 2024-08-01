@@ -3,12 +3,12 @@ import { describe, vi, it, expect } from "vitest";
 import { runCodeGen } from "../src/index";
 import * as fs from "node:fs/promises";
 
-const pagesPath = "./src/pages";
+const pagesDir = "./src/pages";
 
 vi.mock("node:fs/promises", () => ({
   writeFile: vi.fn(),
   readdir: vi.fn().mockImplementation((searchPath: string) => {
-    if (searchPath === pagesPath) {
+    if (searchPath === pagesDir) {
       return [
         {
           name: "index.astro",
@@ -21,7 +21,7 @@ vi.mock("node:fs/promises", () => ({
       ];
     }
 
-    if (searchPath === path.join(pagesPath, "posts")) {
+    if (searchPath === path.join(pagesDir, "posts")) {
       return [
         {
           name: "[id].astro",
@@ -41,10 +41,8 @@ vi.mock("node:fs/promises", () => ({
 describe("runCodeGen", () => {
   it("writes a file", async () => {
     await runCodeGen({
-      pagesPath,
-      outPath: "./",
-      name: "$path",
-      trailingSlash: false,
+      pagesDir,
+      outputPath: "./",
     });
 
     expect(fs.writeFile).toHaveBeenCalledOnce();
@@ -57,10 +55,8 @@ describe("runCodeGen", () => {
   });
   it("returns correct routes", async () => {
     const routes = await runCodeGen({
-      pagesPath,
-      outPath: "./",
-      name: "$path",
-      trailingSlash: false,
+      pagesDir,
+      outputPath: "./",
     });
 
     expect(routes).toEqual([
