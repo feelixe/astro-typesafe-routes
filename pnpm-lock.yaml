@@ -30,9 +30,6 @@ devDependencies:
   typescript-eslint:
     specifier: rc-v8
     version: 8.0.0-alpha.62(eslint@9.8.0)(typescript@5.5.4)
-  vite-node:
-    specifier: ^2.0.4
-    version: 2.0.5(@types/node@20.14.14)
   vitest:
     specifier: ^2.0.4
     version: 2.0.5(@types/node@20.14.14)
