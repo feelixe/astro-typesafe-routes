@@ -37,7 +37,6 @@
     "globals": "^15.8.0",
     "typescript": "^5.5.4",
     "typescript-eslint": "rc-v8",
-    "vite-node": "^2.0.4",
     "vitest": "^2.0.4"
   },
   "dependencies": {
