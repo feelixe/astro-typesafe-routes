@@ -176,7 +176,7 @@ export function $path(...args: PathParameters) {
 
 export type AstroTypesafeRoutesParameters = {
   outputPath?: string;
-  pagesDir: string;
+  pagesDir?: string;
 };
 
 const astroTypesafeRoutes = (
