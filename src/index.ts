@@ -2,29 +2,12 @@ import * as fs from "node:fs/promises";
 import * as path from "path";
 import * as prettier from "prettier";
 import { AstroIntegration } from "astro";
+import fastGlob from "fast-glob";
 
-export async function listFiles(dir: string) {
-  let results: string[] = [];
-
-  const entries = await fs.readdir(dir, { withFileTypes: true });
-
-  for (const entry of entries) {
-    const fullPath = path.join(dir, entry.name);
-    if (entry.isDirectory()) {
-      const subdirFiles = await listFiles(fullPath);
-      results = results.concat(
-        subdirFiles.map((file) => path.join(entry.name, file)),
-      );
-    } else {
-      results.push(entry.name);
-    }
-  }
-
-  return results;
-}
-
-export function filterValidAstroFiles(paths: string[]) {
-  return paths.filter((p) => p.match(/\.(astro|md|mdx|html)$/));
+export async function listAstroRouteFiles(dir: string) {
+  const pattern = path.join(dir, "**/*.{astro,md,mdx,html}");
+  const files = await fastGlob(pattern);
+  return files.map((el) => path.relative(dir, el));
 }
 
 export function trimFileExtensions(paths: string[]) {
@@ -111,9 +94,8 @@ export async function formatPrettier(content: string) {
 }
 
 export async function getRoutes(pagesDir: string) {
-  const files = await listFiles(pagesDir);
-  const astroFiles = filterValidAstroFiles(files);
-  const withoutExtension = trimFileExtensions(astroFiles);
+  const routeFiles = await listAstroRouteFiles(pagesDir);
+  const withoutExtension = trimFileExtensions(routeFiles);
   const withoutIndex = trimIndex(withoutExtension);
   const withoutTrailingSlash = trimTrailingSlash(withoutIndex);
   const withLeading = addLeadingSlash(withoutTrailingSlash);
@@ -176,7 +158,7 @@ export function $path(...args: PathParameters) {
 
 export type AstroTypesafeRoutesParameters = {
   outputPath?: string;
-  pagesDir: string;
+  pagesDir?: string;
 };
 
 const astroTypesafeRoutes = (
