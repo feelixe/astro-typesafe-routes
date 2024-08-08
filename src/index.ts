@@ -1,11 +1,11 @@
 import * as fs from "node:fs/promises";
 import * as path from "path";
 import * as prettier from "prettier";
-import { AstroIntegration } from "astro";
+import { AstroIntegration, AstroIntegrationLogger } from "astro";
 import fastGlob from "fast-glob";
 
 export async function listAstroRouteFiles(dir: string) {
-  const pattern = path.join(dir, "**/*.{astro,md,mdx,html}");
+  const pattern = path.posix.join(dir, "**/*.{astro,md,mdx,html}");
   const files = await fastGlob(pattern);
   return files.map((el) => path.relative(dir, el));
 }
@@ -156,6 +156,10 @@ export function $path(...args: PathParameters) {
   return url;
 }
 
+export function logSuccess(logger: AstroIntegrationLogger, outputPath: string) {
+  logger.info(`Generated route type to ${outputPath}`);
+}
+
 export type AstroTypesafeRoutesParameters = {
   outputPath?: string;
   pagesDir?: string;
@@ -173,13 +177,10 @@ const astroTypesafeRoutes = (
   return {
     name: "astro-typesafe-routes",
     hooks: {
-      "astro:config:done": async () => {
-        await runCodeGen(codeGenOptions);
-      },
       "astro:config:setup": async (args) => {
-        args.logger.info(
-          `Generated route type to ${codeGenOptions.outputPath}`,
-        );
+        await runCodeGen(codeGenOptions);
+        logSuccess(args.logger, codeGenOptions.outputPath);
+
         args.updateConfig({
           vite: {
             plugins: [
@@ -188,15 +189,11 @@ const astroTypesafeRoutes = (
                 configureServer: (server) => {
                   server.watcher.on("add", async () => {
                     await runCodeGen(codeGenOptions);
-                    args.logger.info(
-                      `Generated route type to ${codeGenOptions.outputPath}`,
-                    );
+                    logSuccess(args.logger, codeGenOptions.outputPath);
                   });
                   server.watcher.on("unlink", async () => {
                     await runCodeGen(codeGenOptions);
-                    args.logger.info(
-                      `Generated route type to ${codeGenOptions.outputPath}`,
-                    );
+                    logSuccess(args.logger, codeGenOptions.outputPath);
                   });
                 },
               },
