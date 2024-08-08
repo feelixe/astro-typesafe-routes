@@ -8,8 +8,13 @@
 ---
 
 ## Installation
-```sh
+1. Add integration
+```bash
 npx astro add astro-typesafe-routes
+```
+2. Start the Astro development server if it's not already running to run code generation
+```bash
+npm run dev
 ```
 
 ## Manual Installation
@@ -28,6 +33,11 @@ export default defineConfig({
     ]
 });
 ```
+3. Start the Astro development server if it's not already running to run code generation
+```bash
+npm run dev
+```
+
 
 ## Usage
 Import the path function and use it as a drop-in replacement on links and anywhere else you would use a URL.
@@ -41,7 +51,7 @@ import { $path } from "astro-typesafe-routes";
 </a>
 ```
 
-The generated function also accepts the fields `search`, `hash` and `trailingSlash`.
+The path function also accepts the optional fields `search`, `hash` and `trailingSlash`.
 
 ```typescript
 ---
