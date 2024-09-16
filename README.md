@@ -43,7 +43,7 @@ npm run dev
 Import the path function and use it as a drop-in replacement on links and anywhere else you would use a URL.
 ```typescript
 ---
-import { $path } from "astro-typesafe-routes";
+import { $path } from "astro-typesafe-routes/path";
 ---
 
 <a href={$path("/posts/[postId]", { params: { postId: "1" } })}>
@@ -55,7 +55,7 @@ The path function also accepts the optional fields `search`, `hash` and `trailin
 
 ```typescript
 ---
-import { $path } from "astro-typesafe-routes";
+import { $path } from "astro-typesafe-routes/path";
 ---
 
 <a
