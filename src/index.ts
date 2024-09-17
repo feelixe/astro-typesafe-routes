@@ -2,9 +2,9 @@ import * as fs from "node:fs/promises";
 import * as path from "path";
 import * as prettier from "prettier";
 import { AstroIntegration, AstroIntegrationLogger } from "astro";
-import fastGlob from "fast-glob";
 
 export async function listAstroRouteFiles(dir: string) {
+  const { default: fastGlob } = await import("fast-glob");
   const pattern = path.posix.join(dir, "**/*.{astro,md,mdx,html}");
   const files = await fastGlob(pattern);
   return files.map((el) => path.relative(dir, el));
