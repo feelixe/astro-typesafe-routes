@@ -2,7 +2,7 @@
   "name": "astro-typesafe-routes",
   "type": "module",
   "description": "Astro Integration for typesafe URLs",
-  "version": "2.0.8",
+  "version": "2.0.10",
   "keywords": [
     "astro-integration"
   ],
@@ -13,7 +13,7 @@
     "url": "git+https://github.com/feelixe/astro-typesafe-routes"
   },
   "homepage": "https://github.com/feelixe/astro-typesafe-routes",
-  "main": "./dist/index.js",
+  "main": "dist/index.js",
   "scripts": {
     "dev": "tsc -w",
     "build": "tsc",
