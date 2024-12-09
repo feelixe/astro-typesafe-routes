@@ -2,7 +2,7 @@
   "name": "astro-typesafe-routes",
   "type": "module",
   "description": "Astro Integration for typesafe URLs",
-  "version": "2.0.7",
+  "version": "2.0.8",
   "keywords": [
     "astro-integration"
   ],
@@ -42,5 +42,6 @@
   "dependencies": {
     "fast-glob": "^3.3.2",
     "prettier": "^3.3.3"
-  }
+  },
+  "packageManager": "pnpm@8.6.7+sha512.bd1216a43fcbe2985ff41936a3f3b64c347c7c5a099e962ba764caa9321917fa99dbfae02f7a8a5f31e87c781b5ec8a7c0ca12122833dbcb2a937a50fb230441"
 }
