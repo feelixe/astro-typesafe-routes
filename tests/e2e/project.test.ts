@@ -1,6 +1,6 @@
 import { describe, beforeAll, it, afterAll, expect } from "bun:test";
 import { $ } from "bun";
-import { cp } from "node:fs/promises";
+import { cp, rm } from "node:fs/promises";
 import path from "node:path";
 
 const rootDir = import.meta.dir;
@@ -32,9 +32,12 @@ describe("setup", async () => {
   }, 20_000);
 
   it("build succeeds when project contains only valid links", async () => {
-    await $`cd ./project && rm ./src/pages/page-with-invalid-link.astro`.cwd(
+    const invalidPage = path.join(
       rootDir,
+      "project",
+      "./src/pages/page-with-invalid-link.astro",
     );
+    await rm(invalidPage);
 
     await $`cd ./project && bun run build`.cwd(rootDir);
   }, 20_000);
