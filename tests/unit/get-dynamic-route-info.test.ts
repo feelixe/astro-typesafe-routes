@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { getDynamicRouteInfo, DynamicRoute } from "../src";
+import { getDynamicRouteInfo, DynamicRoute } from "../../src";
 
 describe("getDynamicRouteInfo", () => {
   it("returns correct dynamic route info for paths with single parameters", () => {

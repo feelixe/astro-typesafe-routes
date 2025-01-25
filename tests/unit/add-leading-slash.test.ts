@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { addLeadingSlash } from "../src";
+import { addLeadingSlash } from "../../src";
 
 describe("addLeadingSlash", () => {
   it("should add a leading slash to paths without one", () => {

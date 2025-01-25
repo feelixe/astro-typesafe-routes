@@ -1,5 +1,5 @@
 import { describe, vi, it, expect, Mock } from "vitest";
-import { runCodeGen } from "../src/index";
+import { runCodeGen } from "../../src";
 import * as fs from "node:fs/promises";
 import fastGlob from "fast-glob";
 

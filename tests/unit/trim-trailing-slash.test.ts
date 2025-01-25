@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { trimTrailingSlash } from "../src";
+import { trimTrailingSlash } from "../../src";
 
 describe("trimTrailingSlash", () => {
   it("removes trailing slash", () => {
