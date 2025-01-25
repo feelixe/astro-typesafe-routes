@@ -31,7 +31,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.7.0",
-    "@types/node": "^20.14.12",
+    "@types/bun": "latest",
     "astro": "^5.0.0",
     "eslint": "9.x",
     "globals": "^15.8.0",
