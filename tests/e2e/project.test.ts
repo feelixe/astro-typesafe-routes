@@ -1,31 +1,39 @@
-import { describe, beforeAll, it, afterAll } from "bun:test";
+import { describe, beforeAll, it, afterAll, expect } from "bun:test";
 import { $ } from "bun";
+
+const rootDir = import.meta.dir;
 
 describe("setup", async () => {
   beforeAll(async () => {
     // Copy Astro template project
-    await $`cp -r ./project-template ./project`;
+    await $`cd ${rootDir} && cp -r ./project-template ./project`;
 
     // Install test-project dependencies
-    await $`cd ./project && bun install`;
+    await $`cd ${rootDir} && cd ./project && bun install`;
 
     // Build package
-    await $`cd ../../ && bun run build`;
+    await $`cd ${rootDir} && cd ../../ && bun run build`;
 
     // Add bun link to package
-    await $`cd ../../ && pwd && bun link`;
+    await $`cd ${rootDir} && cd ../../ && pwd && bun link`;
 
     // Install bun linked package
-    await $`cd ./project && bun link astro-typesafe-routes --save`;
-
-    // it("generates a declaration files");
+    await $`cd ${rootDir} && cd ./project && bun link astro-typesafe-routes --save`;
   });
 
   it("build fails when project contains an invalid link", async () => {
-    await $`cd ./project && bun run build`;
-  });
+    await expect(async () => {
+      await $`cd ${rootDir} && cd ./project && bun run build`;
+    }).toThrow();
+  }, 20_000);
 
-  // afterAll(async () => {
-  //   await $`rm -rf ./project`;
-  // });
+  it("build succeeds when project contains only valid links", async () => {
+    await $`cd ${rootDir} && cd ./project && rm ./src/pages/page-with-invalid-link.astro`;
+
+    await $`cd ${rootDir} && cd ./project && bun run build`;
+  }, 20_000);
+
+  afterAll(async () => {
+    await $`cd ${rootDir} && rm -rf ./project`;
+  });
 });

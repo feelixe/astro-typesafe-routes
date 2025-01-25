@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it } from "bun:test";
 import { trimIndex } from "../../src";
 
 describe("trimIndex", () => {
