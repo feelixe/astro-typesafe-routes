@@ -16,7 +16,7 @@
   "main": "dist/index.js",
   "scripts": {
     "dev": "tsc -w",
-    "build": "tsc",
+    "build": "rimraf dist && tsc",
     "test": "vitest run",
     "test:dev": "vitest"
   },
@@ -35,6 +35,7 @@
     "astro": "^5.0.0",
     "eslint": "9.x",
     "globals": "^15.8.0",
+    "rimraf": "^6.0.1",
     "typescript": "^5.5.4",
     "typescript-eslint": "rc-v8",
     "vitest": "^2.0.4"
