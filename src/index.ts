@@ -58,6 +58,8 @@ export async function getRouteFileContent(routes: DynamicRoute[]) {
 
   return `
   declare module "astro-typesafe-routes" {
+    import { AstroIntegration } from "astro";
+
     export type Routes = ${JSON.stringify(routesObject)};
   
     type Route = keyof Routes;
@@ -83,6 +85,13 @@ export async function getRouteFileContent(routes: DynamicRoute[]) {
         ];
 
     export function $path<T extends Route>(...args: PathParameters<T>): string;
+
+    export type AstroTypesafeRoutesParameters = {
+      outputPath?: string;
+      pagesDir?: string;
+    };
+
+    export default function astroTypesafeRoutes(): AstroIntegration; 
   }`;
 }
 
@@ -170,9 +179,9 @@ export type AstroTypesafeRoutesParameters = {
   pagesDir?: string;
 };
 
-const astroTypesafeRoutes = (
+export default function astroTypesafeRoutes(
   opts?: AstroTypesafeRoutesParameters,
-): AstroIntegration => {
+): AstroIntegration {
   const codeGenOptions = {
     pagesDir: "./src/pages",
     outputPath: "./node_modules/astro-typesafe-routes.d.ts",
@@ -208,6 +217,4 @@ const astroTypesafeRoutes = (
       },
     },
   };
-};
-
-export default astroTypesafeRoutes;
+}
