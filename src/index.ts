@@ -91,7 +91,7 @@ export async function getRouteFileContent(routes: DynamicRoute[]) {
       pagesDir?: string;
     };
 
-    export default function astroTypesafeRoutes(): AstroIntegration; 
+    export default function astroTypesafeRoutes(opts?: AstroTypesafeRoutesParameters): AstroIntegration; 
   }`;
 }
 
