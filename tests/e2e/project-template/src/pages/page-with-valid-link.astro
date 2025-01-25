@@ -1,0 +1,7 @@
+---
+import { $path } from "astro-typesafe-routes";
+---
+
+<a href={$path("/blog/[...slug]", { params: { "...slug": "123" } })}>
+  Click me
+</a>

@@ -2,7 +2,7 @@
   "name": "astro-typesafe-routes",
   "type": "module",
   "description": "Astro Integration for typesafe URLs",
-  "version": "2.0.12",
+  "version": "2.0.13",
   "keywords": [
     "astro-integration"
   ],
@@ -16,9 +16,7 @@
   "main": "dist/index.js",
   "scripts": {
     "dev": "tsc -w",
-    "build": "rimraf dist && tsc",
-    "test": "vitest run",
-    "test:dev": "vitest"
+    "build": "rimraf dist && tsc"
   },
   "files": [
     "dist",
@@ -31,14 +29,13 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.7.0",
-    "@types/node": "^20.14.12",
+    "@types/bun": "latest",
     "astro": "^5.0.0",
     "eslint": "9.x",
     "globals": "^15.8.0",
     "rimraf": "^6.0.1",
     "typescript": "^5.5.4",
-    "typescript-eslint": "rc-v8",
-    "vitest": "^2.0.4"
+    "typescript-eslint": "rc-v8"
   },
   "dependencies": {
     "fast-glob": "^3.3.2",

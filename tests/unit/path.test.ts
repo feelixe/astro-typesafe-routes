@@ -1,8 +1,5 @@
-import { it } from "vitest";
-import { describe } from "vitest";
-import { $path } from "../src";
-import { expect } from "vitest";
-
+import { it, describe, expect } from "bun:test";
+import { $path } from "../../src";
 describe("$path", () => {
   it("returns pathname", () => {
     expect($path("/test")).toBe("/test");

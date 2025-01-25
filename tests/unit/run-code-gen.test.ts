@@ -1,19 +1,20 @@
-import { describe, vi, it, expect, Mock } from "vitest";
-import { runCodeGen } from "../src/index";
+import { describe, it, expect, mock } from "bun:test";
+import { runCodeGen } from "../../src";
 import * as fs from "node:fs/promises";
-import fastGlob from "fast-glob";
 
 const pagesDir = "./src/pages";
 
-vi.mock("fast-glob");
-const mockedFastGlob = fastGlob as unknown as Mock;
-mockedFastGlob.mockReturnValue([
-  "./src/pages/index.astro",
-  "./src/pages/posts/[id].astro",
-]);
+mock.module("fast-glob", () => ({
+  default: mock(() => [
+    "./src/pages/index.astro",
+    "./src/pages/posts/[id].astro",
+  ]),
+}));
 
-vi.mock("node:fs/promises", () => ({
-  writeFile: vi.fn(),
+const writeFile = mock(() => {});
+
+mock.module("node:fs/promises", () => ({
+  writeFile,
 }));
 
 describe("runCodeGen", () => {
@@ -23,7 +24,7 @@ describe("runCodeGen", () => {
       outputPath: "./",
     });
 
-    expect(fs.writeFile).toHaveBeenCalledOnce();
+    expect(fs.writeFile).toHaveBeenCalledTimes(1);
 
     expect(fs.writeFile).toHaveBeenCalledWith(
       "./",
