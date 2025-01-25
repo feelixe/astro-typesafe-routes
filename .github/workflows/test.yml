@@ -13,7 +13,6 @@ jobs:
   test:
     strategy:
       matrix:
-        node-version: ["20"]
         platform: [ubuntu-latest, windows-latest]
 
     runs-on: ${{ matrix.platform }}
@@ -21,11 +20,6 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: ${{ matrix.node-version }}
 
       - name: Setup Bun
         uses: oven-sh/setup-bun@v2
