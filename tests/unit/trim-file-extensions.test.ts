@@ -1,5 +1,5 @@
-import { describe, expect, it } from "vitest";
-import { trimFileExtensions } from "../src";
+import { describe, expect, it } from "bun:test";
+import { trimFileExtensions } from "../../src";
 
 describe("trimFileExtensions", () => {
   it("removes file extensions", () => {

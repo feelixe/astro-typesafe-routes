@@ -1,5 +1,5 @@
-import { describe, expect, it } from "vitest";
-import { trimIndex } from "../src";
+import { describe, expect, it } from "bun:test";
+import { trimIndex } from "../../src";
 
 describe("trimIndex", () => {
   it("removes text index from end of string", () => {
