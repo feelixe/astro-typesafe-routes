@@ -10,6 +10,10 @@ export async function listAstroRouteFiles(dir: string) {
   return files.map((el) => path.relative(dir, el));
 }
 
+export function normalizeSeparators(paths: string[]) {
+  return paths.map((routePath) => routePath.replaceAll(path.sep, "/"));
+}
+
 export function trimFileExtensions(paths: string[]) {
   return paths.map((path) => path.replace(/\.([^.]+)$/, ""));
 }
@@ -95,7 +99,8 @@ export async function formatPrettier(content: string) {
 
 export async function getRoutes(pagesDir: string) {
   const routeFiles = await listAstroRouteFiles(pagesDir);
-  const withoutExtension = trimFileExtensions(routeFiles);
+  const withNormalizedSeparators = normalizeSeparators(routeFiles);
+  const withoutExtension = trimFileExtensions(withNormalizedSeparators);
   const withoutIndex = trimIndex(withoutExtension);
   const withoutTrailingSlash = trimTrailingSlash(withoutIndex);
   const withLeading = addLeadingSlash(withoutTrailingSlash);
