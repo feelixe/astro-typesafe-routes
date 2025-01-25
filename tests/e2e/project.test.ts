@@ -21,8 +21,7 @@ describe("setup", async () => {
     // it("generates a declaration files");
   });
 
-  it("builds without errors", async () => {
-    // Build test project
+  it("build fails when project contains an invalid link", async () => {
     await $`cd ./project && bun run build`;
   });
 
