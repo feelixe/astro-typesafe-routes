@@ -2,7 +2,7 @@
   "name": "astro-typesafe-routes",
   "type": "module",
   "description": "Astro Integration for typesafe URLs",
-  "version": "3.0.1-rc.0",
+  "version": "3.0.0-rc4",
   "keywords": [
     "astro-integration"
   ],
