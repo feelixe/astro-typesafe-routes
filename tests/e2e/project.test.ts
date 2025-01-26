@@ -1,48 +1,83 @@
-import { describe, beforeAll, it, afterAll, expect } from "bun:test";
+import { describe, it, expect, beforeEach, afterEach } from "bun:test";
 import { $ } from "bun";
 import { cp, rm } from "node:fs/promises";
 import path from "node:path";
 
 const rootDir = import.meta.dir;
 
-describe("setup", async () => {
-  beforeAll(async () => {
-    // Copy Astro template project
-    const templateDir = path.join(rootDir, "project-template");
-    const projectDir = path.join(rootDir, "project");
-    await cp(templateDir, projectDir, { recursive: true });
+type SetupTestProjectArgs = {
+  templateDir: string;
+  outDir: string;
+  packageDir: string;
+};
 
-    // Install test-project dependencies
-    await $`cd ./project && bun install`.cwd(rootDir);
+async function setupTestProject(args: SetupTestProjectArgs) {
+  // Copy template
+  await cp(args.templateDir, args.outDir, { recursive: true });
 
-    // Build package
-    await $`cd ../../ && bun run build`.cwd(rootDir);
+  // Install test-project dependencies
+  await $`bun install`.cwd(args.outDir);
 
-    // Add bun link to package
-    await $`cd ../../ && pwd && bun link`.cwd(rootDir);
+  // Build package
+  await $`bun run build`.cwd(args.packageDir);
 
-    // Install bun linked package
-    await $`cd ./project && bun link astro-typesafe-routes --save`.cwd(rootDir);
+  // Add bun link to package
+  await $`bun link`.cwd(args.packageDir);
+
+  // Install bun linked package
+  await $`bun link astro-typesafe-routes --save`.cwd(args.outDir);
+}
+
+type CleanUpTestProjectArgs = {
+  dir: string;
+};
+
+async function cleanUpTestProject(args: CleanUpTestProjectArgs) {
+  await $`rm -rf ${args.dir}`;
+}
+
+const setups = [
+  {
+    name: "Astro v4",
+    templateDir: path.join(rootDir, "./project-templates/astro-v4"),
+  },
+  {
+    name: "Astro v5",
+    templateDir: path.join(rootDir, "./project-templates/astro-v5"),
+  },
+];
+
+describe.each(setups)("$name", (args) => {
+  const projectDir = path.join(rootDir, "project");
+  const packageDir = path.join(rootDir, "../../");
+
+  beforeEach(async () => {
+    await setupTestProject({
+      outDir: projectDir,
+      templateDir: args.templateDir,
+      packageDir,
+    });
+  });
+
+  afterEach(async () => {
+    await cleanUpTestProject({
+      dir: projectDir,
+    });
   });
 
   it("build fails when project contains an invalid link", async () => {
     await expect(async () => {
-      await $`cd ./project && bun run build`.cwd(rootDir);
+      await $`bun run build`.cwd(projectDir);
     }).toThrow();
   }, 20_000);
 
   it("build succeeds when project contains only valid links", async () => {
     const invalidPage = path.join(
-      rootDir,
-      "project",
+      projectDir,
       "./src/pages/page-with-invalid-link.astro",
     );
     await rm(invalidPage);
 
-    await $`cd ./project && bun run build`.cwd(rootDir);
+    await $`bun run build`.cwd(projectDir);
   }, 20_000);
-
-  afterAll(async () => {
-    // await $`rm -rf ./project`.cwd(rootDir);
-  });
 });
