@@ -1,0 +1,14 @@
+---
+import { HTMLAttributes } from "astro/types";
+import { $path, type RouteOptions } from "../index";
+
+export type Props = Omit<HTMLAttributes<"a">, "href"> & RouteOptions;
+
+const { to, params, search, hash, trailingSlash, ...anchorProps } = Astro.props;
+
+const href = $path({ to, params, search, hash, trailingSlash });
+---
+
+<a href={href} {...anchorProps}>
+  <slot />
+</a>

@@ -2,7 +2,7 @@
 <p align="center">Astro Integration for typesafe URLs</p>
 
 <div align="center">
-  <img src="https://i.imgur.com/aSNlJ7O.gif" alt="Usage demo">
+  <img src="https://i.ibb.co/g3k4NfN/ezgif-4-b7d48fa603.gif" alt="Usage demo">
 </div>
 
 ---
@@ -28,9 +28,9 @@ import { defineConfig } from 'astro/config';
 import astroTypesafeRoutes from "astro-typesafe-routes"
 
 export default defineConfig({
-    integrations: [
-        astroTypesafeRoutes()
-    ]
+  integrations: [
+    astroTypesafeRoutes()
+  ]
 });
 ```
 3. Start the Astro development server if it's not already running to run code generation
@@ -40,42 +40,42 @@ npm run dev
 
 
 ## Usage
-Import the path function and use it as a drop-in replacement on links and anywhere else you would use a URL.
+Import the `Link` component and use it as a drop-in replacement for links.
+```typescript
+---
+import Link from "astro-typesafe-routes/link";
+---
+
+<Link to="/blog/[id]" params={{ id: "4" }}>Blog post</Link>
+```
+
+If you can't or don't want to use the `Link` component, you can use the `$path` function to ensure safe URLs.
 ```typescript
 ---
 import { $path } from "astro-typesafe-routes";
 ---
 
-<a href={$path("/posts/[postId]", { params: { postId: "1" } })}>
+<a href={$path("/blog/[id]", { params: { id: "4" } })}>
   Blog Post
 </a>
 ```
 
-The path function also accepts the optional fields `search`, `hash` and `trailingSlash`.
+Both the `$path` function and `Link` component also accepts the optional fields `search`, `hash` and `trailingSlash`.
 
 ```typescript
 ---
-import { $path } from "astro-typesafe-routes";
+import Link from "astro-typesafe-routes/link";
 ---
 
-<a
-  href={$path("/posts/[postId]", {
-    params: { postId: "1" },
-    hash: "header",
-    search: { filter: "recent" },
-    trailingSlash: true
-  })}
+<Link
+  to="/blog/[id]"
+  params={{ id: "4" }}
+  hash="header"
+  search={{ filter: "recent" }}
 >
-  Blog Post
-</a>
-
+  Slug here
+</Link>
 ```
-
-## Options
-The Astro integration accepts some optional options.
-- `outputPath` - Path to the declaration file that will be generated (defaults to `./node_modules/astro-typesafe-routes.d.ts`).
-- `pagesDir` - Directory of your Astro pages (defaults to `./src/pages`).
-
 
 ## Credit
 Inspiration taken from [yesmeck/remix-routes](https://github.com/yesmeck/remix-routes).

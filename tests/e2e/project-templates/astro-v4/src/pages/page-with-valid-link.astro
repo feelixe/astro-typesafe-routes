@@ -2,4 +2,4 @@
 import { $path } from "astro-typesafe-routes";
 ---
 
-<a href={$path("/page-with-valid-link")}> Click me </a>
+<a href={$path({ to: "/page-with-valid-link" })}>Click me</a>

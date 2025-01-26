@@ -2,4 +2,4 @@
 import { $path } from "astro-typesafe-routes";
 ---
 
-<a href={$path("/non-existing-page")}>Click me</a>
+<a href={$path({ to: "/non-existing-page" })}>Click me</a>
