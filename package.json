@@ -14,9 +14,15 @@
   },
   "homepage": "https://github.com/feelixe/astro-typesafe-routes",
   "main": "dist/index.js",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
   "scripts": {
     "dev": "tsc -w",
-    "build": "rm -rf dist && tsc"
+    "build": "bun build.ts"
   },
   "files": [
     "dist",
