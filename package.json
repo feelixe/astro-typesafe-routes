@@ -34,7 +34,7 @@
     "package.json"
   ],
   "peerDependencies": {
-    "astro": ">=4.0.0 <6.0.0"
+    "astro": ">=4.14.0 <6.0.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.7.0",

@@ -4,15 +4,10 @@ import {
   IntegrationResolvedRoute,
 } from "astro";
 import { writeFile } from "node:fs/promises";
+import { DynamicRoute } from "./types.js";
+import { astroV4ResolveRoutes } from "./astro-v4-resolve-routes.js";
 
-export type Route = never;
-
-export type GetRouteFileContentOpts = {
-  trailingSlash: boolean;
-  functionName: string;
-};
-
-export async function getRouteFileContent(routes: DynamicRoute[]) {
+export async function getDeclarationContent(routes: DynamicRoute[]) {
   const routeEntries = routes.map((route) => [
     route.path,
     { params: route.params },
@@ -40,7 +35,7 @@ declare module "astro-typesafe-routes" {
 
   export type ParamsRecord<T extends Route> =
     Routes[T]["params"] extends Array<string>
-      ? { [key in Routes[T]["params"][number]]: string }
+      ? { [key in Routes[T]["params"][number]]: string | number }
       : null;
 
   export type RouteOptions<T extends Route> = {
@@ -65,8 +60,6 @@ declare module "astro-typesafe-routes" {
 }`;
 }
 
-export type DynamicRoute = { path: string; params: string[] | null };
-
 export type GetRoutesParams = {
   routes: IntegrationResolvedRoute[];
 };
@@ -79,15 +72,6 @@ export function getRoutes(args: GetRoutesParams): DynamicRoute[] {
     path: route.pattern ?? "",
     params: route.params.length > 0 ? route.params : null,
   }));
-}
-
-export type GetDeclarationContentParam = {
-  routes: IntegrationResolvedRoute[];
-};
-
-export async function getDeclarationContent(args: GetDeclarationContentParam) {
-  const routes = await getRoutes(args);
-  return await getRouteFileContent(routes);
 }
 
 export type RouteOptions = {
@@ -140,39 +124,38 @@ export function logSuccess(logger: AstroIntegrationLogger) {
 }
 
 export default function astroTypesafeRoutes(): AstroIntegration {
-  let routes: IntegrationResolvedRoute[] | undefined;
+  let astroRoutes: IntegrationResolvedRoute[] | undefined;
   let declarationUrl: URL | undefined;
 
   return {
     name: "astro-typesafe-routes",
     hooks: {
       "astro:routes:resolved": async (args) => {
-        routes = args.routes;
+        astroRoutes = args.routes;
         if (!declarationUrl) {
           return;
         }
 
+        const resolvedRoutes = await getRoutes(args);
+
         await writeDeclarationFile({
           path: declarationUrl.pathname,
-          content: await getDeclarationContent({
-            routes,
-          }),
+          content: await getDeclarationContent(resolvedRoutes),
         });
 
         logSuccess(args.logger);
       },
       "astro:config:done": async (args) => {
-        if (!routes) {
-          let message = "Something went wrong, Astro routes were not resolved";
-          args.logger.error(message);
-          throw new Error(message);
+        let routes;
+        if (!astroRoutes) {
+          routes = await astroV4ResolveRoutes("./src/pages");
+        } else {
+          routes = getRoutes({ routes: astroRoutes });
         }
 
         declarationUrl = args.injectTypes({
           filename: "astro-typesafe-routes.d.ts",
-          content: await getDeclarationContent({
-            routes,
-          }),
+          content: await getDeclarationContent(routes),
         });
 
         logSuccess(args.logger);

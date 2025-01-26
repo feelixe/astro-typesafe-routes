@@ -8,11 +8,11 @@ const rootDir = import.meta.dir;
 const packageDir = path.join(rootDir, "../../");
 
 const setups = [
-  {
-    name: "Astro v4",
-    templateDir: path.join(rootDir, "./project-templates/astro-v4"),
-    outDir: path.join(rootDir, "./projects/project-astro-v4"),
-  },
+  // {
+  //   name: "Astro v4",
+  //   templateDir: path.join(rootDir, "./project-templates/astro-v4"),
+  //   outDir: path.join(rootDir, "./projects/project-astro-v4"),
+  // },
   {
     name: "Astro v5",
     templateDir: path.join(rootDir, "./project-templates/astro-v5"),
