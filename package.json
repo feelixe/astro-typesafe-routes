@@ -18,6 +18,9 @@
     ".": {
       "import": "./dist/index.js",
       "types": "./dist/index.d.ts"
+    },
+    "./link": {
+      "import": "./dist/components/link.astro"
     }
   },
   "scripts": {
@@ -43,7 +46,6 @@
     "typescript-eslint": "rc-v8"
   },
   "dependencies": {
-    "fast-glob": "^3.3.2",
-    "prettier": "^3.3.3"
+    "fast-glob": "^3.3.2"
   }
 }

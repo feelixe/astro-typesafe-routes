@@ -1,48 +1,11 @@
-import * as fs from "node:fs/promises";
-import * as path from "path";
-import * as prettier from "prettier";
-import { AstroIntegration, AstroIntegrationLogger } from "astro";
+import {
+  AstroIntegration,
+  AstroIntegrationLogger,
+  IntegrationResolvedRoute,
+} from "astro";
+import { writeFile } from "node:fs/promises";
 
-export async function listAstroRouteFiles(dir: string) {
-  const { default: fastGlob } = await import("fast-glob");
-  const pattern = path.posix.join(dir, "**/*.{astro,md,mdx,html}");
-  const files = await fastGlob(pattern);
-  return files.map((el) => path.relative(dir, el));
-}
-
-export function normalizeSeparators(paths: string[]) {
-  return paths.map((routePath) => routePath.replaceAll(path.sep, "/"));
-}
-
-export function trimFileExtensions(paths: string[]) {
-  return paths.map((path) => path.replace(/\.([^.]+)$/, ""));
-}
-
-export function trimIndex(paths: string[]) {
-  return paths.map((path) => path.replace(/index$/, ""));
-}
-
-export function trimTrailingSlash(paths: string[]) {
-  return paths.map((path) => path.replace(/\/$/, ""));
-}
-
-export function addLeadingSlash(paths: string[]) {
-  return paths.map((path) => (path.startsWith("/") ? path : "/" + path));
-}
-
-export type DynamicRoute = { path: string; params: string[] | null };
-
-export function getDynamicRouteInfo(paths: string[]): DynamicRoute[] {
-  return paths.map((path) => {
-    const paramSegments = (path.match(/(\[[^\]]+\])/g) || []).map((segment) =>
-      segment.replace(/\[|\]/g, ""),
-    );
-    return {
-      path,
-      params: paramSegments.length === 0 ? null : paramSegments,
-    };
-  });
-}
+export type Route = never;
 
 export type GetRouteFileContentOpts = {
   trailingSlash: boolean;
@@ -57,163 +20,162 @@ export async function getRouteFileContent(routes: DynamicRoute[]) {
   const routesObject = Object.fromEntries(routeEntries);
 
   return `
-  declare module "astro-typesafe-routes" {
-    import { AstroIntegration } from "astro";
+declare module "astro-typesafe-routes/link" {
+  import { HTMLAttributes } from "astro/types";
+  import { RouteOptions, Route } from "astro-typesafe-routes";
 
-    export type Routes = ${JSON.stringify(routesObject)};
-  
-    type Route = keyof Routes;
-  
-    type ParamsRecord<T extends Route> =
-      Routes[T]["params"] extends Array<string>
-        ? { [key in Routes[T]["params"][number]]: string }
-        : null;
-  
-    type Options = {
-      search?: ConstructorParameters<typeof URLSearchParams>[0];
-      hash?: string;
-      trailingSlash?: boolean;
-    };
+  type LinkBaseProps = Omit<HTMLAttributes<"a">, "href">;
 
-    type PathParameters<T extends Route> = Routes[T]["params"] extends null
-      ? [pathName: T, options?: Options]
-      : [
-          pathName: T,
-          options: Options & {
-            params: ParamsRecord<T>;
-          },
-        ];
+  export type LinkProps<T extends Route> = LinkBaseProps & RouteOptions<T>;
 
-    export function $path<T extends Route>(...args: PathParameters<T>): string;
-
-    export type AstroTypesafeRoutesParameters = {
-      outputPath?: string;
-      pagesDir?: string;
-    };
-
-    export default function astroTypesafeRoutes(opts?: AstroTypesafeRoutesParameters): AstroIntegration; 
-  }`;
+  export default function Link<T extends Route>(props: LinkProps<T>): any;
 }
 
-export async function writeRouteFile(path: string, content: string) {
-  await fs.writeFile(path, content, { encoding: "utf-8" });
-}
+declare module "astro-typesafe-routes" {
+  import { AstroIntegration } from "astro";
 
-export async function formatPrettier(content: string) {
-  return await prettier.format(content, {
-    parser: "typescript",
-    plugins: [],
-  });
-}
+  export type Routes = ${JSON.stringify(routesObject, null, 2)};
 
-export async function getRoutes(pagesDir: string) {
-  const routeFiles = await listAstroRouteFiles(pagesDir);
-  const withNormalizedSeparators = normalizeSeparators(routeFiles);
-  const withoutExtension = trimFileExtensions(withNormalizedSeparators);
-  const withoutIndex = trimIndex(withoutExtension);
-  const withoutTrailingSlash = trimTrailingSlash(withoutIndex);
-  const withLeading = addLeadingSlash(withoutTrailingSlash);
-  return getDynamicRouteInfo(withLeading);
-}
+  export type Route = keyof Routes;
 
-export type RunCodeGenOptions = {
-  pagesDir: string;
-  outputPath: string;
-};
+  export type ParamsRecord<T extends Route> =
+    Routes[T]["params"] extends Array<string>
+      ? { [key in Routes[T]["params"][number]]: string }
+      : null;
 
-export async function runCodeGen(options: RunCodeGenOptions) {
-  const routes = await getRoutes(options.pagesDir);
-
-  const fileContent = await getRouteFileContent(routes);
-  const formattedContent = await formatPrettier(fileContent);
-  await writeRouteFile(options.outputPath, formattedContent);
-  return routes;
-}
-
-export type PathParameters = [
-  pathName: string,
-  options?: {
-    params?: Record<string, string>;
-    trailingSlash?: boolean;
+  export type RouteOptions<T extends Route> = {
+    to: T;
     search?: ConstructorParameters<typeof URLSearchParams>[0];
     hash?: string;
-  },
-];
+    trailingSlash?: boolean;
+  } & (
+    Routes[T]["params"] extends null ? {} : { params: ParamsRecord<T> }
+  )
 
-export function $path(...args: PathParameters) {
-  const [pathName, options] = args;
-  const trailingSlash = options?.trailingSlash ?? false;
+  export function $path<T extends Route>(args: RouteOptions<T>): string;
 
-  let url: string = pathName;
+  export type AstroTypesafeRoutesParameters = {
+    outputPath?: string;
+    pagesDir?: string;
+  };
+
+  export default function astroTypesafeRoutes(
+    opts?: AstroTypesafeRoutesParameters,
+  ): AstroIntegration;
+}`;
+}
+
+export type DynamicRoute = { path: string; params: string[] | null };
+
+export type GetRoutesParams = {
+  routes: IntegrationResolvedRoute[];
+};
+
+export function getRoutes(args: GetRoutesParams): DynamicRoute[] {
+  const withoutInternal = args.routes.filter(
+    (route) => route.origin !== "internal",
+  );
+  return withoutInternal.map((route) => ({
+    path: route.pattern ?? "",
+    params: route.params.length > 0 ? route.params : null,
+  }));
+}
+
+export type GetDeclarationContentParam = {
+  routes: IntegrationResolvedRoute[];
+};
+
+export async function getDeclarationContent(args: GetDeclarationContentParam) {
+  const routes = await getRoutes(args);
+  return await getRouteFileContent(routes);
+}
+
+export type RouteOptions = {
+  to: string;
+  search?: ConstructorParameters<typeof URLSearchParams>[0];
+  hash?: string;
+  trailingSlash?: boolean;
+  params?: Record<string, string>;
+};
+
+export function $path(args: RouteOptions) {
+  const trailingSlash = args.trailingSlash ?? false;
+
+  let url: string = args.to;
 
   if (trailingSlash) {
     url += "/";
   }
 
-  if (options?.params !== undefined) {
-    for (const [paramKey, paramValue] of Object.entries<string>(
-      options.params,
-    )) {
+  if (args?.params !== undefined) {
+    for (const [paramKey, paramValue] of Object.entries<string>(args.params)) {
       url = url.replace(`[${paramKey}]`, paramValue);
     }
   }
 
-  const search = new URLSearchParams(options?.search);
+  const search = new URLSearchParams(args?.search);
   if (search.size > 0) {
     url += `?${search.toString()}`;
   }
 
-  if (options?.hash !== undefined) {
-    url += `#${options.hash}`;
+  if (args?.hash !== undefined) {
+    const hash = args.hash.startsWith("#") ? args.hash.slice(1) : args.hash;
+    url += `#${hash}`;
   }
 
   return url;
 }
 
-export function logSuccess(logger: AstroIntegrationLogger, outputPath: string) {
-  logger.info(`Generated route type to ${outputPath}`);
-}
-
-export type AstroTypesafeRoutesParameters = {
-  outputPath?: string;
-  pagesDir?: string;
+type WriteDeclarationFileParams = {
+  path: string;
+  content: string;
 };
 
-export default function astroTypesafeRoutes(
-  opts?: AstroTypesafeRoutesParameters,
-): AstroIntegration {
-  const codeGenOptions = {
-    pagesDir: "./src/pages",
-    outputPath: "./node_modules/astro-typesafe-routes.d.ts",
-    ...opts,
-  };
+async function writeDeclarationFile(args: WriteDeclarationFileParams) {
+  return await writeFile(args.path, args.content, { encoding: "utf-8" });
+}
+
+export function logSuccess(logger: AstroIntegrationLogger) {
+  logger.info(`Generated route type`);
+}
+
+export default function astroTypesafeRoutes(): AstroIntegration {
+  let routes: IntegrationResolvedRoute[] | undefined;
+  let declarationUrl: URL | undefined;
 
   return {
     name: "astro-typesafe-routes",
     hooks: {
-      "astro:config:setup": async (args) => {
-        await runCodeGen(codeGenOptions);
-        logSuccess(args.logger, codeGenOptions.outputPath);
+      "astro:routes:resolved": async (args) => {
+        routes = args.routes;
+        if (!declarationUrl) {
+          return;
+        }
 
-        args.updateConfig({
-          vite: {
-            plugins: [
-              {
-                name: "astro-typesafe-routes",
-                configureServer: (server) => {
-                  server.watcher.on("add", async () => {
-                    await runCodeGen(codeGenOptions);
-                    logSuccess(args.logger, codeGenOptions.outputPath);
-                  });
-                  server.watcher.on("unlink", async () => {
-                    await runCodeGen(codeGenOptions);
-                    logSuccess(args.logger, codeGenOptions.outputPath);
-                  });
-                },
-              },
-            ],
-          },
+        await writeDeclarationFile({
+          path: declarationUrl.pathname,
+          content: await getDeclarationContent({
+            routes,
+          }),
         });
+
+        logSuccess(args.logger);
+      },
+      "astro:config:done": async (args) => {
+        if (!routes) {
+          let message = "Something went wrong, Astro routes were not resolved";
+          args.logger.error(message);
+          throw new Error(message);
+        }
+
+        declarationUrl = args.injectTypes({
+          filename: "astro-typesafe-routes.d.ts",
+          content: await getDeclarationContent({
+            routes,
+          }),
+        });
+
+        logSuccess(args.logger);
       },
     },
   };
