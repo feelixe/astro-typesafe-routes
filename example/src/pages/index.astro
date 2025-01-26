@@ -1,11 +1,25 @@
 ---
-import Layout from "../layouts/Layout.astro";
-import { $path } from "astro-typesafe-routes";
 import Link from "astro-typesafe-routes/link";
+import { $path } from "astro-typesafe-routes";
 ---
 
-<Layout>
-  <a href={$path({ to: "/blog/[id]", params: { id: "hej" } })}>Click here!</a>
+<Link
+  to="/blog/[id]"
+  params={{ id: "4" }}
+  hash="header"
+  search={{ foo: "bar" }}
+>
+  Slug here
+</Link>
 
-  <Link to="/article/[...slug]" params={{ "...slug": "hej" }}>Slug here</Link>
-</Layout>
+<a
+  href={$path({
+    to: "/blog/[id]",
+    params: { id: "1" },
+    hash: "header",
+    search: { filter: "recent" },
+    trailingSlash: true,
+  })}
+>
+  Blog Post
+</a>
