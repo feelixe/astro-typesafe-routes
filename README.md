@@ -6,23 +6,25 @@
 </div>
 
 ---
+## Requirements
+Works with Astro version 4 and 5, with a minimum of `4.14.0`.
 
 ## Installation
-1. Add integration
+1. Add integration:
 ```bash
 npx astro add astro-typesafe-routes
 ```
-2. Start the Astro development server if it's not already running to run code generation
+2. Start the Astro development server if it's not already running to run type generation:
 ```bash
 npm run dev
 ```
 
 ## Manual Installation
-1. Install package
+1. Install package:
 ```sh
 npm install -D astro-typesafe-routes
 ```
-2. Add integration to `astro.config.mjs`
+2. Add integration to `astro.config.mjs`:
 ```javascript
 import { defineConfig } from 'astro/config';
 import astroTypesafeRoutes from "astro-typesafe-routes"
@@ -33,7 +35,7 @@ export default defineConfig({
   ]
 });
 ```
-3. Start the Astro development server if it's not already running to run code generation
+3. Start the Astro development server if it's not already running to run code generation:
 ```bash
 npm run dev
 ```
@@ -75,6 +77,28 @@ import Link from "astro-typesafe-routes/link";
 >
   Slug here
 </Link>
+```
+
+## Create your own Link Component
+If you need to accept typed props to a component, import the types `Route` and `RouteOptions`.
+
+```typescript
+---
+---
+import type { HTMLAttributes } from "astro/types";
+import { $path, type Route, type RouteOptions } from "astro-typesafe-routes";
+
+export type Props<T extends Route> = Omit<HTMLAttributes<"a">, "href"> &
+  RouteOptions<T>;
+
+const { to, params, search, hash, trailingSlash, ...anchorProps } = Astro.props;
+
+const href = $path({ to, params, search, hash, trailingSlash });
+---
+
+<a href={href} {...anchorProps}>
+  <slot />
+</a>
 ```
 
 ## Credit
