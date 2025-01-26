@@ -1,48 +1,53 @@
-import { describe, beforeAll, it, afterAll, expect } from "bun:test";
+import { describe, it, expect, beforeEach, afterEach } from "bun:test";
 import { $ } from "bun";
-import { cp, rm } from "node:fs/promises";
+import { rm } from "node:fs/promises";
 import path from "node:path";
+import { cleanUpTestProject, setupTestProject } from "./project-utils";
 
 const rootDir = import.meta.dir;
+const packageDir = path.join(rootDir, "../../");
 
-describe("setup", async () => {
-  beforeAll(async () => {
-    // Copy Astro template project
-    const templateDir = path.join(rootDir, "project-template");
-    const projectDir = path.join(rootDir, "project");
-    await cp(templateDir, projectDir, { recursive: true });
+const setups = [
+  {
+    name: "Astro v4",
+    templateDir: path.join(rootDir, "./project-templates/astro-v4"),
+    outDir: path.join(rootDir, "./projects/project-astro-v4"),
+  },
+  {
+    name: "Astro v5",
+    templateDir: path.join(rootDir, "./project-templates/astro-v5"),
+    outDir: path.join(rootDir, "./projects/project-astro-v5"),
+  },
+];
 
-    // Install test-project dependencies
-    await $`cd ./project && bun install`.cwd(rootDir);
+describe.each(setups)("$name", (args) => {
+  beforeEach(async () => {
+    await setupTestProject({
+      outDir: args.outDir,
+      templateDir: args.templateDir,
+      packageDir,
+    });
+  });
 
-    // Build package
-    await $`cd ../../ && bun run build`.cwd(rootDir);
-
-    // Add bun link to package
-    await $`cd ../../ && pwd && bun link`.cwd(rootDir);
-
-    // Install bun linked package
-    await $`cd ./project && bun link astro-typesafe-routes --save`.cwd(rootDir);
+  afterEach(async () => {
+    await cleanUpTestProject({
+      dir: args.outDir,
+    });
   });
 
   it("build fails when project contains an invalid link", async () => {
     await expect(async () => {
-      await $`cd ./project && bun run build`.cwd(rootDir);
+      await $`bun run build`.cwd(args.outDir);
     }).toThrow();
   }, 20_000);
 
   it("build succeeds when project contains only valid links", async () => {
     const invalidPage = path.join(
-      rootDir,
-      "project",
+      args.outDir,
       "./src/pages/page-with-invalid-link.astro",
     );
     await rm(invalidPage);
 
-    await $`cd ./project && bun run build`.cwd(rootDir);
+    await $`bun run build`.cwd(args.outDir);
   }, 20_000);
-
-  afterAll(async () => {
-    // await $`rm -rf ./project`.cwd(rootDir);
-  });
 });

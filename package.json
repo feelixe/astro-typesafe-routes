@@ -16,7 +16,7 @@
   "main": "dist/index.js",
   "scripts": {
     "dev": "tsc -w",
-    "build": "rimraf dist && tsc"
+    "build": "rm -rf dist && tsc"
   },
   "files": [
     "dist",
@@ -33,7 +33,6 @@
     "astro": "^5.0.0",
     "eslint": "9.x",
     "globals": "^15.8.0",
-    "rimraf": "^6.0.1",
     "typescript": "^5.5.4",
     "typescript-eslint": "rc-v8"
   },
