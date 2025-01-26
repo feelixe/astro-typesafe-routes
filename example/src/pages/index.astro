@@ -1,25 +1,5 @@
 ---
 import Link from "astro-typesafe-routes/link";
-import { $path } from "astro-typesafe-routes";
 ---
 
-<Link
-  to="/blog/[id]"
-  params={{ id: "4" }}
-  hash="header"
-  search={{ foo: "bar" }}
->
-  Slug here
-</Link>
-
-<a
-  href={$path({
-    to: "/blog/[id]",
-    params: { id: "1" },
-    hash: "header",
-    search: { filter: "recent" },
-    trailingSlash: true,
-  })}
->
-  Blog Post
-</a>
+<Link to="/blog/[id]" params={{ id: "1" }}>Blog post</Link>

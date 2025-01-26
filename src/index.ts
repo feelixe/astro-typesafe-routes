@@ -95,7 +95,7 @@ export type RouteOptions = {
   search?: ConstructorParameters<typeof URLSearchParams>[0];
   hash?: string;
   trailingSlash?: boolean;
-  params?: Record<string, string>;
+  params?: Record<string, string | number>;
 };
 
 export function $path(args: RouteOptions) {
@@ -108,8 +108,8 @@ export function $path(args: RouteOptions) {
   }
 
   if (args?.params !== undefined) {
-    for (const [paramKey, paramValue] of Object.entries<string>(args.params)) {
-      url = url.replace(`[${paramKey}]`, paramValue);
+    for (const [paramKey, paramValue] of Object.entries(args.params)) {
+      url = url.replace(`[${paramKey}]`, paramValue.toString());
     }
   }
 

@@ -2,7 +2,7 @@
 <p align="center">Astro Integration for typesafe URLs</p>
 
 <div align="center">
-  <img src="https://i.imgur.com/aSNlJ7O.gif" alt="Usage demo">
+  <img src="https://i.ibb.co/g3k4NfN/ezgif-4-b7d48fa603.gif" alt="Usage demo">
 </div>
 
 ---
@@ -28,9 +28,9 @@ import { defineConfig } from 'astro/config';
 import astroTypesafeRoutes from "astro-typesafe-routes"
 
 export default defineConfig({
-    integrations: [
-        astroTypesafeRoutes()
-    ]
+  integrations: [
+    astroTypesafeRoutes()
+  ]
 });
 ```
 3. Start the Astro development server if it's not already running to run code generation
@@ -55,7 +55,7 @@ If you can't or don't want to use the `Link` component, you can use the `$path` 
 import { $path } from "astro-typesafe-routes";
 ---
 
-<a href={$path("/posts/[postId]", { params: { postId: "1" } })}>
+<a href={$path("/blog/[id]", { params: { id: "4" } })}>
   Blog Post
 </a>
 ```
