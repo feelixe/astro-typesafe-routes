@@ -1,6 +1,6 @@
 import { describe, it, expect, beforeEach, afterEach } from "bun:test";
 import { $ } from "bun";
-import { cp, rm } from "node:fs/promises";
+import { rm } from "node:fs/promises";
 import path from "node:path";
 import { cleanUpTestProject, setupTestProject } from "./project-utils";
 
