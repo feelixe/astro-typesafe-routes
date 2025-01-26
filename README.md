@@ -79,20 +79,17 @@ import Link from "astro-typesafe-routes/link";
 </Link>
 ```
 
-## Create your own Link Component
-If you need to accept typed props to a component, import the types `Route` and `RouteOptions`.
+## Typed Custom Component Props
+Import `Route` and `RouteOptions` types to add type safety to your custom link components:
 
 ```typescript
 ---
----
-import type { HTMLAttributes } from "astro/types";
-import { $path, type Route, type RouteOptions } from "astro-typesafe-routes";
+import { HTMLAttributes } from "astro/types";
+import { $path, type RouteOptions } from "../index";
 
-export type Props<T extends Route> = Omit<HTMLAttributes<"a">, "href"> &
-  RouteOptions<T>;
+export type Props = Omit<HTMLAttributes<"a">, "href"> & RouteOptions;
 
 const { to, params, search, hash, trailingSlash, ...anchorProps } = Astro.props;
-
 const href = $path({ to, params, search, hash, trailingSlash });
 ---
 
