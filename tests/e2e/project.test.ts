@@ -43,6 +43,6 @@ describe("setup", async () => {
   }, 20_000);
 
   afterAll(async () => {
-    await $`rm -rf ./project`.cwd(rootDir);
+    // await $`rm -rf ./project`.cwd(rootDir);
   });
 });
