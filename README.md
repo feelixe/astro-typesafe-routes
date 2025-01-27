@@ -1,5 +1,10 @@
 <h1 align="center">Astro Typesafe Routes</h1>
-<p align="center">Astro Integration for typesafe URLs</p>
+<p align="center">
+  Enhance your Astro development experience with rigorous type safety for every route in your application. This integration automatically generates TypeScript definitions from your project's route structure.
+  <br />
+  <br />
+  <a href="https://badge.fury.io/js/astro-typesafe-routes"><img src="https://badge.fury.io/js/astro-typesafe-routes.svg?icon=si%3Anpm" alt="npm version" height="18"></a>
+</p>
 
 <div align="center">
   <img src="https://i.ibb.co/g3k4NfN/ezgif-4-b7d48fa603.gif" alt="Usage demo">
