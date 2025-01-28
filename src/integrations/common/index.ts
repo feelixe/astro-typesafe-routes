@@ -57,13 +57,13 @@ export async function getDeclarationContent(routes: DynamicRoute[]) {
   
     export function $path<T extends Route>(args: RouteOptions<T>): string;
   
-    export type AstroTypesafeRoutesParameters = {
-      outputPath?: string;
-      pagesDir?: string;
+    export type AstroTypesafeRoutesParams = {
+      astroVersion?: 4 | 5;
+      skipVersionCheck?: boolean;
     };
   
     export default function astroTypesafeRoutes(
-      opts?: AstroTypesafeRoutesParameters,
+      args?: AstroTypesafeRoutesParams,
     ): AstroIntegration;
   }`;
 }

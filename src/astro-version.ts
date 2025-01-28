@@ -17,6 +17,7 @@ export function getAstroMajorVersion() {
 
 export function assertSupportedVersion() {
   const astroVersion = getAstroVersion();
+
   const isSupportedVersion = semver.satisfies(astroVersion, SUPPORTED_VERSIONS);
   if (!isSupportedVersion) {
     throw new Error(
