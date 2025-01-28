@@ -1,5 +1,5 @@
 import { AstroIntegration, IntegrationResolvedRoute } from "astro";
-import { DynamicRoute } from "../../types.js";
+import { DynamicRoute } from "../common/types.js";
 import {
   getDeclarationContent,
   logSuccess,

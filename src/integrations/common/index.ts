@@ -1,5 +1,5 @@
 import { AstroIntegrationLogger } from "astro";
-import { DynamicRoute } from "../../types.js";
+import { DynamicRoute } from "./types.js";
 import * as fs from "node:fs/promises";
 
 type WriteDeclarationFileParams = {

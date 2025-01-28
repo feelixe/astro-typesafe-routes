@@ -4,7 +4,7 @@
  */
 
 import * as path from "path";
-import { DynamicRoute } from "../../types.js";
+import { DynamicRoute } from "../common/types.js";
 import fastGlob from "fast-glob";
 
 const PAGES_PATTERN = "src/pages/**/*.{astro,md,mdx,html}";
@@ -38,7 +38,7 @@ function addLeadingSlash(paths: string[]) {
 function getDynamicRouteInfo(paths: string[]): DynamicRoute[] {
   return paths.map((path) => {
     const paramSegments = (path.match(/(\[[^\]]+\])/g) || []).map((segment) =>
-      segment.replace(/\[|\]/g, ""),
+      segment.replace(/\[|\]/g, "")
     );
     return {
       path,
