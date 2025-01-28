@@ -8,19 +8,21 @@ const BUILD_DIR = path.join(ROOT_DIR, "dist");
 const COMPONENTS_SOURCE = path.join(ROOT_DIR, "src", "components");
 const COMPONENTS_OUT = path.join(BUILD_DIR, "components");
 
-async function cleanUp() {
+async function cleanOutDirectory() {
   await rm(BUILD_DIR, { recursive: true, force: true });
 }
 
 async function build() {
-  await cleanUp();
+  await cleanOutDirectory();
   await $`tsc`;
   await cp(COMPONENTS_SOURCE, COMPONENTS_OUT, { recursive: true });
 }
 
 try {
   await build();
+  console.info("✅ Build completed");
 } catch (error) {
-  cleanUp();
+  cleanOutDirectory();
+  console.error("❌ Build failed");
   throw error;
 }
