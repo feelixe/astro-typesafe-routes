@@ -52,4 +52,15 @@ describe("$path", () => {
       })
     ).toBe("/test/?key=value#hash");
   });
+
+  it("coerces numbers to string", () => {
+    expect(
+      $path({
+        to: "/test/[id]",
+        params: {
+          id: 1,
+        },
+      })
+    ).toBe("/test/1");
+  });
 });
