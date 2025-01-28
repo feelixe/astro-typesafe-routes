@@ -44,7 +44,7 @@ describe.each(setups)("$name", (args) => {
   it("build succeeds when project contains only valid links", async () => {
     const invalidPage = path.join(
       args.outDir,
-      "./src/pages/page-with-invalid-link.astro"
+      "./src/pages/page-with-invalid-link.astro",
     );
     await rm(invalidPage);
 

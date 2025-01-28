@@ -5,17 +5,16 @@ import {
   writeDeclarationFile,
 } from "../common/index.js";
 import { resolveRoutes } from "./resolve-routes.js";
-import * as path from "node:path";
 
 export default function astroTypesafeRoutesAstroV4(): AstroIntegration {
   let declarationUrl: URL | undefined;
-  let pagesDir: string | undefined;
+  let rootDir: string | undefined;
 
   async function generate() {
-    if (!pagesDir || !declarationUrl) {
-      throw new Error("Unexpected error: pages or declaration was undefined");
+    if (!rootDir || !declarationUrl) {
+      throw new Error("Unexpected error: rootDir or declaration was undefined");
     }
-    const routes = await resolveRoutes(pagesDir);
+    const routes = await resolveRoutes(rootDir);
 
     await writeDeclarationFile({
       path: declarationUrl.pathname,
@@ -48,8 +47,8 @@ export default function astroTypesafeRoutesAstroV4(): AstroIntegration {
         });
       },
       "astro:config:done": async (args) => {
-        pagesDir = path.join(args.config.root.pathname, "src", "pages");
-        const routes = await resolveRoutes(pagesDir);
+        rootDir = args.config.root.pathname.replace(/^\//, "");
+        const routes = await resolveRoutes(rootDir);
 
         declarationUrl = args.injectTypes({
           filename: "astro-typesafe-routes.d.ts",

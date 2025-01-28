@@ -6,11 +6,12 @@
 import * as path from "path";
 import { DynamicRoute } from "../../types.js";
 
-async function listAstroRouteFiles(dir: string) {
+async function listAstroRouteFiles(rootDir: string) {
   const { default: fastGlob } = await import("fast-glob");
-  const pattern = path.posix.join(dir, "**/*.{astro,md,mdx,html}");
-  const files = await fastGlob(pattern);
-  return files.map((el) => path.relative(dir, el));
+  const pattern = path.posix.join("src/pages/**/*.{astro,md,mdx,html}");
+  const files = await fastGlob(pattern, { cwd: rootDir });
+  const pagesDir = path.join(rootDir, "src", "pages");
+  return files.map((el) => path.relative(pagesDir, el));
 }
 
 function normalizeSeparators(paths: string[]) {
@@ -36,7 +37,7 @@ function addLeadingSlash(paths: string[]) {
 function getDynamicRouteInfo(paths: string[]): DynamicRoute[] {
   return paths.map((path) => {
     const paramSegments = (path.match(/(\[[^\]]+\])/g) || []).map((segment) =>
-      segment.replace(/\[|\]/g, "")
+      segment.replace(/\[|\]/g, ""),
     );
     return {
       path,
