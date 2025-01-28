@@ -5,11 +5,12 @@
 
 import * as path from "path";
 import { DynamicRoute } from "../../types.js";
+import fastGlob from "fast-glob";
+
+const PAGES_PATTERN = "src/pages/**/*.{astro,md,mdx,html}";
 
 async function listAstroRouteFiles(rootDir: string) {
-  const { default: fastGlob } = await import("fast-glob");
-  const pattern = path.posix.join("src/pages/**/*.{astro,md,mdx,html}");
-  const files = await fastGlob(pattern, { cwd: rootDir });
+  const files = await fastGlob(PAGES_PATTERN, { cwd: rootDir });
   const pagesDir = path.join(rootDir, "src", "pages");
   return files.map((el) => path.relative(pagesDir, el));
 }
