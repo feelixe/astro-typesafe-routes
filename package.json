@@ -46,6 +46,8 @@
     "typescript-eslint": "rc-v8"
   },
   "dependencies": {
-    "fast-glob": "^3.3.2"
+    "@types/semver": "^7.5.8",
+    "fast-glob": "^3.3.2",
+    "semver": "^7.6.3"
   }
 }

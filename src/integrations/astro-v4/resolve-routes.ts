@@ -4,7 +4,7 @@
  */
 
 import * as path from "path";
-import { DynamicRoute } from "./types.js";
+import { DynamicRoute } from "../../types.js";
 
 async function listAstroRouteFiles(dir: string) {
   const { default: fastGlob } = await import("fast-glob");
@@ -36,7 +36,7 @@ function addLeadingSlash(paths: string[]) {
 function getDynamicRouteInfo(paths: string[]): DynamicRoute[] {
   return paths.map((path) => {
     const paramSegments = (path.match(/(\[[^\]]+\])/g) || []).map((segment) =>
-      segment.replace(/\[|\]/g, ""),
+      segment.replace(/\[|\]/g, "")
     );
     return {
       path,
@@ -45,7 +45,7 @@ function getDynamicRouteInfo(paths: string[]): DynamicRoute[] {
   });
 }
 
-export async function astroV4ResolveRoutes(pagesDir: string) {
+export async function resolveRoutes(pagesDir: string) {
   const routeFiles = await listAstroRouteFiles(pagesDir);
   const withNormalizedSeparators = normalizeSeparators(routeFiles);
   const withoutExtension = trimFileExtensions(withNormalizedSeparators);
