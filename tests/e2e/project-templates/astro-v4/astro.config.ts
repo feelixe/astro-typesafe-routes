@@ -6,7 +6,6 @@ export default defineConfig({
   integrations: [
     astroTypesafeRoutes({
       astroVersion: 4,
-      skipVersionCheck: true,
     }),
   ],
 });

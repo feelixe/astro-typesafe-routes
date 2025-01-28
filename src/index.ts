@@ -6,17 +6,14 @@ import {
 import { astroTypesafeRoutesAstroV5 } from "./integrations/astro-v5/index.js";
 import astroTypesafeRoutesAstroV4 from "./integrations/astro-v4/index.js";
 
-export * from "./path.js";
-
 export type AstroTypesafeRoutesParams = {
   astroVersion?: 4 | 5;
-  skipVersionCheck?: boolean;
 };
 
 export default function astroTypesafeRoutes(
   args?: AstroTypesafeRoutesParams,
 ): AstroIntegration {
-  if (!args?.skipVersionCheck) {
+  if (args?.astroVersion === undefined) {
     assertSupportedVersion();
   }
 

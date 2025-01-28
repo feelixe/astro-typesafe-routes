@@ -21,6 +21,10 @@
     },
     "./link": {
       "import": "./dist/components/link.astro"
+    },
+    "./path": {
+      "import": "./dist/path.js",
+      "types": "./dist/path.d.ts"
     }
   },
   "scripts": {

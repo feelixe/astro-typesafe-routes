@@ -24,8 +24,8 @@ export async function getDeclarationContent(routes: DynamicRoute[]) {
 
   return `
   declare module "astro-typesafe-routes/link" {
-    import { HTMLAttributes } from "astro/types";
-    import { RouteOptions, Route } from "astro-typesafe-routes";
+    import { HTMLAttributes } from "astro/types/path";
+    import { RouteOptions, Route } from "astro-typesafe-routes/path";
   
     type LinkBaseProps = Omit<HTMLAttributes<"a">, "href">;
   
@@ -34,9 +34,7 @@ export async function getDeclarationContent(routes: DynamicRoute[]) {
     export default function Link<T extends Route>(props: LinkProps<T>): any;
   }
   
-  declare module "astro-typesafe-routes" {
-    import { AstroIntegration } from "astro";
-  
+  declare module "astro-typesafe-routes/path" {
     export type Routes = ${JSON.stringify(routesObject, null, 2)};
   
     export type Route = keyof Routes;
@@ -56,14 +54,5 @@ export async function getDeclarationContent(routes: DynamicRoute[]) {
     )
   
     export function $path<T extends Route>(args: RouteOptions<T>): string;
-  
-    export type AstroTypesafeRoutesParams = {
-      astroVersion?: 4 | 5;
-      skipVersionCheck?: boolean;
-    };
-  
-    export default function astroTypesafeRoutes(
-      args?: AstroTypesafeRoutesParams,
-    ): AstroIntegration;
   }`;
 }

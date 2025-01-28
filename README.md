@@ -7,7 +7,7 @@
 
 ---
 ## Requirements
-Works with Astro version 4 and 5, with a minimum of `4.14.0`.
+Compatible with Astro version 4 and 5, with a minimum of `4.14.0`.
 
 ## Installation
 1. Add integration:
@@ -54,10 +54,10 @@ import Link from "astro-typesafe-routes/link";
 If you can't or don't want to use the `Link` component, you can use the `$path` function to ensure safe URLs.
 ```typescript
 ---
-import { $path } from "astro-typesafe-routes";
+import { $path } from "astro-typesafe-routes/path";
 ---
 
-<a href={$path("/blog/[id]", { params: { id: "4" } })}>
+<a href={$path({ to: "/blog/[id]", params: { id: "4" } })}>
   Blog Post
 </a>
 ```
@@ -84,10 +84,12 @@ Import `Route` and `RouteOptions` types to add type safety to your custom link c
 
 ```typescript
 ---
-import { HTMLAttributes } from "astro/types";
-import { $path, type RouteOptions } from "../index";
+import type { HTMLAttributes } from "astro/types";
+import type { RouteOptions, Route } from "astro-typesafe-routes/path";
+import { $path } from "astro-typesafe-routes/path";
 
-export type Props = Omit<HTMLAttributes<"a">, "href"> & RouteOptions;
+export type Props<T extends Route> = Omit<HTMLAttributes<"a">, "href"> &
+  RouteOptions<T>;
 
 const { to, params, search, hash, trailingSlash, ...anchorProps } = Astro.props;
 const href = $path({ to, params, search, hash, trailingSlash });
@@ -98,5 +100,12 @@ const href = $path({ to, params, search, hash, trailingSlash });
 </a>
 ```
 
-## Credit
-Inspiration taken from [yesmeck/remix-routes](https://github.com/yesmeck/remix-routes).
+## Configurations
+This integration automatically detects the running Astro major version for compatibility. If it should detect the wrong version you can pass an override as argument to the integration.
+```typescript
+export default defineConfig({
+  integrations: [astroTypesafeRoutes({
+    astroVersion: 4
+  })],
+});
+```
