@@ -5,6 +5,7 @@ import {
   writeDeclarationFile,
 } from "../common/index.js";
 import { resolveRoutes } from "./resolve-routes.js";
+import { fileURLToPath } from "url";
 
 export default function astroTypesafeRoutesAstroV4(): AstroIntegration {
   let declarationUrl: URL | undefined;
@@ -47,7 +48,7 @@ export default function astroTypesafeRoutesAstroV4(): AstroIntegration {
         });
       },
       "astro:config:done": async (args) => {
-        rootDir = args.config.root.pathname.replace(/^\//, "");
+        rootDir = fileURLToPath(args.config.root);
         const routes = await resolveRoutes(rootDir);
 
         declarationUrl = args.injectTypes({
