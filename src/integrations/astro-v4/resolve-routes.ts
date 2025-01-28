@@ -4,13 +4,15 @@
  */
 
 import * as path from "path";
-import { DynamicRoute } from "./types.js";
+import { DynamicRoute } from "../common/types.js";
+import fastGlob from "fast-glob";
 
-async function listAstroRouteFiles(dir: string) {
-  const { default: fastGlob } = await import("fast-glob");
-  const pattern = path.posix.join(dir, "**/*.{astro,md,mdx,html}");
-  const files = await fastGlob(pattern);
-  return files.map((el) => path.relative(dir, el));
+const PAGES_PATTERN = "src/pages/**/*.{astro,md,mdx,html}";
+
+async function listAstroRouteFiles(rootDir: string) {
+  const files = await fastGlob(PAGES_PATTERN, { cwd: rootDir });
+  const pagesDir = path.join(rootDir, "src", "pages");
+  return files.map((el) => path.relative(pagesDir, el));
 }
 
 function normalizeSeparators(paths: string[]) {
@@ -36,7 +38,7 @@ function addLeadingSlash(paths: string[]) {
 function getDynamicRouteInfo(paths: string[]): DynamicRoute[] {
   return paths.map((path) => {
     const paramSegments = (path.match(/(\[[^\]]+\])/g) || []).map((segment) =>
-      segment.replace(/\[|\]/g, ""),
+      segment.replace(/\[|\]/g, "")
     );
     return {
       path,
@@ -45,7 +47,7 @@ function getDynamicRouteInfo(paths: string[]): DynamicRoute[] {
   });
 }
 
-export async function astroV4ResolveRoutes(pagesDir: string) {
+export async function resolveRoutes(pagesDir: string) {
   const routeFiles = await listAstroRouteFiles(pagesDir);
   const withNormalizedSeparators = normalizeSeparators(routeFiles);
   const withoutExtension = trimFileExtensions(withNormalizedSeparators);
