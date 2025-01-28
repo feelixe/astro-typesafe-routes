@@ -3,8 +3,8 @@ import {
   getDeclarationContent,
   logSuccess,
   writeDeclarationFile,
-} from "../common";
-import { resolveRoutes } from "./resolve-routes";
+} from "../common/index.js";
+import { resolveRoutes } from "./resolve-routes.js";
 import * as path from "node:path";
 
 export default function astroTypesafeRoutesAstroV4(): AstroIntegration {

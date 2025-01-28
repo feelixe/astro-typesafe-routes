@@ -16,7 +16,7 @@
     "outDir": "./dist",
     "baseUrl": "./src",
     "types": [
-      "node"
+      "bun"
     ],
     "typeRoots": [
       "./node_modules/@types",

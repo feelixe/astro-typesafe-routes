@@ -1,10 +1,10 @@
 import { AstroIntegration, IntegrationResolvedRoute } from "astro";
-import { DynamicRoute } from "../../types";
+import { DynamicRoute } from "../../types.js";
 import {
   getDeclarationContent,
   logSuccess,
   writeDeclarationFile,
-} from "../common";
+} from "../common/index.js";
 export type GetRoutesParams = {
   routes: IntegrationResolvedRoute[];
 };
@@ -27,6 +27,7 @@ export function astroTypesafeRoutesAstroV5(): AstroIntegration {
     name: "astro-typesafe-routes",
     hooks: {
       "astro:routes:resolved": async (args) => {
+        astroRoutes = args.routes;
         if (!declarationUrl) {
           return;
         }

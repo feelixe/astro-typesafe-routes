@@ -1,9 +1,12 @@
 import { AstroIntegration } from "astro";
-import { assertSupportedVersion, getAstroMajorVersion } from "astro-version";
-import { astroTypesafeRoutesAstroV5 } from "integrations/astro-v5";
-import astroTypesafeRoutesAstroV4 from "integrations/astro-v4";
+import {
+  assertSupportedVersion,
+  getAstroMajorVersion,
+} from "./astro-version.js";
+import { astroTypesafeRoutesAstroV5 } from "./integrations/astro-v5/index.js";
+import astroTypesafeRoutesAstroV4 from "./integrations/astro-v4/index.js";
 
-export * from "./path";
+export * from "./path.js";
 
 export default function astroTypesafeRoutes(): AstroIntegration {
   assertSupportedVersion();
