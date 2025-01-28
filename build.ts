@@ -2,7 +2,11 @@ import { $ } from "bun";
 import { rm, cp } from "node:fs/promises";
 import path from "node:path";
 
-const BUILD_DIR = "./dist";
+const ROOT_DIR = import.meta.dir;
+const BUILD_DIR = path.join(ROOT_DIR, "dist");
+
+const COMPONENTS_SOURCE = path.join(ROOT_DIR, "src", "components");
+const COMPONENTS_OUT = path.join(BUILD_DIR, "components");
 
 async function cleanUp() {
   await rm(BUILD_DIR, { recursive: true, force: true });
@@ -10,11 +14,8 @@ async function cleanUp() {
 
 async function build() {
   await cleanUp();
-
   await $`tsc`;
-
-  const componentsOutDir = path.join(BUILD_DIR, "components");
-  await cp("./src/components", componentsOutDir, { recursive: true });
+  await cp(COMPONENTS_SOURCE, COMPONENTS_OUT, { recursive: true });
 }
 
 try {

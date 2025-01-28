@@ -1,5 +1,5 @@
 import { it, describe, expect } from "bun:test";
-import { $path } from "../../src";
+import { $path } from "../../src/path";
 
 describe("$path", () => {
   it("returns pathname", () => {
@@ -8,19 +8,19 @@ describe("$path", () => {
 
   it("replaces dynamic paths with params", () => {
     expect($path({ to: "/test/[id]", params: { id: "123" } })).toBe(
-      "/test/123",
+      "/test/123"
     );
   });
 
   it("replaces multiple dynamic paths with params", () => {
     expect(
-      $path({ to: "/test/[lang]/[id]", params: { id: "123", lang: "sv" } }),
+      $path({ to: "/test/[lang]/[id]", params: { id: "123", lang: "sv" } })
     ).toBe("/test/sv/123");
   });
 
   it("adds search params", () => {
     expect($path({ to: "/test", search: { key: "value" } })).toBe(
-      "/test?key=value",
+      "/test?key=value"
     );
   });
 
@@ -34,7 +34,7 @@ describe("$path", () => {
 
   it("adds hash and search param in correct order", () => {
     expect($path({ to: "/test", hash: "hash", search: { key: "value" } })).toBe(
-      "/test?key=value#hash",
+      "/test?key=value#hash"
     );
   });
 
@@ -49,7 +49,7 @@ describe("$path", () => {
         trailingSlash: true,
         search: { key: "value" },
         hash: "hash",
-      }),
+      })
     ).toBe("/test/?key=value#hash");
   });
 });

@@ -8,9 +8,6 @@
     "dist"
   ],
   "compilerOptions": {
-    "strictNullChecks": true,
-    "types": [
-      "./node_modules/astro-typesafe-routes.d.ts"
-    ]
+    "strictNullChecks": true
   },
 }
