@@ -1,5 +1,5 @@
 import { AstroIntegration, IntegrationResolvedRoute } from "astro";
-import { DynamicRoute } from "../common/types.js";
+import { ResolvedRoute } from "../common/types.js";
 import {
   getDeclarationContent,
   logSuccess,
@@ -16,18 +16,18 @@ export type GetRoutesParams = {
 
 export async function getRoutes(
   args: GetRoutesParams
-): Promise<DynamicRoute[]> {
+): Promise<ResolvedRoute[]> {
   const withoutInternal = args.routes.filter(
     (route) => route.origin !== "internal"
   );
   const promises = withoutInternal.map(async (route) => {
-    const routeFilePath = path.join(args.rootDir, route.entrypoint);
-    const hasSearchSchema = await doesRouteHaveSearchSchema(routeFilePath);
+    const absolutePath = path.join(args.rootDir, route.entrypoint);
+    const hasSearchSchema = await doesRouteHaveSearchSchema(absolutePath);
 
     return {
       path: route.pattern ?? "",
       params: route.params.length > 0 ? route.params : null,
-      filePath: routeFilePath,
+      absolutePath,
       hasSearchSchema,
     };
   });
@@ -59,7 +59,7 @@ export function astroTypesafeRoutesAstroV5(): AstroIntegration {
         });
 
         await writeDeclarationFile({
-          path: declarationPath,
+          outPath: declarationPath,
           content: await getDeclarationContent({
             routes: resolvedRoutes,
             outPath: declarationPath,

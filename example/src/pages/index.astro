@@ -1,12 +1,13 @@
 ---
 import { z } from "zod";
-import Link from "astro-typesafe-routes/link";
 
 export const searchSchema = z.object({
   filter: z.string(),
   isActive: z.boolean(),
+  filler: z.object({
+    pellet: z.string(),
+  }),
 });
 ---
 
-<Link to="/" search={{ filter: "hej", isActive: true }} />
 <div>hej!</div>

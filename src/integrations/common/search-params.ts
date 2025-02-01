@@ -8,8 +8,8 @@ function isNodeExported(node: ts.VariableStatement) {
   );
 }
 
-export async function doesRouteHaveSearchSchema(routeFilePath: string) {
-  const astroFile = await fs.readFile(routeFilePath, "utf-8");
+export async function doesRouteHaveSearchSchema(absoluteRoutePath: string) {
+  const astroFile = await fs.readFile(absoluteRoutePath, "utf-8");
 
   const tsFile = await astroCompiler.transform(astroFile, {
     filename: "index.astro",

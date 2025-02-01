@@ -6,7 +6,7 @@ import astroTypesafeRoutes from "astro-typesafe-routes";
 export default defineConfig({
   integrations: [
     astroTypesafeRoutes({
-      astroVersion: 5,
+      astroVersion: 4,
     }),
   ],
 });

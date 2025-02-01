@@ -1,15 +1,25 @@
 import { AstroIntegrationLogger } from "astro";
-import { DynamicRoute } from "./types.js";
+import { ResolvedRoute } from "./types.js";
 import * as fs from "node:fs/promises";
 import * as path from "node:path";
 
 type WriteDeclarationFileParams = {
-  path: string;
+  outPath: string;
   content: string;
 };
 
 export async function writeDeclarationFile(args: WriteDeclarationFileParams) {
-  return await fs.writeFile(args.path, args.content, { encoding: "utf-8" });
+  let content = args.content;
+
+  try {
+    // @ts-ignore optional prettier formatting
+    const prettier = await import("prettier");
+    content = await prettier.format(content, {
+      parser: "typescript",
+      plugins: [],
+    });
+  } catch {}
+  return await fs.writeFile(args.outPath, content, { encoding: "utf-8" });
 }
 
 export function logSuccess(logger: AstroIntegrationLogger) {
@@ -17,26 +27,23 @@ export function logSuccess(logger: AstroIntegrationLogger) {
 }
 
 export type GetDeclarationContentParams = {
-  routes: DynamicRoute[];
+  routes: ResolvedRoute[];
   outPath: string;
 };
 
 export async function getDeclarationContent(args: GetDeclarationContentParams) {
-  const routeEntries = args.routes.map((route) => [
-    route.path,
-    { params: route.params },
-  ]);
-  const routesObject = Object.fromEntries(routeEntries);
-
   const rows = args.routes.map((route) => {
     let search = "null";
     if (route.hasSearchSchema) {
       const declarationDir = path.dirname(args.outPath);
-      const relativeRoutePath = path.relative(declarationDir, route.filePath);
+      const relativeRoutePath = path.relative(
+        declarationDir,
+        route.absolutePath,
+      );
       search = `typeof import("${relativeRoutePath}").searchSchema`;
     }
     return `"${route.path}": { params: ${JSON.stringify(
-      route.params
+      route.params,
     )}; search: ${search} }`;
   });
 
@@ -70,14 +77,10 @@ declare module "astro-typesafe-routes/path" {
     to: T;
     hash?: string;
     trailingSlash?: boolean;
-  } & (Routes[T]["search"] extends null
-    ? {
-        search?: ConstructorParameters<typeof URLSearchParams>[0];
-      }
-    : {
-        search: z.input<Routes[T]["search"]>;
-      }) &
-    (Routes[T]["params"] extends null ? {} : { params: ParamsRecord<T> });
+    search: Routes[T]["search"] extends null
+      ? ConstructorParameters<typeof URLSearchParams>[0]
+      : z.input<Routes[T]["search"]>;
+  } & (Routes[T]["params"] extends null ? {} : { params: ParamsRecord<T> });
 
   export function $path<T extends Route>(args: RouteOptions<T>): string;
 }`;
