@@ -1,4 +1,12 @@
-import { describe, it, expect, beforeEach, afterEach } from "bun:test";
+import {
+  describe,
+  it,
+  expect,
+  beforeEach,
+  afterEach,
+  beforeAll,
+  afterAll,
+} from "bun:test";
 import { $ } from "bun";
 import { rm } from "node:fs/promises";
 import path from "node:path";
@@ -8,46 +16,120 @@ const rootDir = import.meta.dir;
 const packageDir = path.join(rootDir, "../../");
 
 const setups = [
+  // {
+  //   name: "Astro v4 - valid path",
+  //   templateDir: path.join(rootDir, "./project-templates/v4/valid-path"),
+  //   outDir: path.join(rootDir, "./projects/v4-valid-path"),
+  // },
   {
-    name: "Astro v4",
-    templateDir: path.join(rootDir, "./project-templates/astro-v4"),
-    outDir: path.join(rootDir, "./projects/project-astro-v4"),
+    name: "Astro v4 - invalid path",
+    templateDir: path.join(rootDir, "./project-templates/v4/invalid-path"),
+    outDir: path.join(rootDir, "./projects/v4-invalid-path"),
   },
   {
-    name: "Astro v5",
-    templateDir: path.join(rootDir, "./project-templates/astro-v5"),
-    outDir: path.join(rootDir, "./projects/project-astro-v5"),
+    name: "Astro v5 - valid path",
+    templateDir: path.join(rootDir, "./project-templates/v5/valid-path"),
+    outDir: path.join(rootDir, "./projects/v5-valid-path"),
+  },
+  {
+    name: "Astro v5 - invalid path",
+    templateDir: path.join(rootDir, "./project-templates/v5/invalid-path"),
+    outDir: path.join(rootDir, "./projects/v5-invalid-path"),
   },
 ];
 
-describe.each(setups)("$name", (args) => {
-  beforeEach(async () => {
+describe("Astro v4 - invalid path", () => {
+  const outDir = path.join(rootDir, "./projects/v4-invalid-path");
+  const templateDir = path.join(rootDir, "./project-templates/v4/invalid-path");
+
+  beforeAll(async () => {
     await setupTestProject({
-      outDir: args.outDir,
-      templateDir: args.templateDir,
+      outDir,
+      templateDir,
       packageDir,
     });
   });
 
-  afterEach(async () => {
+  afterAll(async () => {
     await cleanUpTestProject({
-      dir: args.outDir,
+      dir: outDir,
     });
   });
 
   it("build fails when project contains an invalid link", async () => {
     await expect(async () => {
-      await $`bun run build`.cwd(args.outDir);
+      await $`bun run build`.cwd(outDir);
     }).toThrow();
   }, 20_000);
+});
 
-  it("build succeeds when project contains only valid links", async () => {
-    const invalidPage = path.join(
-      args.outDir,
-      "./src/pages/page-with-invalid-link.astro",
-    );
-    await rm(invalidPage);
+describe("Astro v4 - valid path", () => {
+  const outDir = path.join(rootDir, "./projects/v4-valid-path");
+  const templateDir = path.join(rootDir, "./project-templates/v4/valid-path");
 
-    await $`bun run build`.cwd(args.outDir);
+  beforeAll(async () => {
+    await setupTestProject({
+      outDir,
+      templateDir,
+      packageDir,
+    });
+  });
+
+  afterAll(async () => {
+    await cleanUpTestProject({
+      dir: outDir,
+    });
+  });
+
+  it("build without errors when project contains only valid links", async () => {
+    await $`bun run build`.cwd(outDir);
+  }, 20_000);
+});
+
+describe("Astro v5 - invalid path", () => {
+  const outDir = path.join(rootDir, "./projects/v5-invalid-path");
+  const templateDir = path.join(rootDir, "./project-templates/v5/invalid-path");
+
+  beforeAll(async () => {
+    await setupTestProject({
+      outDir,
+      templateDir,
+      packageDir,
+    });
+  });
+
+  afterAll(async () => {
+    await cleanUpTestProject({
+      dir: outDir,
+    });
+  });
+
+  it("build fails when project contains an invalid link", async () => {
+    await expect(async () => {
+      await $`bun run build`.cwd(outDir);
+    }).toThrow();
+  }, 20_000);
+});
+
+describe("Astro v5 - valid path", () => {
+  const outDir = path.join(rootDir, "./projects/v5-valid-path");
+  const templateDir = path.join(rootDir, "./project-templates/v5/valid-path");
+
+  beforeAll(async () => {
+    await setupTestProject({
+      outDir,
+      templateDir,
+      packageDir,
+    });
+  });
+
+  afterAll(async () => {
+    await cleanUpTestProject({
+      dir: outDir,
+    });
+  });
+
+  it("build without errors when project contains only valid links", async () => {
+    await $`bun run build`.cwd(outDir);
   }, 20_000);
 });
