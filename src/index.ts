@@ -5,7 +5,7 @@ import {
 } from "./astro-version.js";
 import { astroTypesafeRoutesAstroV5 } from "./integrations/astro-v5/index.js";
 import astroTypesafeRoutesAstroV4 from "./integrations/astro-v4/index.js";
-import { AstroTypesafeRoutesBaseParams } from "integrations/common/types";
+import { AstroTypesafeRoutesBaseParams } from "./integrations/common/types.js";
 
 export type AstroTypesafeRoutesParams = AstroTypesafeRoutesBaseParams & {
   astroVersion?: 4 | 5;
