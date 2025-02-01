@@ -24,7 +24,7 @@ export async function getDeclarationContent(routes: DynamicRoute[]) {
 
   return `
 declare module "astro-typesafe-routes/link" {
-  import { HTMLAttributes } from "astro/types/path";
+  import { HTMLAttributes } from "astro/types";
   import { RouteOptions, Route } from "astro-typesafe-routes/path";
 
   type LinkBaseProps = Omit<HTMLAttributes<"a">, "href">;

@@ -1,5 +1,10 @@
 ---
-import Link from "astro-typesafe-routes/link";
+import { z } from "zod";
+
+export const searchSchema = z.object({
+  filter: z.string(),
+  isActive: z.boolean(),
+});
 ---
 
-<Link to="/blog/[id]" params={{ id: 1 }}>Blog post</Link>
+<div>hej!</div>
