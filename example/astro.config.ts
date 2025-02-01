@@ -4,5 +4,9 @@ import astroTypesafeRoutes from "astro-typesafe-routes";
 
 // https://astro.build/config
 export default defineConfig({
-  integrations: [astroTypesafeRoutes()],
+  integrations: [
+    astroTypesafeRoutes({
+      astroVersion: 5,
+    }),
+  ],
 });
