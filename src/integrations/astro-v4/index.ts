@@ -1,4 +1,4 @@
-import { AstroIntegration, AstroIntegrationLogger } from "astro";
+import { AstroIntegration, AstroIntegrationLogger, InjectedType } from "astro";
 import {
   getDeclarationContent,
   logSuccess,
@@ -6,15 +6,25 @@ import {
 } from "../common/index.js";
 import { resolveRoutesAstroV4 } from "./resolve-routes.js";
 import { fileURLToPath } from "url";
+import { AstroTypesafeRoutesBaseParams } from "../common/types.js";
+import { AstroRootDirDidNotResolveError } from "../common/errors.js";
+import { DECLARATION_FILENAME } from "../common/constants.js";
 
-export default function astroTypesafeRoutesAstroV4(): AstroIntegration {
+export default function astroTypesafeRoutesAstroV4(
+  args?: AstroTypesafeRoutesBaseParams,
+): AstroIntegration {
+  const typedSearchParams = args?.typedSearchParams ?? false;
   let declarationPath: string | undefined;
   let rootDir: string | undefined;
 
-  async function generate(logger: AstroIntegrationLogger) {
+  async function generate(
+    logger: AstroIntegrationLogger,
+    injectFn?: (injectedType: InjectedType) => unknown,
+  ) {
+    if (!rootDir) throw new AstroRootDirDidNotResolveError();
     if (!rootDir || !declarationPath) {
       throw new Error(
-        "Unexpected error: rootDir or declarationPath was undefined"
+        "Unexpected error: rootDir or declarationPath was undefined",
       );
     }
     const routes = await resolveRoutesAstroV4(rootDir);
@@ -22,11 +32,21 @@ export default function astroTypesafeRoutesAstroV4(): AstroIntegration {
     const declarationContent = await getDeclarationContent({
       outPath: declarationPath,
       routes,
+      typedSearchParams,
     });
-    await writeDeclarationFile({
-      outPath: declarationPath,
-      content: declarationContent,
-    });
+
+    if (!injectFn) {
+      await writeDeclarationFile({
+        filename: declarationPath,
+        content: declarationContent,
+      });
+    } else {
+      await injectFn({
+        content: declarationContent,
+        filename: DECLARATION_FILENAME,
+      });
+    }
+
     logSuccess(logger);
   }
 
@@ -59,9 +79,9 @@ export default function astroTypesafeRoutesAstroV4(): AstroIntegration {
           filename: "astro-typesafe-routes.d.ts",
           content: "",
         });
-        declarationPath = fileURLToPath(declarationUrl);
 
-        await generate(args.logger);
+        declarationPath = fileURLToPath(declarationUrl);
+        await generate(args.logger, args.injectTypes);
       },
     },
   };

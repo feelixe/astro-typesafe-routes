@@ -8,3 +8,7 @@ export type ResolvedRoute = RouteFileWithSearch & {
   path: string;
   params: string[] | null;
 };
+
+export type AstroTypesafeRoutesBaseParams = {
+  typedSearchParams?: boolean;
+};

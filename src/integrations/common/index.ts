@@ -2,24 +2,16 @@ import { AstroIntegrationLogger } from "astro";
 import { ResolvedRoute } from "./types.js";
 import * as fs from "node:fs/promises";
 import * as path from "node:path";
+import { tryFormatPrettier } from "./format.js";
 
 type WriteDeclarationFileParams = {
-  outPath: string;
+  filename: string;
   content: string;
 };
 
 export async function writeDeclarationFile(args: WriteDeclarationFileParams) {
-  let content = args.content;
-
-  try {
-    // @ts-ignore optional prettier formatting
-    const prettier = await import("prettier");
-    content = await prettier.format(content, {
-      parser: "typescript",
-      plugins: [],
-    });
-  } catch {}
-  return await fs.writeFile(args.outPath, content, { encoding: "utf-8" });
+  const content = await tryFormatPrettier(args.content);
+  return await fs.writeFile(args.filename, content, { encoding: "utf-8" });
 }
 
 export function logSuccess(logger: AstroIntegrationLogger) {
@@ -29,12 +21,13 @@ export function logSuccess(logger: AstroIntegrationLogger) {
 export type GetDeclarationContentParams = {
   routes: ResolvedRoute[];
   outPath: string;
+  typedSearchParams: boolean;
 };
 
 export async function getDeclarationContent(args: GetDeclarationContentParams) {
   const rows = args.routes.map((route) => {
     let search = "null";
-    if (route.hasSearchSchema) {
+    if (route.hasSearchSchema && args.typedSearchParams) {
       const declarationDir = path.dirname(args.outPath);
       const relativeRoutePath = path.relative(
         declarationDir,
@@ -77,10 +70,10 @@ declare module "astro-typesafe-routes/path" {
     to: T;
     hash?: string;
     trailingSlash?: boolean;
-    search: Routes[T]["search"] extends null
-      ? ConstructorParameters<typeof URLSearchParams>[0]
-      : z.input<Routes[T]["search"]>;
-  } & (Routes[T]["params"] extends null ? {} : { params: ParamsRecord<T> });
+  } & (Routes[T]["search"] extends null
+    ? { search?: ConstructorParameters<typeof URLSearchParams>[0] }
+    : { search: z.input<Routes[T]["search"]> }) &
+    (Routes[T]["params"] extends null ? {} : { params: ParamsRecord<T> });
 
   export function $path<T extends Route>(args: RouteOptions<T>): string;
 }`;
