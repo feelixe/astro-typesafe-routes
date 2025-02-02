@@ -25,6 +25,10 @@
     "./path": {
       "import": "./dist/path.js",
       "types": "./dist/path.d.ts"
+    },
+    "./search": {
+      "import": "./dist/search.js",
+      "types": "./dist/search.d.ts"
     }
   },
   "scripts": {

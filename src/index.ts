@@ -5,9 +5,8 @@ import {
 } from "./astro-version.js";
 import { astroTypesafeRoutesAstroV5 } from "./integrations/astro-v5/index.js";
 import astroTypesafeRoutesAstroV4 from "./integrations/astro-v4/index.js";
-import { AstroTypesafeRoutesBaseParams } from "./integrations/common/types.js";
 
-export type AstroTypesafeRoutesParams = AstroTypesafeRoutesBaseParams & {
+export type AstroTypesafeRoutesParams = {
   astroVersion?: 4 | 5;
 };
 
@@ -21,10 +20,10 @@ export default function astroTypesafeRoutes(
   const astroMajorVersion = args?.astroVersion ?? getAstroMajorVersion();
 
   if (astroMajorVersion === 5) {
-    return astroTypesafeRoutesAstroV5(args);
+    return astroTypesafeRoutesAstroV5();
   }
   if (astroMajorVersion === 4) {
-    return astroTypesafeRoutesAstroV4(args);
+    return astroTypesafeRoutesAstroV4();
   }
 
   throw new Error(

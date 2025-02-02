@@ -10,8 +10,7 @@ type WriteDeclarationFileParams = {
 };
 
 export async function writeDeclarationFile(args: WriteDeclarationFileParams) {
-  const content = await tryFormatPrettier(args.content);
-  return await fs.writeFile(args.filename, content, { encoding: "utf-8" });
+  return await fs.writeFile(args.filename, args.content, { encoding: "utf-8" });
 }
 
 export function logSuccess(logger: AstroIntegrationLogger) {
@@ -21,13 +20,12 @@ export function logSuccess(logger: AstroIntegrationLogger) {
 export type GetDeclarationContentParams = {
   routes: ResolvedRoute[];
   outPath: string;
-  typedSearchParams: boolean;
 };
 
 export async function getDeclarationContent(args: GetDeclarationContentParams) {
   const rows = args.routes.map((route) => {
     let search = "null";
-    if (route.hasSearchSchema && args.typedSearchParams) {
+    if (route.hasSearchSchema) {
       const declarationDir = path.dirname(args.outPath);
       const relativeRoutePath = path.relative(
         declarationDir,
@@ -42,7 +40,7 @@ export async function getDeclarationContent(args: GetDeclarationContentParams) {
 
   const routesType = `{${rows.join(",\n")}}`;
 
-  return `
+  const content = `
 declare module "astro-typesafe-routes/link" {
   import { HTMLAttributes } from "astro/types";
   import { RouteOptions, Route } from "astro-typesafe-routes/path";
@@ -70,11 +68,14 @@ declare module "astro-typesafe-routes/path" {
     to: T;
     hash?: string;
     trailingSlash?: boolean;
+    searchParams?: ConstructorParameters<typeof URLSearchParams>[0];
   } & (Routes[T]["search"] extends null
-    ? { search?: ConstructorParameters<typeof URLSearchParams>[0] }
+    ? {}
     : { search: z.input<Routes[T]["search"]> }) &
     (Routes[T]["params"] extends null ? {} : { params: ParamsRecord<T> });
 
   export function $path<T extends Route>(args: RouteOptions<T>): string;
 }`;
+
+  return await tryFormatPrettier(content);
 }

@@ -7,6 +7,8 @@ export async function tryFormatPrettier(content: string) {
       plugins: [],
     });
     return content;
-  } catch {}
+  } catch {
+    console.log("failed to format with prettier");
+  }
   return content;
 }

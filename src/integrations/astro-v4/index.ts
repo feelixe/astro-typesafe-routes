@@ -6,14 +6,10 @@ import {
 } from "../common/index.js";
 import { resolveRoutesAstroV4 } from "./resolve-routes.js";
 import { fileURLToPath } from "url";
-import { AstroTypesafeRoutesBaseParams } from "../common/types.js";
 import { AstroRootDirDidNotResolveError } from "../common/errors.js";
 import { DECLARATION_FILENAME } from "../common/constants.js";
 
-export default function astroTypesafeRoutesAstroV4(
-  args?: AstroTypesafeRoutesBaseParams,
-): AstroIntegration {
-  const typedSearchParams = args?.typedSearchParams ?? false;
+export default function astroTypesafeRoutesAstroV4(): AstroIntegration {
   let declarationPath: string | undefined;
   let rootDir: string | undefined;
 
@@ -32,7 +28,6 @@ export default function astroTypesafeRoutesAstroV4(
     const declarationContent = await getDeclarationContent({
       outPath: declarationPath,
       routes,
-      typedSearchParams,
     });
 
     if (!injectFn) {

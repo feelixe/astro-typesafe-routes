@@ -4,10 +4,7 @@ import {
   InjectedType,
   IntegrationResolvedRoute,
 } from "astro";
-import {
-  AstroTypesafeRoutesBaseParams,
-  ResolvedRoute,
-} from "../common/types.js";
+import { ResolvedRoute } from "../common/types.js";
 import {
   getDeclarationContent,
   logSuccess,
@@ -48,10 +45,7 @@ export async function getRoutes(
   return await Promise.all(promises);
 }
 
-export function astroTypesafeRoutesAstroV5(
-  args?: AstroTypesafeRoutesBaseParams,
-): AstroIntegration {
-  const typedSearchParams = args?.typedSearchParams ?? false;
+export function astroTypesafeRoutesAstroV5(): AstroIntegration {
   let astroRoutes: IntegrationResolvedRoute[] | undefined;
   let declarationPath: string | undefined;
   let rootDir: string | undefined;
@@ -72,7 +66,6 @@ export function astroTypesafeRoutesAstroV5(
     const declarationContent = await getDeclarationContent({
       routes: resolvedRoutes,
       outPath: declarationPath,
-      typedSearchParams,
     });
 
     if (!injectFn) {

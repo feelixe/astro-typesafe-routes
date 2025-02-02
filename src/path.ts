@@ -1,6 +1,9 @@
+import { serialize } from "./search-serializer.js";
+
 export type RouteOptions = {
   to: string;
-  search?: ConstructorParameters<typeof URLSearchParams>[0];
+  searchParams?: ConstructorParameters<typeof URLSearchParams>[0];
+  search?: Record<string, unknown>;
   hash?: string;
   trailingSlash?: boolean;
   params?: Record<string, string | number>;
@@ -15,18 +18,23 @@ export function $path(args: RouteOptions) {
     url += "/";
   }
 
-  if (args?.params !== undefined) {
+  if (args.params !== undefined) {
     for (const [paramKey, paramValue] of Object.entries(args.params)) {
       url = url.replace(`[${paramKey}]`, paramValue.toString());
     }
   }
 
-  const search = new URLSearchParams(args?.search);
-  if (search.size > 0) {
+  if (args.search) {
+    const search = serialize(args.search);
     url += `?${search.toString()}`;
   }
 
-  if (args?.hash !== undefined) {
+  const searchParams = new URLSearchParams(args?.searchParams);
+  if (searchParams.size > 0 && !args.search) {
+    url += `?${searchParams.toString()}`;
+  }
+
+  if (args.hash !== undefined) {
     const hash = args.hash.startsWith("#") ? args.hash.slice(1) : args.hash;
     url += `#${hash}`;
   }
