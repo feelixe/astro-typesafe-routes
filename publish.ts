@@ -64,8 +64,8 @@ if (!userConfirmed) {
 
 const isPreRelease = tag !== DEFAULT_TAG;
 
-// await runTests();
-// await build();
-// await tagAndPush(version);
-// await publishToNpm(tag);
+await runTests();
+await build();
+await tagAndPush(version);
+await publishToNpm(tag);
 await createRelease(version, isPreRelease);
