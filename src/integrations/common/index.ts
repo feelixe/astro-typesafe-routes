@@ -1,28 +1,46 @@
 import { AstroIntegrationLogger } from "astro";
-import { DynamicRoute } from "./types.js";
+import { ResolvedRoute } from "./types.js";
 import * as fs from "node:fs/promises";
+import * as path from "node:path";
+import { tryFormatPrettier } from "./format.js";
 
 type WriteDeclarationFileParams = {
-  path: string;
+  filename: string;
   content: string;
 };
 
 export async function writeDeclarationFile(args: WriteDeclarationFileParams) {
-  return await fs.writeFile(args.path, args.content, { encoding: "utf-8" });
+  return await fs.writeFile(args.filename, args.content, { encoding: "utf-8" });
 }
 
 export function logSuccess(logger: AstroIntegrationLogger) {
   logger.info(`Generated route type`);
 }
 
-export async function getDeclarationContent(routes: DynamicRoute[]) {
-  const routeEntries = routes.map((route) => [
-    route.path,
-    { params: route.params },
-  ]);
-  const routesObject = Object.fromEntries(routeEntries);
+export type GetDeclarationContentParams = {
+  routes: ResolvedRoute[];
+  outPath: string;
+};
 
-  return `
+export async function getDeclarationContent(args: GetDeclarationContentParams) {
+  const rows = args.routes.map((route) => {
+    let search = "null";
+    if (route.hasSearchSchema) {
+      const declarationDir = path.dirname(args.outPath);
+      const relativeRoutePath = path.relative(
+        declarationDir,
+        route.absolutePath,
+      );
+      search = `typeof import("${relativeRoutePath}").searchSchema`;
+    }
+    return `"${route.path}": { params: ${JSON.stringify(
+      route.params,
+    )}; search: ${search} }`;
+  });
+
+  const routesType = `{${rows.join(",\n")}}`;
+
+  const content = `
 declare module "astro-typesafe-routes/link" {
   import { HTMLAttributes } from "astro/types";
   import { RouteOptions, Route } from "astro-typesafe-routes/path";
@@ -35,7 +53,9 @@ declare module "astro-typesafe-routes/link" {
 }
 
 declare module "astro-typesafe-routes/path" {
-  export type Routes = ${JSON.stringify(routesObject, null, 2)};
+  import type { z } from "zod";
+
+  export type Routes = ${routesType};
 
   export type Route = keyof Routes;
 
@@ -46,13 +66,16 @@ declare module "astro-typesafe-routes/path" {
 
   export type RouteOptions<T extends Route> = {
     to: T;
-    search?: ConstructorParameters<typeof URLSearchParams>[0];
     hash?: string;
     trailingSlash?: boolean;
-  } & (
-    Routes[T]["params"] extends null ? {} : { params: ParamsRecord<T> }
-  )
+    searchParams?: ConstructorParameters<typeof URLSearchParams>[0];
+  } & (Routes[T]["search"] extends null
+    ? {}
+    : { search: z.input<Routes[T]["search"]> }) &
+    (Routes[T]["params"] extends null ? {} : { params: ParamsRecord<T> });
 
   export function $path<T extends Route>(args: RouteOptions<T>): string;
 }`;
+
+  return await tryFormatPrettier(content);
 }

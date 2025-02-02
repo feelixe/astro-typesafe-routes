@@ -1,16 +1,13 @@
 // @ts-check
 import { defineConfig } from "astro/config";
 import astroTypesafeRoutes from "astro-typesafe-routes";
-import node from "@astrojs/node";
 
 export default defineConfig({
+  site: "https://example.com",
   integrations: [
     astroTypesafeRoutes({
-      astroVersion: 4,
+      astroVersion: 5,
+      typedSearchParams: true,
     }),
   ],
-  output: "server",
-  adapter: node({
-    mode: "standalone",
-  }),
 });

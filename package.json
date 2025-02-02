@@ -25,6 +25,10 @@
     "./path": {
       "import": "./dist/path.js",
       "types": "./dist/path.d.ts"
+    },
+    "./search": {
+      "import": "./dist/search.js",
+      "types": "./dist/search.d.ts"
     }
   },
   "scripts": {
@@ -41,12 +45,13 @@
     "astro": ">=4.14.0 <6.0.0"
   },
   "devDependencies": {
-    "@types/semver": "^7.5.8",
-    "@types/bun": "latest",
     "@eslint/js": "^9.7.0",
+    "@types/bun": "latest",
+    "@types/semver": "^7.5.8",
     "astro": "^5.0.0",
     "eslint": "9.x",
     "globals": "^15.8.0",
+    "prettier": "^3.4.2",
     "typescript": "^5.5.4",
     "typescript-eslint": "rc-v8"
   },

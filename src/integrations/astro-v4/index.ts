@@ -1,26 +1,48 @@
-import { AstroIntegration } from "astro";
+import { AstroIntegration, AstroIntegrationLogger, InjectedType } from "astro";
 import {
   getDeclarationContent,
   logSuccess,
   writeDeclarationFile,
 } from "../common/index.js";
-import { resolveRoutes } from "./resolve-routes.js";
+import { resolveRoutesAstroV4 } from "./resolve-routes.js";
 import { fileURLToPath } from "url";
+import { AstroRootDirDidNotResolveError } from "../common/errors.js";
+import { DECLARATION_FILENAME } from "../common/constants.js";
 
 export default function astroTypesafeRoutesAstroV4(): AstroIntegration {
-  let declarationUrl: URL | undefined;
+  let declarationPath: string | undefined;
   let rootDir: string | undefined;
 
-  async function generate() {
-    if (!rootDir || !declarationUrl) {
-      throw new Error("Unexpected error: rootDir or declaration was undefined");
+  async function generate(
+    logger: AstroIntegrationLogger,
+    injectFn?: (injectedType: InjectedType) => unknown,
+  ) {
+    if (!rootDir) throw new AstroRootDirDidNotResolveError();
+    if (!rootDir || !declarationPath) {
+      throw new Error(
+        "Unexpected error: rootDir or declarationPath was undefined",
+      );
     }
-    const routes = await resolveRoutes(rootDir);
+    const routes = await resolveRoutesAstroV4(rootDir);
 
-    await writeDeclarationFile({
-      path: declarationUrl.pathname,
-      content: await getDeclarationContent(routes),
+    const declarationContent = await getDeclarationContent({
+      outPath: declarationPath,
+      routes,
     });
+
+    if (!injectFn) {
+      await writeDeclarationFile({
+        filename: declarationPath,
+        content: declarationContent,
+      });
+    } else {
+      await injectFn({
+        content: declarationContent,
+        filename: DECLARATION_FILENAME,
+      });
+    }
+
+    logSuccess(logger);
   }
 
   return {
@@ -34,12 +56,10 @@ export default function astroTypesafeRoutesAstroV4(): AstroIntegration {
                 name: "astro-typesafe-routes",
                 configureServer: (server) => {
                   server.watcher.on("add", async () => {
-                    await generate();
-                    logSuccess(args.logger);
+                    await generate(args.logger);
                   });
                   server.watcher.on("unlink", async () => {
-                    await generate();
-                    logSuccess(args.logger);
+                    await generate(args.logger);
                   });
                 },
               },
@@ -49,14 +69,14 @@ export default function astroTypesafeRoutesAstroV4(): AstroIntegration {
       },
       "astro:config:done": async (args) => {
         rootDir = fileURLToPath(args.config.root);
-        const routes = await resolveRoutes(rootDir);
 
-        declarationUrl = args.injectTypes({
+        const declarationUrl = args.injectTypes({
           filename: "astro-typesafe-routes.d.ts",
-          content: await getDeclarationContent(routes),
+          content: "",
         });
 
-        logSuccess(args.logger);
+        declarationPath = fileURLToPath(declarationUrl);
+        await generate(args.logger, args.injectTypes);
       },
     },
   };
