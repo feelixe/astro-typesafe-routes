@@ -21,6 +21,7 @@
       },
       "peerDependencies": {
         "astro": ">=4.14.0 <6.0.0",
+        "typescript": "^5.0.0",
       },
     },
   },

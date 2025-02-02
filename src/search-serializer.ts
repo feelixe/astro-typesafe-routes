@@ -1,3 +1,11 @@
+function parseOrUndefined(value: string) {
+  try {
+    return JSON.parse(value);
+  } catch {
+    return undefined;
+  }
+}
+
 export function serialize(search: Record<string, unknown>) {
   const searchParams = new URLSearchParams();
   for (const [key, value] of Object.entries(search)) {
@@ -11,7 +19,11 @@ export function deserialize(search: string | URLSearchParams) {
 
   const result: Record<string, unknown> = {};
   for (const [key, value] of params) {
-    result[key] = JSON.parse(value);
+    const parsedValue = parseOrUndefined(value);
+    if (parsedValue === undefined) {
+      continue;
+    }
+    result[key] = parsedValue;
   }
   return result;
 }
