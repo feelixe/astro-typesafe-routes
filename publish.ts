@@ -26,8 +26,8 @@ async function tagAndPush(version: string) {
 }
 
 async function createRelease(version: string, isPreRelease: boolean) {
-  await $`gh release create v${version} --generate-notes${
-    isPreRelease ? " --prerelease" : ""
+  await $`gh release create v${version} --generate-notes ${
+    isPreRelease ? "--prerelease" : ""
   }`;
 }
 
@@ -64,8 +64,8 @@ if (!userConfirmed) {
 
 const isPreRelease = tag !== DEFAULT_TAG;
 
-await runTests();
-await build();
-await tagAndPush(version);
-await publishToNpm(tag);
+// await runTests();
+// await build();
+// await tagAndPush(version);
+// await publishToNpm(tag);
 await createRelease(version, isPreRelease);
