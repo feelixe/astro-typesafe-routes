@@ -25,10 +25,6 @@
     "./path": {
       "import": "./dist/path.js",
       "types": "./dist/path.d.ts"
-    },
-    "./search": {
-      "import": "./dist/search.js",
-      "types": "./dist/search.d.ts"
     }
   },
   "scripts": {
@@ -43,7 +39,12 @@
     "package.json"
   ],
   "peerDependencies": {
-    "astro": ">=4.14.0 <6.0.0"
+    "astro": ">=4.14.0 <6.0.0",
+    "typescript": "^5.0.0"
+  },
+  "dependencies": {
+    "fast-glob": "^3.3.2",
+    "semver": "^7.6.3"
   },
   "devDependencies": {
     "@eslint/js": "^9.7.0",
@@ -56,9 +57,5 @@
     "prompts": "^2.4.2",
     "typescript": "^5.5.4",
     "typescript-eslint": "rc-v8"
-  },
-  "dependencies": {
-    "fast-glob": "^3.3.2",
-    "semver": "^7.6.3"
   }
 }

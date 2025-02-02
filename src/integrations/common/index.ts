@@ -3,6 +3,7 @@ import { ResolvedRoute } from "./types.js";
 import * as fs from "node:fs/promises";
 import * as path from "node:path";
 import { tryFormatPrettier } from "./format.js";
+import { normalizeSeparators } from "./utils.js";
 
 type WriteDeclarationFileParams = {
   filename: string;
@@ -31,7 +32,8 @@ export async function getDeclarationContent(args: GetDeclarationContentParams) {
         declarationDir,
         route.absolutePath,
       );
-      search = `typeof import("${relativeRoutePath}").searchSchema`;
+      const normalizedSearchPath = normalizeSeparators(relativeRoutePath);
+      search = `typeof import("${normalizedSearchPath}").searchSchema`;
     }
     return `"${route.path}": { params: ${JSON.stringify(
       route.params,

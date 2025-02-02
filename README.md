@@ -190,7 +190,7 @@ import Link from "astro-typesafe-routes/link";
 // src/pages/my-route.astro
 ---
 import { z } from "astro/zod";
-import { getSearch } from "astro-typesafe-routes/search";
+import { getSearch } from "astro-typesafe-routes";
 
 export const searchSchema = z.object({
   filter: z.string().catch("all"),
