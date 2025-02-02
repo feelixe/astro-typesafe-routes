@@ -2,7 +2,7 @@
   "name": "astro-typesafe-routes",
   "type": "module",
   "description": "Astro Integration for typesafe URLs",
-  "version": "4.0.0-rc1",
+  "version": "4.0.0-rc2",
   "keywords": [
     "astro-integration"
   ],
@@ -34,7 +34,7 @@
   "scripts": {
     "dev": "tsc -w",
     "build": "bun build.ts",
-    "publish": "bun publish.ts"
+    "publish-package": "bun publish.ts"
   },
   "files": [
     "dist",
