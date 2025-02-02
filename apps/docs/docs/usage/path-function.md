@@ -2,7 +2,7 @@
 sidebar_position: 2
 ---
 # Path Function
-Replace your standard links with the Link component from astro-typesafe-routes for type-safe navigation. Simply import it and use it with route parameters for a seamless experience.
+For cases like redirects or when the `Link` component isn’t suitable, use the `$path` function to get type-safe URLs.
 
 ```jsx
 ---
