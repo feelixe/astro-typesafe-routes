@@ -132,8 +132,10 @@ const href = $path({ to, params, search, searchParams, hash, trailingSlash });
 
 ### Typesafe Search Params
 > • Typed search params are optional, if you which to pass untyped search params, use field `searchParams` instead.
-> • Only supported when using [On-demand Rendering](https://docs.astro.build/en/guides/on-demand-rendering/).
-> • Added in: `astro-typesafe-routes@4.0.0`
+>
+> • Only supported when using [on-demand Rendering](https://docs.astro.build/en/guides/on-demand-rendering/).
+> 
+> • Added in: `astro-typesafe-routes@4.0.0`.
 
 1. To add typesafe search params to a route, export a zod schema called `searchSchema`. Must start with a `z.object`. The inner fields can be nested and of any type that is JSON serializable:
 ```tsx
