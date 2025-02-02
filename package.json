@@ -2,10 +2,7 @@
   "name": "astro-typesafe-routes-workspace",
   "private": true,
   "workspaces": [
-    "packages/*",
+    "packages/astro-typesafe-routes",
     "apps/*"
-  ],
-  "scripts": {
-    "build": "bun run --filter packages/astro-typesafe-routes build"
-  }
+  ]
 }

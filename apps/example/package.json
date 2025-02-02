@@ -12,7 +12,7 @@
     "@astrojs/check": "^0.9.4",
     "@astrojs/node": "^9.0.2",
     "astro": "^5.1.9",
-    "astro-typesafe-routes": "link:astro-typesafe-routes",
+    //    "astro-typesafe-routes": "link:astro-typesafe-routes",
     "typescript": "^5.7.3"
   },
   "devDependencies": {

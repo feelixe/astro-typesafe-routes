@@ -9,7 +9,7 @@ import { fileURLToPath } from "url";
 import { AstroRootDirDidNotResolveError } from "../common/errors.js";
 import { DECLARATION_FILENAME } from "../common/constants.js";
 
-export default function astroTypesafeRoutesAstroV4(): AstroIntegration {
+export function astroTypesafeRoutesAstroV4(): AstroIntegration {
   let declarationPath: string | undefined;
   let rootDir: string | undefined;
 
