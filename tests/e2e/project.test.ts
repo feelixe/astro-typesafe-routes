@@ -1,10 +1,25 @@
 import { describe, it, expect, beforeAll, afterAll } from "bun:test";
 import { $ } from "bun";
 import path from "node:path";
-import { cleanUpTestProject, setupTestProject } from "./project-utils";
+import * as fs from "node:fs/promises";
+import {
+  buildPackage,
+  cleanUpTestProject,
+  setupTestProject,
+} from "./project-utils";
 
 const rootDir = import.meta.dir;
 const packageDir = path.join(rootDir, "../../");
+const projectsDir = path.join(rootDir, "projects");
+
+beforeAll(async () => {
+  await buildPackage({ packageDir });
+  await fs.rm(projectsDir, { recursive: true, force: true });
+});
+
+afterAll(async () => {
+  await fs.rm(projectsDir, { recursive: true, force: true });
+});
 
 const setups = [
   {

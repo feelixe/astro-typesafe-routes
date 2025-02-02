@@ -32,14 +32,20 @@ export async function setupTestProject(args: SetupTestProjectArgs) {
   // Install test-project dependencies
   await $`bun install`.cwd(args.outDir);
 
+  // Install bun linked package
+  await $`bun link astro-typesafe-routes --save`.cwd(args.outDir);
+}
+
+export type BuildPackageParams = {
+  packageDir: string;
+};
+
+export async function buildPackage(args: BuildPackageParams) {
   // Build package
   await $`bun run build`.cwd(args.packageDir);
 
   // Add bun link to package
   await $`bun link`.cwd(args.packageDir);
-
-  // Install bun linked package
-  await $`bun link astro-typesafe-routes --save`.cwd(args.outDir);
 }
 
 export type CleanUpTestProjectArgs = {
