@@ -1,4 +1,1 @@
-node_modules
-**/*.env
-**/dist
 tests/e2e/projects
