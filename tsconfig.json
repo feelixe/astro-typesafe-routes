@@ -37,8 +37,8 @@
     "strictBindCallApply": true,
     "strictPropertyInitialization": true,
     "downlevelIteration": true,
-    "declarationMap": true,
-    "sourceMap": true
+    "declarationMap": false,
+    "sourceMap": false
   },
   "include": [
     "src/**/*"
