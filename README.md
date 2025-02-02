@@ -21,8 +21,8 @@
   - [Link Component](#link-component)
   - [Path Function](#path-function)
   - [Optional Fields](#optional-fields)
-- [Typed Custom Component Props](#typed-custom-component-props)
-- [Typesafe Search Params](#typesafe-search-params)
+  - [Typed Custom Component Props](#typed-custom-component-props)
+  - [Typesafe Search Params](#typesafe-search-params)
 - [Configurations](#configurations)
 
 
@@ -109,7 +109,7 @@ import Link from "astro-typesafe-routes/link";
 </Link>
 ```
 
-## Typed Custom Component Props
+### Typed Custom Component Props
 Import `Route` and `RouteOptions` types to add type safety to your custom link components:
 
 ```typescript
@@ -130,7 +130,7 @@ const href = $path({ to, params, search, searchParams, hash, trailingSlash });
 </a>
 ```
 
-## Typesafe Search Params
+### Typesafe Search Params
 > • Typed search params are optional, if you which to pass untyped search params, use field `searchParams` instead.
 > • Only supported when using [On-demand Rendering](https://docs.astro.build/en/guides/on-demand-rendering/).
 > • Added in: `astro-typesafe-routes@4.0.0`
