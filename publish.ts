@@ -6,6 +6,11 @@ import prompts from "prompts";
 const TAG_MAP = [[/^rc[0-9]+$/, "next"] as const];
 const DEFAULT_TAG = "latest";
 
+async function runTests() {
+  console.log("Running tests...");
+  await $`bun test`;
+}
+
 async function build() {
   console.log("Building...");
   await $`bun run build`;
@@ -18,6 +23,12 @@ async function publishToNpm(tag: string) {
 async function tagAndPush(version: string) {
   await $`git tag -a v${version} -m "Release version ${version}"`;
   await $`git push origin v${version}`;
+}
+
+async function createRelease(version: string, isPreRelease: boolean) {
+  await $`gh release create v${version} --generate-notes${
+    isPreRelease ? " --prerelease" : ""
+  }`;
 }
 
 async function getVersionAndTag(version: string) {
@@ -51,6 +62,10 @@ if (!userConfirmed) {
   process.exit(1);
 }
 
+const isPreRelease = tag !== DEFAULT_TAG;
+
+await runTests();
 await build();
 await tagAndPush(version);
 await publishToNpm(tag);
+await createRelease(version, isPreRelease);
