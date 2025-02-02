@@ -2,3 +2,4 @@
 **/*.env
 **/dist
 **/.DS_STORE
+apps/local-example

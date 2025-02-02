@@ -28,7 +28,7 @@
     }
   },
   "scripts": {
-    "dev": "tsc -w",
+    "dev": "tsc -w --incremental --preserveWatchOutput",
     "build": "bun build.ts",
     "publish-package": "bun publish.ts"
   },
