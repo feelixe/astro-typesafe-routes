@@ -69,4 +69,4 @@ import Link from "astro-typesafe-routes/link";
 ```
 
 ### Advanced Usage
-Read the [documentation site](https://example.com) for more detailed documentation.
+For more in-depth information and detailed usage instructions, please refer to the [documentation](http://example.com).
