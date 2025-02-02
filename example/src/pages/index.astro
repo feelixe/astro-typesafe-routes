@@ -5,11 +5,6 @@ import { getSearch } from "astro-typesafe-routes/search";
 export const searchSchema = z.object({
   filter: z.string().catch("all"),
   isActive: z.boolean().catch(false),
-  filler: z
-    .object({
-      pellet: z.string(),
-    })
-    .catch({ pellet: "1" }),
 });
 
 const search = getSearch(Astro, searchSchema);

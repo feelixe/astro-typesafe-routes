@@ -1,9 +1,5 @@
 ---
 import Link from "astro-typesafe-routes/link";
-
-export function getStaticPaths() {
-  return [{ params: { id: "1" } }, { params: { id: "2" } }];
-}
 ---
 
 <Link
@@ -11,9 +7,6 @@ export function getStaticPaths() {
   search={{
     isActive: true,
     filter: "active",
-    filler: {
-      pellet: "1",
-    },
   }}
 >
   Hit me!
