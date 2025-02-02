@@ -6,6 +6,11 @@ import prompts from "prompts";
 const TAG_MAP = [[/^rc[0-9]+$/, "next"] as const];
 const DEFAULT_TAG = "latest";
 
+async function build() {
+  console.log("Building...");
+  await $`bun run build`;
+}
+
 async function publishToNpm(tag: string) {
   await $`bun publish --tag ${tag}`;
 }
@@ -36,7 +41,7 @@ const { version, tag } = await getVersionAndTag(packageJson.version);
 const res = await prompts({
   type: "confirm",
   name: "value",
-  message: `Publish ${packageJson.name} version: ${version} under tag: ${tag}?`,
+  message: `Publish ${packageJson.name} version "${version}" under tag "${tag}"?`,
   initial: false,
 });
 
@@ -46,5 +51,6 @@ if (!userConfirmed) {
   process.exit(1);
 }
 
+await build();
 await tagAndPush(version);
 await publishToNpm(tag);
