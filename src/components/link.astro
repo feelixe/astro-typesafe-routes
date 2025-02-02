@@ -4,9 +4,17 @@ import { $path, type RouteOptions } from "../path";
 
 export type Props = Omit<HTMLAttributes<"a">, "href"> & RouteOptions;
 
-const { to, params, search, hash, trailingSlash, ...anchorProps } = Astro.props;
+const {
+  to,
+  params,
+  search,
+  searchParams,
+  hash,
+  trailingSlash,
+  ...anchorProps
+} = Astro.props;
 
-const href = $path({ to, params, search, hash, trailingSlash });
+const href = $path({ to, params, search, searchParams, hash, trailingSlash });
 ---
 
 <a href={href} {...anchorProps}>
