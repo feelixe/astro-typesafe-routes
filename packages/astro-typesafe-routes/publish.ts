@@ -6,6 +6,15 @@ import prompts from "prompts";
 const TAG_MAP = [[/^rc[0-9]+$/, "next"] as const];
 const DEFAULT_TAG = "latest";
 
+async function doesTagAlreadyExist(version: string) {
+  try {
+    await $`gh api -X GET /repos/{owner}/{repo}/git/ref/tags/v${version}`.quiet();
+    return true;
+  } catch {
+    return false;
+  }
+}
+
 async function runTests() {
   console.log("Running tests...");
   await $`bun test`;
@@ -48,6 +57,12 @@ async function getVersionAndTag(version: string) {
 }
 
 const { version, tag } = await getVersionAndTag(packageJson.version);
+
+const versionIsBusy = await doesTagAlreadyExist(version);
+if (versionIsBusy) {
+  console.error(`Version "${version}" already exists`);
+  process.exit(1);
+}
 
 const res = await prompts({
   type: "confirm",
