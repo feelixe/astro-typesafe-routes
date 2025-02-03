@@ -4,7 +4,7 @@
   <br />
   <br />
   <a href="https://www.npmjs.com/package/astro-typesafe-routes"><img src="https://badge.fury.io/js/astro-typesafe-routes.svg?icon=si%3Anpm" alt="npm version" height="18"></a>
-  <img src="https://img.shields.io/badge/License-MIT-blue" height="18" />
+  <a href="/LICENSE"><img src="https://img.shields.io/badge/License-MIT-blue" height="18" /></a>
 </p>
 
 <p align="center">
