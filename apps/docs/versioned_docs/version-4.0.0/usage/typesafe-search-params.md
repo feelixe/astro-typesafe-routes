@@ -4,7 +4,7 @@ sidebar_position: 5
 # Typesafe Search Params
 Astro Typesafe Routes supports generation types for typesafe search params.
 
-* Only supported when using [on-demand Rendering](https://docs.astro.build/en/guides/on-demand-rendering/).
+* Only supported when using [on-demand rendering](https://docs.astro.build/en/guides/on-demand-rendering/).
 * Typed search params are optional, if you want to pass untyped search params, use field `searchParams` instead.
 * Added in: `astro-typesafe-routes@4.0.0`
 
