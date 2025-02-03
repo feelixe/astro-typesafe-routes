@@ -36,6 +36,7 @@ const config: Config = {
       {
         docs: {
           sidebarPath: "./sidebars.ts",
+          onlyIncludeVersions: ["2.0.0", "3.0.0", "4.0.0"],
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
           // editUrl:
@@ -58,6 +59,12 @@ const config: Config = {
       //   src: "img/logo.svg",
       // },
       items: [
+        {
+          type: "docsVersionDropdown",
+          position: "left",
+          // Optional: Customize dropdown labels
+          // dropdownItemsAfter: [{ to: '/versions', label: 'All versions' }],
+        },
         {
           type: "docSidebar",
           sidebarId: "tutorialSidebar",
