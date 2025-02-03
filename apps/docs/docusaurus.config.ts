@@ -5,6 +5,7 @@ import type * as Preset from "@docusaurus/preset-classic";
 // This runs in Node.js - Don't use client-side code here (browser APIs, JSX...)
 
 const config: Config = {
+  plugins: [["docusaurus-plugin-simple-analytics", {}]],
   title: "Astro Typesafe Routes",
   tagline:
     "Enhance your Astro development experience with rigorous type safety for every route in your application. This integration automatically generates TypeScript definitions from your project's route structure.",

@@ -8,7 +8,7 @@
 </p>
 
 <p align="center">
-<a href="https://example.com/">Documentation</a>
+<a href="https://astro-typesafe-routes-docs.vercel.app/">Documentation</a>
 </p>
 
 <div align="center">
@@ -69,4 +69,4 @@ import Link from "astro-typesafe-routes/link";
 ```
 
 ### Advanced Usage
-For more in-depth information and detailed usage instructions, please refer to the [documentation](http://example.com).
+For more in-depth information and detailed usage instructions, please refer to the [documentation](https://astro-typesafe-routes-docs.vercel.app/).
