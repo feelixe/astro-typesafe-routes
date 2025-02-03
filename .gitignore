@@ -1,6 +1,5 @@
-node_modules
+**/node_modules
 **/*.env
 **/dist
 **/.DS_STORE
-workflow.md
-tests/e2e/projects
+apps/local-example

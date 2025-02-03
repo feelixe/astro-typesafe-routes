@@ -1,0 +1,14 @@
+---
+import Link from "astro-typesafe-routes/link";
+---
+
+<Link
+  to="/"
+  search={{
+    isActive: true,
+    filter: "active",
+  }}
+  trailingSlash
+>
+  Hit me!
+</Link>
