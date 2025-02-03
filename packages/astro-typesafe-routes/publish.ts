@@ -45,7 +45,7 @@ async function getVersionAndTag(version: string) {
   if (parsedVersion === null) {
     throw new Error(`Invalid version: ${version}`);
   }
-  const tag = version.split("-").at(-1);
+  const tag = version.split("-").at(1);
   if (tag === undefined) {
     return { version: parsedVersion, tag: DEFAULT_TAG };
   }
