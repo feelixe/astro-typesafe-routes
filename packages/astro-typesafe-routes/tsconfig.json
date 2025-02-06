@@ -5,6 +5,7 @@
         "./src/*"
       ],
     },
+    "jsx": "preserve",
     "target": "esnext",
     "module": "esnext",
     "moduleResolution": "node",

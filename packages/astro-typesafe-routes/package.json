@@ -20,7 +20,7 @@
       "types": "./dist/index.d.ts"
     },
     "./link": {
-      "import": "./dist/components/link.astro"
+      "import": "./dist/components/link/astro/astro-link.astro"
     },
     "./path": {
       "import": "./dist/path.js",
@@ -40,7 +40,16 @@
   ],
   "peerDependencies": {
     "astro": ">=4.14.0 <6.0.0",
-    "typescript": "^5.0.0"
+    "typescript": "^5.0.0",
+    "react": "^18.0.0"
+  },
+  "peerDependenciesMeta": {
+    "typescript": {
+      "optional": true
+    },
+    "react": {
+      "optional": true
+    }
   },
   "dependencies": {
     "fast-glob": "^3.3.2",
@@ -55,6 +64,7 @@
     "globals": "^15.8.0",
     "prettier": "^3.4.2",
     "prompts": "^2.4.2",
+    "react": "^19.0.0",
     "typescript": "^5.5.4",
     "typescript-eslint": "rc-v8"
   }
