@@ -2,7 +2,7 @@
   "name": "astro-typesafe-routes",
   "type": "module",
   "description": "Astro Integration for typesafe URLs",
-  "version": "4.0.0",
+  "version": "4.1.0-rc2",
   "keywords": [
     "astro-integration"
   ],
@@ -21,6 +21,10 @@
     },
     "./link": {
       "import": "./dist/components/link/astro/astro-link.astro"
+    },
+    "./link/react": {
+      "import": "./dist/components/link/react/react-link.jsx",
+      "types": "./dist/components/link/react/react-link.d.ts"
     },
     "./path": {
       "import": "./dist/path.js",
@@ -66,6 +70,8 @@
     "prompts": "^2.4.2",
     "react": "^19.0.0",
     "typescript": "^5.5.4",
-    "typescript-eslint": "rc-v8"
+    "typescript-eslint": "rc-v8",
+    "vue": "^3.5.13",
+    "vue-tsc": "^2.2.0"
   }
 }

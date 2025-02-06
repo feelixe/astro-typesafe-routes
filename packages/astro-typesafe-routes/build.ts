@@ -5,8 +5,14 @@ import path from "node:path";
 const ROOT_DIR = import.meta.dir;
 const BUILD_DIR = path.join(ROOT_DIR, "dist");
 
-const COMPONENTS_SOURCE = path.join(ROOT_DIR, "src", "components");
-const COMPONENTS_OUT = path.join(BUILD_DIR, "components");
+const COMPONENTS_SOURCE = path.join(
+  ROOT_DIR,
+  "src",
+  "components",
+  "link",
+  "astro",
+);
+const COMPONENTS_OUT = path.join(BUILD_DIR, "components", "link", "astro");
 
 async function cleanOutDirectory() {
   await rm(BUILD_DIR, { recursive: true, force: true });
