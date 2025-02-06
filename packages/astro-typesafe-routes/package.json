@@ -26,6 +26,10 @@
       "import": "./dist/components/link/react/react-link.jsx",
       "types": "./dist/components/link/react/react-link.d.ts"
     },
+    "./link/vue": {
+      "import": "./dist/components/link/vue/vue-link.vue",
+      "types": "./dist/components/link/vue/vue-link.vue.d.ts"
+    },
     "./path": {
       "import": "./dist/path.js",
       "types": "./dist/path.d.ts"
@@ -45,13 +49,17 @@
   "peerDependencies": {
     "astro": ">=4.14.0 <6.0.0",
     "typescript": "^5.0.0",
-    "react": "^18.0.0"
+    "react": "^18.0.0",
+    "vue": "^3.0.0"
   },
   "peerDependenciesMeta": {
     "typescript": {
       "optional": true
     },
     "react": {
+      "optional": true
+    },
+    "vue": {
       "optional": true
     }
   },
