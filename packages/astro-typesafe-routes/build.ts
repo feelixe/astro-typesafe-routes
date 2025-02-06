@@ -9,10 +9,6 @@ const FILES_TO_COPY = [
     src: path.join(ROOT_DIR, "./src/components/link/astro/astro-link.astro"),
     dest: path.join(BUILD_DIR, "./components/link/astro/astro-link.astro"),
   },
-  {
-    src: path.join(ROOT_DIR, "./src/components/link/vue/vue-link.vue"),
-    dest: path.join(BUILD_DIR, "./components/link/vue/vue-link.vue"),
-  },
 ];
 
 async function cleanOutDirectory() {
@@ -22,6 +18,7 @@ async function cleanOutDirectory() {
 async function build() {
   await cleanOutDirectory();
   await $`tsc`;
+  await $`vue-tsc`;
   for (const fileToCopy of FILES_TO_COPY) {
     await cp(fileToCopy.src, fileToCopy.dest, { recursive: true });
   }

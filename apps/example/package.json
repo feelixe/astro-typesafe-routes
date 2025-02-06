@@ -11,9 +11,11 @@
   "dependencies": {
     "@astrojs/check": "^0.9.4",
     "@astrojs/node": "^9.0.2",
+    "@astrojs/vue": "^5.0.6",
     "astro": "^5.1.9",
     "astro-typesafe-routes": "workspace:*",
-    "typescript": "^5.7.3"
+    "typescript": "^5.7.3",
+    "vue": "^3.5.13"
   },
   "devDependencies": {
     "@astrojs/compiler": "^2.10.3"
