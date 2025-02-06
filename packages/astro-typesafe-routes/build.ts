@@ -4,15 +4,16 @@ import path from "node:path";
 
 const ROOT_DIR = import.meta.dir;
 const BUILD_DIR = path.join(ROOT_DIR, "dist");
-
-const COMPONENTS_SOURCE = path.join(
-  ROOT_DIR,
-  "src",
-  "components",
-  "link",
-  "astro",
-);
-const COMPONENTS_OUT = path.join(BUILD_DIR, "components", "link", "astro");
+const FILES_TO_COPY = [
+  {
+    src: path.join(ROOT_DIR, "./src/components/link/astro/astro-link.astro"),
+    dest: path.join(BUILD_DIR, "./components/link/astro/astro-link.astro"),
+  },
+  {
+    src: path.join(ROOT_DIR, "./src/components/link/vue/vue-link.vue"),
+    dest: path.join(BUILD_DIR, "./components/link/vue/vue-link.vue"),
+  },
+];
 
 async function cleanOutDirectory() {
   await rm(BUILD_DIR, { recursive: true, force: true });
@@ -21,7 +22,9 @@ async function cleanOutDirectory() {
 async function build() {
   await cleanOutDirectory();
   await $`tsc`;
-  await cp(COMPONENTS_SOURCE, COMPONENTS_OUT, { recursive: true });
+  for (const fileToCopy of FILES_TO_COPY) {
+    await cp(fileToCopy.src, fileToCopy.dest, { recursive: true });
+  }
 }
 
 try {

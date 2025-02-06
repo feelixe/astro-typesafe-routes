@@ -27,8 +27,7 @@
       "types": "./dist/components/link/react/react-link.d.ts"
     },
     "./link/vue": {
-      "import": "./dist/components/link/vue/vue-link.vue",
-      "types": "./dist/components/link/vue/vue-link.vue.d.ts"
+      "import": "./dist/components/link/vue/vue-link.vue"
     },
     "./path": {
       "import": "./dist/path.js",
@@ -79,7 +78,6 @@
     "react": "^19.0.0",
     "typescript": "^5.5.4",
     "typescript-eslint": "rc-v8",
-    "vue": "^3.5.13",
-    "vue-tsc": "^2.2.0"
+    "vue": "^3.5.13"
   }
 }
