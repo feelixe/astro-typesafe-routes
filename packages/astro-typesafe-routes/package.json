@@ -2,7 +2,7 @@
   "name": "astro-typesafe-routes",
   "type": "module",
   "description": "Astro Integration for typesafe URLs",
-  "version": "4.1.0-rc4",
+  "version": "4.1.0-rc5",
   "keywords": [
     "astro-integration"
   ],
@@ -29,6 +29,10 @@
     "./path": {
       "import": "./dist/path.js",
       "types": "./dist/path.d.ts"
+    },
+    "./params": {
+      "import": "./dist/params.js",
+      "types": "./dist/params.d.ts"
     }
   },
   "scripts": {
