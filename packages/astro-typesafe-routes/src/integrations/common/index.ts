@@ -54,6 +54,17 @@ declare module "astro-typesafe-routes/link" {
   export default function Link<T extends Route>(props: LinkProps<T>): any;
 }
 
+declare module "astro-typesafe-routes/link/react" {
+  import { ComponentProps } from "react";
+  import { RouteOptions, Route } from "astro-typesafe-routes/path";
+
+  type LinkBaseProps = Omit<ComponentProps<"a">, "href">;
+
+  export type LinkProps<T extends Route> = LinkBaseProps & RouteOptions<T>;
+
+  export default function Link<T extends Route>(props: LinkProps<T>): any;
+}
+
 declare module "astro-typesafe-routes/path" {
   import type { z } from "zod";
 
