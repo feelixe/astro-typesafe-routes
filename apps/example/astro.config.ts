@@ -2,13 +2,11 @@
 import { defineConfig } from "astro/config";
 import astroTypesafeRoutes from "astro-typesafe-routes";
 import node from "@astrojs/node";
-import vue from "@astrojs/vue";
 
 export default defineConfig({
   integrations: [
-    vue(),
     astroTypesafeRoutes({
-      astroVersion: 4,
+      astroVersion: 5,
     }),
   ],
   output: "server",

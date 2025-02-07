@@ -18,7 +18,6 @@ async function cleanOutDirectory() {
 async function build() {
   await cleanOutDirectory();
   await $`tsc`;
-  await $`vue-tsc`;
   for (const fileToCopy of FILES_TO_COPY) {
     await cp(fileToCopy.src, fileToCopy.dest, { recursive: true });
   }

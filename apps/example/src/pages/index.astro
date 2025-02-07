@@ -1,7 +1,6 @@
 ---
 import { z } from "astro/zod";
 import { getSearch } from "astro-typesafe-routes";
-import Link from "astro-typesafe-routes/link/vue";
 
 export const searchSchema = z.object({
   filter: z.string().catch("all"),
@@ -10,10 +9,3 @@ export const searchSchema = z.object({
 
 const search = getSearch(Astro, searchSchema);
 ---
-
-<div>
-  hello!
-  <Link client:load>Hit me</Link>
-
-  123
-</div>

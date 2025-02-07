@@ -26,10 +26,6 @@
       "import": "./dist/components/link/react/react-link.jsx",
       "types": "./dist/components/link/react/react-link.d.ts"
     },
-    "./link/vue": {
-      "import": "./dist/components/link/vue/vue-link.vue.js",
-      "types": "./dist/components/link/vue/vue-link.vue.d.ts"
-    },
     "./path": {
       "import": "./dist/path.js",
       "types": "./dist/path.d.ts"
@@ -49,17 +45,13 @@
   "peerDependencies": {
     "astro": ">=4.14.0 <6.0.0",
     "typescript": "^5.0.0",
-    "react": "^18.0.0",
-    "vue": "^3.0.0"
+    "react": "^18.0.0 || ^19.0.0"
   },
   "peerDependenciesMeta": {
     "typescript": {
       "optional": true
     },
     "react": {
-      "optional": true
-    },
-    "vue": {
       "optional": true
     }
   },
@@ -71,7 +63,6 @@
     "@eslint/js": "^9.7.0",
     "@types/bun": "latest",
     "@types/semver": "^7.5.8",
-    "@vitejs/plugin-vue": "^5.2.1",
     "astro": "^5.0.0",
     "eslint": "9.x",
     "globals": "^15.8.0",
@@ -79,8 +70,6 @@
     "prompts": "^2.4.2",
     "react": "^19.0.0",
     "typescript": "^5.5.4",
-    "typescript-eslint": "rc-v8",
-    "vue": "^3.5.13",
-    "vue-tsc": "^2.2.0"
+    "typescript-eslint": "rc-v8"
   }
 }
