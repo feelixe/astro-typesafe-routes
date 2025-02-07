@@ -1,57 +1,12 @@
 {
-  "name": "astro-typesafe-routes",
-  "type": "module",
-  "description": "Astro Integration for typesafe URLs",
-  "version": "3.0.4",
-  "keywords": [
-    "astro-integration"
-  ],
-  "author": "Felix Eklöf",
-  "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/feelixe/astro-typesafe-routes"
-  },
-  "homepage": "https://github.com/feelixe/astro-typesafe-routes",
-  "main": "dist/index.js",
-  "exports": {
-    ".": {
-      "import": "./dist/index.js",
-      "types": "./dist/index.d.ts"
-    },
-    "./link": {
-      "import": "./dist/components/link.astro"
-    },
-    "./path": {
-      "import": "./dist/path.js",
-      "types": "./dist/path.d.ts"
-    }
-  },
+  "name": "astro-typesafe-routes-workspace",
+  "private": true,
   "scripts": {
-    "dev": "tsc -w",
-    "build": "bun build.ts"
+    "build": "bun run --filter ./packages/* build",
+    "dev": "bun run --filter ./packages/* dev"
   },
-  "files": [
-    "dist",
-    "README.md",
-    "LICENSE",
-    "package.json"
-  ],
-  "peerDependencies": {
-    "astro": ">=4.14.0 <6.0.0"
-  },
-  "devDependencies": {
-    "@types/semver": "^7.5.8",
-    "@types/bun": "latest",
-    "@eslint/js": "^9.7.0",
-    "astro": "^5.0.0",
-    "eslint": "9.x",
-    "globals": "^15.8.0",
-    "typescript": "^5.5.4",
-    "typescript-eslint": "rc-v8"
-  },
-  "dependencies": {
-    "fast-glob": "^3.3.2",
-    "semver": "^7.6.3"
-  }
+  "workspaces": [
+    "packages/*",
+    "apps/*"
+  ]
 }
