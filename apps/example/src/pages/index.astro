@@ -1,15 +1,5 @@
 ---
-import { z } from "astro/zod";
-import { getSearch } from "astro-typesafe-routes";
 import { getParams } from "astro-typesafe-routes/params";
 
-export const searchSchema = z.object({
-  filter: z.string().catch("all"),
-  isActive: z.boolean().catch(false),
-});
-
-const search = getSearch(Astro, searchSchema);
 const params = getParams(Astro, "/[id]");
-
-params.id;
 ---
