@@ -1,0 +1,17 @@
+{
+  "name": "e2e-project-v4-valid-path",
+  "type": "module",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro check && astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/check": "^0.8.3",
+    "astro": "^4.0.0",
+    "typescript": "^5.7.3",
+    "astro-typesafe-routes": "workspace:*"
+  }
+}
