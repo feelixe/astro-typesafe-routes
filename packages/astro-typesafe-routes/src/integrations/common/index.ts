@@ -65,6 +65,16 @@ declare module "astro-typesafe-routes/link/react" {
   export default function Link<T extends Route>(props: LinkProps<T>): any;
 }
 
+declare module "astro-typesafe-routes/params" {
+  import { AstroGlobal } from "astro";
+  import { Route, Routes } from "astro-typesafe-routes/path";
+
+  export function getParams<T extends Route>(
+    astro: AstroGlobal,
+    route: T,
+  ): { [key in Routes[T]["params"][number]]: string };
+}
+
 declare module "astro-typesafe-routes/path" {
   import type { z } from "zod";
 
