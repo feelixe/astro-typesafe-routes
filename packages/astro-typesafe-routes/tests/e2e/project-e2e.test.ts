@@ -20,6 +20,37 @@ const setups = [
     projectDir: path.join(ROOT_DIR, "../../../../e2e-projects/v4-valid-path"),
     expectBuildSuccess: true,
   },
+  {
+    name: "Astro v4 - invalid path",
+    projectDir: path.join(ROOT_DIR, "../../../../e2e-projects/v4-invalid-path"),
+    expectBuildSuccess: false,
+  },
+  {
+    name: "Astro v5 - valid path",
+    projectDir: path.join(ROOT_DIR, "../../../../e2e-projects/v5-valid-path"),
+    expectBuildSuccess: true,
+  },
+  {
+    name: "Astro v5 - invalid path",
+    projectDir: path.join(ROOT_DIR, "../../../../e2e-projects/v5-invalid-path"),
+    expectBuildSuccess: false,
+  },
+  {
+    name: "Astro v5 - valid search params",
+    projectDir: path.join(
+      ROOT_DIR,
+      "../../../../e2e-projects/v5-valid-search-params",
+    ),
+    expectBuildSuccess: true,
+  },
+  {
+    name: "Astro v5 - invalid search params",
+    projectDir: path.join(
+      ROOT_DIR,
+      "../../../../e2e-projects/v5-invalid-search-params",
+    ),
+    expectBuildSuccess: false,
+  },
 ];
 
 describe.each(setups)("E2E - $name", async (setup) => {
