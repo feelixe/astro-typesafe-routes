@@ -9,6 +9,7 @@ import {
 
 const ROOT_DIR = import.meta.dir;
 const PACKAGE_DIR = path.join(ROOT_DIR, "../../");
+const E2E_PROJECTS_DIR = path.join(ROOT_DIR, "../../../../e2e-projects");
 
 beforeAll(async () => {
   await buildPackage({ packageDir: PACKAGE_DIR });
@@ -17,38 +18,32 @@ beforeAll(async () => {
 const setups = [
   {
     name: "Astro v4 - valid path",
-    projectDir: path.join(ROOT_DIR, "../../../../e2e-projects/v4-valid-path"),
+    projectDir: path.join(E2E_PROJECTS_DIR, "./v4-valid-path"),
     expectBuildSuccess: true,
   },
   {
     name: "Astro v4 - invalid path",
-    projectDir: path.join(ROOT_DIR, "../../../../e2e-projects/v4-invalid-path"),
+    projectDir: path.join(E2E_PROJECTS_DIR, "./v4-invalid-path"),
     expectBuildSuccess: false,
   },
   {
     name: "Astro v5 - valid path",
-    projectDir: path.join(ROOT_DIR, "../../../../e2e-projects/v5-valid-path"),
+    projectDir: path.join(E2E_PROJECTS_DIR, "./v5-valid-path"),
     expectBuildSuccess: true,
   },
   {
     name: "Astro v5 - invalid path",
-    projectDir: path.join(ROOT_DIR, "../../../../e2e-projects/v5-invalid-path"),
+    projectDir: path.join(E2E_PROJECTS_DIR, "./v5-invalid-path"),
     expectBuildSuccess: false,
   },
   {
     name: "Astro v5 - valid search params",
-    projectDir: path.join(
-      ROOT_DIR,
-      "../../../../e2e-projects/v5-valid-search-params",
-    ),
+    projectDir: path.join(E2E_PROJECTS_DIR, "./v5-valid-search-params"),
     expectBuildSuccess: true,
   },
   {
     name: "Astro v5 - invalid search params",
-    projectDir: path.join(
-      ROOT_DIR,
-      "../../../../e2e-projects/v5-invalid-search-params",
-    ),
+    projectDir: path.join(E2E_PROJECTS_DIR, "./v5-invalid-search-params"),
     expectBuildSuccess: false,
   },
 ];
