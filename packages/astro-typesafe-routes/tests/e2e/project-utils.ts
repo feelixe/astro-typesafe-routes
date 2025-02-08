@@ -12,28 +12,12 @@ async function cleanUpLocalFiles(ourDir: string) {
 }
 
 export type SetupTestProjectArgs = {
-  templateDir: string;
-  outDir: string;
-  packageDir: string;
+  projectDir: string;
 };
 
 export async function setupTestProject(args: SetupTestProjectArgs) {
-  // Remove any old copy
-  await cleanUpTestProject({
-    dir: args.outDir,
-  });
-
-  // Copy template
-  await cp(args.templateDir, args.outDir, { recursive: true });
-
-  // Clean up local files like node_modules
-  await cleanUpLocalFiles(args.outDir);
-
-  // Install test-project dependencies
-  await $`bun install`.cwd(args.outDir);
-
-  // Install bun linked package
-  await $`bun link astro-typesafe-routes --save`.cwd(args.outDir);
+  await cleanUpLocalFiles(args.projectDir);
+  await $`bun install`.cwd(args.projectDir);
 }
 
 export type BuildPackageParams = {
@@ -41,17 +25,13 @@ export type BuildPackageParams = {
 };
 
 export async function buildPackage(args: BuildPackageParams) {
-  // Build package
   await $`bun run build`.cwd(args.packageDir);
-
-  // Add bun link to package
-  await $`bun link`.cwd(args.packageDir);
 }
 
 export type CleanUpTestProjectArgs = {
-  dir: string;
+  projectDir: string;
 };
 
 export async function cleanUpTestProject(args: CleanUpTestProjectArgs) {
-  await rm(args.dir, { recursive: true, force: true });
+  await cleanUpLocalFiles(args.projectDir);
 }

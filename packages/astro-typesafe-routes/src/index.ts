@@ -19,8 +19,6 @@ export default function astroTypesafeRoutes(
     assertSupportedVersion();
   }
 
-  console.log("version", getAstroMajorVersion());
-
   const astroMajorVersion = args?.astroVersion ?? getAstroMajorVersion();
 
   if (astroMajorVersion === 5) {

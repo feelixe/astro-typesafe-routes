@@ -1,7 +1,7 @@
 {
   "name": "e2e-project-v4-valid-path",
   "type": "module",
-  "version": "0.0.1",
+  "private": true,
   "scripts": {
     "dev": "astro dev",
     "build": "astro check && astro build",

@@ -1,7 +1,7 @@
 {
-  "name": "project-template",
+  "name": "e2e-project-v5-invalid-search-params",
   "type": "module",
-  "version": "0.0.1",
+  "private": true,
   "scripts": {
     "dev": "astro dev",
     "build": "astro check && astro build",
@@ -9,8 +9,8 @@
     "astro": "astro"
   },
   "dependencies": {
-    "@astrojs/check": "^0.8.3",
-    "astro": "^4.0.0",
+    "@astrojs/check": "^0.9.4",
+    "astro": "^5.1.9",
     "typescript": "^5.7.3"
   }
 }
