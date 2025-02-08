@@ -8,12 +8,7 @@ import {
 } from "./project-utils.ts";
 
 const ROOT_DIR = import.meta.dir;
-const PACKAGE_DIR = path.join(ROOT_DIR, "../../");
 const E2E_PROJECTS_DIR = path.join(ROOT_DIR, "../../../../e2e-projects");
-
-beforeAll(async () => {
-  await buildPackage({ packageDir: PACKAGE_DIR });
-});
 
 const setups = [
   {
