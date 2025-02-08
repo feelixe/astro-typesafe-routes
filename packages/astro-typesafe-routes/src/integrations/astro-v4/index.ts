@@ -1,12 +1,15 @@
 import { AstroIntegration, AstroIntegrationLogger, InjectedType } from "astro";
+import { fileURLToPath } from "url";
 import {
   getDeclarationContent,
   logSuccess,
   writeDeclarationFile,
 } from "../common/index.js";
 import { resolveRoutesAstroV4 } from "./resolve-routes.js";
-import { fileURLToPath } from "url";
-import { AstroRootDirDidNotResolveError } from "../common/errors.js";
+import {
+  AstroRootDirDidNotResolveError,
+  NoDeclarationPathError,
+} from "../common/errors.js";
 import { DECLARATION_FILENAME } from "../common/constants.js";
 
 export function astroTypesafeRoutesAstroV4(): AstroIntegration {
@@ -18,10 +21,8 @@ export function astroTypesafeRoutesAstroV4(): AstroIntegration {
     injectFn?: (injectedType: InjectedType) => unknown,
   ) {
     if (!rootDir) throw new AstroRootDirDidNotResolveError();
-    if (!rootDir || !declarationPath) {
-      throw new Error(
-        "Unexpected error: rootDir or declarationPath was undefined",
-      );
+    if (!declarationPath) {
+      throw new NoDeclarationPathError();
     }
     const routes = await resolveRoutesAstroV4(rootDir);
 

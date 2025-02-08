@@ -1,18 +1,15 @@
-import { createRequire } from "node:module";
 import semver from "semver";
-import * as fs from "fs";
+import packageJson from "astro/package.json" with { type: "json" };
 
 const SUPPORTED_VERSIONS = ">=4.14.0 <6.0.0";
 
 function getAstroVersion() {
-  const require = createRequire(import.meta.url);
-  const astroPkgPath = require.resolve("astro/package.json");
-  const astroPkg = JSON.parse(fs.readFileSync(astroPkgPath, "utf-8"));
-  return astroPkg.version as string;
+  return packageJson.version;
 }
 
 export function getAstroMajorVersion() {
-  return semver.major(getAstroVersion());
+  const version = getAstroVersion();
+  return semver.major(version);
 }
 
 export function assertSupportedVersion() {
@@ -21,7 +18,7 @@ export function assertSupportedVersion() {
   const isSupportedVersion = semver.satisfies(astroVersion, SUPPORTED_VERSIONS);
   if (!isSupportedVersion) {
     throw new Error(
-      `astro-typesafe-routes is not compatible with this Astro version ${astroVersion}, compatible versions are ${SUPPORTED_VERSIONS}`
+      `astro-typesafe-routes is not compatible with this Astro version ${astroVersion}, compatible versions are ${SUPPORTED_VERSIONS}`,
     );
   }
 }
