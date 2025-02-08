@@ -9,6 +9,11 @@ import {
 
 const ROOT_DIR = import.meta.dir;
 const E2E_PROJECTS_DIR = path.join(ROOT_DIR, "../../../../e2e-projects");
+const PACKAGE_DIR = path.join(ROOT_DIR, "../../");
+
+await beforeAll(async () => {
+  await buildPackage({ packageDir: PACKAGE_DIR });
+});
 
 const setups = [
   {

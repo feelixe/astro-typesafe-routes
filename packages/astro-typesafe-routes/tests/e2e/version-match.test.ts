@@ -6,6 +6,11 @@ import * as fs from "node:fs/promises";
 
 const ROOT_DIR = import.meta.dir;
 const E2E_PROJECTS_DIR = path.join(ROOT_DIR, "../../../../e2e-projects");
+const PACKAGE_DIR = path.join(ROOT_DIR, "../../");
+
+await beforeAll(async () => {
+  await buildPackage({ packageDir: PACKAGE_DIR });
+});
 
 const v4Dir = path.join(E2E_PROJECTS_DIR, "./v4-version-match");
 const v5Dir = path.join(E2E_PROJECTS_DIR, "./v5-version-match");

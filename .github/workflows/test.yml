@@ -37,8 +37,5 @@ jobs:
       - name: Install dependencies
         run: bun install
 
-      - name: Change working directory
-        run: cd ./packages/astro-typesafe-routes
-
       - name: Run tests
         run: bun test
