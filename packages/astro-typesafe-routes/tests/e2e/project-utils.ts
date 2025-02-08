@@ -1,8 +1,8 @@
 import { $ } from "bun";
-import { cp, rm } from "node:fs/promises";
+import { rm } from "node:fs/promises";
 import * as path from "node:path";
 
-const LOCAL_DIRECTORIES = ["dist", ".astro", "node_modules"];
+const LOCAL_DIRECTORIES = ["dist", ".astro"];
 
 async function cleanUpLocalFiles(ourDir: string) {
   for (const localDirectory of LOCAL_DIRECTORIES) {
