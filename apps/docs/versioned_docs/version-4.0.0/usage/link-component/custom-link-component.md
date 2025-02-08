@@ -1,5 +1,5 @@
 ---
-sidebar_position: 4
+sidebar_position: 3
 ---
 # Custom Link Component
 Sometimes, you may need to create your own custom `Link` component while still maintaining type safety. To achieve this, you can import the `Route` and `RouteOptions` types, which allow you to add type-safe routing to your custom implementation.
