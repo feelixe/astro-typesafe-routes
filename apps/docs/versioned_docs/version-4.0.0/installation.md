@@ -10,10 +10,7 @@ Astro Typesafe Routes integrates seamlessly into your Astro project, offering au
 * **Astro** and **Typescript** are required peer dependencies.
   
 ## Automatic Installation
-1. Install Typescript if it's not already installed.
-```bash
-npm i -D typescript
-```
+1. Setup [Typescript for Astro](https://docs.astro.build/en/guides/typescript/).
 2. Add integration:
 ```bash
 npx astro add astro-typesafe-routes
@@ -25,13 +22,10 @@ npm run dev
 4. Done! If you ran into any issues, try manual installation.
    
 ## Manual Installation
-1. Install Typescript if it's not already installed.
-```bash
-npm i -D typescript
-```
+1. Setup [Typescript for Astro](https://docs.astro.build/en/guides/typescript/).
 2. Install package:
 ```sh
-npm install -D astro-typesafe-routes
+npm install astro-typesafe-routes
 ```
 3. Add integration to `astro.config.mjs`:
 ```javascript

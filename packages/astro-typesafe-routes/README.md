@@ -45,7 +45,7 @@ npm run dev
 ## Manual Installation
 1. Install package:
 ```sh
-npm install -D astro-typesafe-routes
+npm install astro-typesafe-routes
 ```
 2. Add integration to `astro.config.mjs`:
 ```javascript
