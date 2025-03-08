@@ -54,10 +54,8 @@ type getResolvedRoutesParams = {
   rootDir: string;
 };
 
-async function getResolvedRoutes(
-  args: getResolvedRoutesParams,
-): Promise<ResolvedRoute[]> {
-  const promises = args.routesWithSearch.map(async (route) => {
+function getResolvedRoutes(args: getResolvedRoutesParams): ResolvedRoute[] {
+  return args.routesWithSearch.map((route) => {
     const pagesDir = path.join(args.rootDir, "src", "pages");
     const relativePath = path.relative(pagesDir, route.absolutePath);
     const withNormalizedSeparators = normalizeSeparators(relativePath);
@@ -74,16 +72,14 @@ async function getResolvedRoutes(
       params: params.length === 0 ? null : params,
     };
   });
-
-  return await Promise.all(promises);
 }
 
 export async function resolveRoutesAstroV4(
   rootDir: string,
 ): Promise<ResolvedRoute[]> {
-  const routes = await listAstroRouteFiles(rootDir);
-  const routesWithSearch = await getRouteSearch(routes);
-  return await getResolvedRoutes({
+  const routeFiles = await listAstroRouteFiles(rootDir);
+  const routesWithSearch = await getRouteSearch(routeFiles);
+  return getResolvedRoutes({
     routesWithSearch,
     rootDir,
   });
