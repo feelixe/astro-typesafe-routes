@@ -1,5 +1,5 @@
-import { it, describe, expect, spyOn, afterEach, jest } from "bun:test";
-import { serialize } from "../../src/search-serializer.ts";
+import { it, describe, expect, afterEach, jest } from "bun:test";
+import { serialize } from "../src/search-serializer.ts";
 
 describe("serialize", () => {
   afterEach(() => {

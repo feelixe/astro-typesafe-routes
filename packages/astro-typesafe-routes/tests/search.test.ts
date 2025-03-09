@@ -1,6 +1,6 @@
-import { it, describe, expect, spyOn, afterEach, jest } from "bun:test";
+import { it, describe, expect, afterEach, jest } from "bun:test";
 import { z } from "astro/zod";
-import { getSearch } from "../../src/search.ts";
+import { getSearch } from "../src/search.ts";
 import { AstroGlobal } from "astro";
 import * as v from "valibot";
 

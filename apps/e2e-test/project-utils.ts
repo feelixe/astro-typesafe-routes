@@ -21,11 +21,11 @@ export async function setupTestProject(args: SetupTestProjectArgs) {
 }
 
 export type BuildPackageParams = {
-  packageDir: string;
+  dir: string;
 };
 
 export async function buildPackage(args: BuildPackageParams) {
-  await $`bun run build`.cwd(args.packageDir);
+  await $`bun run build`.cwd(args.dir);
 }
 
 export type CleanUpTestProjectArgs = {

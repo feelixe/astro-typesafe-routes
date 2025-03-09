@@ -1,7 +1,6 @@
 import { it, describe, expect } from "bun:test";
-import { getSearch } from "../../src/search.ts";
 import { AstroGlobal } from "astro";
-import { getParams } from "../../src/params.ts";
+import { getParams } from "../src/params.ts";
 
 describe("getParams", () => {
   it("returns params", () => {
