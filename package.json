@@ -4,7 +4,7 @@
   "scripts": {
     "build": "bun run --filter ./packages/* build",
     "dev": "bun run --filter ./packages/* dev",
-    "publish": "bun run --filter ./packages/astro-typesafe-routes publish-package"
+    "publish": "bun run --filter ./packages/astro-typesafe-routes publish"
   },
   "workspaces": [
     "packages/*",
