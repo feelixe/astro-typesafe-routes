@@ -3,7 +3,9 @@
 	"type": "module",
 	"description": "Astro Integration for typesafe URLs",
 	"version": "4.1.0",
-	"keywords": ["astro-integration"],
+	"keywords": [
+		"astro-integration"
+	],
 	"author": "Felix Eklöf",
 	"license": "MIT",
 	"repository": {
@@ -40,9 +42,15 @@
 	"scripts": {
 		"dev": "tsc -w --incremental --preserveWatchOutput",
 		"build": "bun build.ts",
-		"publish": "bun publish.ts"
+		"publish": "bun publish.ts",
+		"lint": "biome lint"
 	},
-	"files": ["dist", "README.md", "LICENSE", "package.json"],
+	"files": [
+		"dist",
+		"README.md",
+		"LICENSE",
+		"package.json"
+	],
 	"peerDependencies": {
 		"astro": ">=4.14.0 <6.0.0",
 		"typescript": "^5.0.0",

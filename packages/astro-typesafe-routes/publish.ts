@@ -15,6 +15,11 @@ async function doesTagAlreadyExist(version: string) {
 	}
 }
 
+async function lint() {
+	console.log("Linting...");
+	await $`bun run lint`;
+}
+
 async function runTests() {
 	console.log("Running tests...");
 	await $`bun test`;
@@ -79,6 +84,7 @@ if (!userConfirmed) {
 
 const isPreRelease = tag !== DEFAULT_TAG;
 
+await lint();
 await runTests();
 await build();
 await tagAndPush(version);
