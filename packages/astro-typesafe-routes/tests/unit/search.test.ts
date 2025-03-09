@@ -2,20 +2,14 @@ import { it, describe, expect, spyOn, afterEach, jest } from "bun:test";
 import { z } from "astro/zod";
 import { getSearch } from "../../src/search.ts";
 import { AstroGlobal } from "astro";
-
-const schema = z.object({
-  age: z.number(),
-  person: z.object({
-    name: z.string(),
-  }),
-});
+import * as v from "valibot";
 
 describe("getSearch", () => {
   afterEach(() => {
     jest.restoreAllMocks();
   });
 
-  it("returns parsed search", () => {
+  it("returns parsed search with zod schema", () => {
     const Astro = {
       url: {
         searchParams: new URLSearchParams({
@@ -25,10 +19,41 @@ describe("getSearch", () => {
       },
     } as AstroGlobal;
 
-    const spy = spyOn(schema, "parse");
+    const schema = z.object({
+      age: z.number(),
+      person: z.object({
+        name: z.string(),
+      }),
+    });
+
     const res = getSearch(Astro, schema);
 
-    expect(spy).toHaveBeenCalledTimes(1);
+    expect(res).toEqual({
+      age: 10,
+      person: {
+        name: "John",
+      },
+    });
+  });
+
+  it("returns parsed search with valibot schema", () => {
+    const Astro = {
+      url: {
+        searchParams: new URLSearchParams({
+          age: JSON.stringify(10),
+          person: JSON.stringify({ name: "John" }),
+        }),
+      },
+    } as AstroGlobal;
+
+    const schema = v.object({
+      age: v.number(),
+      person: v.object({
+        name: v.string(),
+      }),
+    });
+
+    const res = getSearch(Astro, schema);
 
     expect(res).toEqual({
       age: 10,
@@ -44,6 +69,10 @@ describe("getSearch", () => {
         searchParams: new URLSearchParams({}),
       },
     } as AstroGlobal;
+
+    const schema = z.object({
+      age: z.number(),
+    });
 
     expect(() => getSearch(Astro, schema)).toThrow();
   });

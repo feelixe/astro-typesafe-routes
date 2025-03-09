@@ -72,11 +72,13 @@ declare module "astro-typesafe-routes/params" {
   export function getParams<T extends Route>(
     astro: AstroGlobal,
     route: T,
-  ): { [key in Routes[T]["params"][number]]: string };
+  ): Routes[T]["params"] extends Array<unknown>
+    ? { [key in Routes[T]["params"][number]]: string }
+    : never;
 }
 
 declare module "astro-typesafe-routes/path" {
-  import type { z } from "zod";
+  import { StandardSchemaV1 } from "astro-typesafe-routes/standard-schema";
 
   export type Routes = ${routesType};
 
@@ -92,13 +94,16 @@ declare module "astro-typesafe-routes/path" {
     hash?: string;
     trailingSlash?: boolean;
     searchParams?: ConstructorParameters<typeof URLSearchParams>[0];
-  } & (Routes[T]["search"] extends null
-    ? {}
-    : { search: z.input<Routes[T]["search"]> }) &
-    (Routes[T]["params"] extends null ? {} : { params: ParamsRecord<T> });
+  } & (Routes[T]["search"] extends StandardSchemaV1
+    ? { search: StandardSchemaV1.InferInput<Routes[T]["search"]> }
+    : { search?: never }) &
+    (Routes[T]["params"] extends null
+      ? { params?: never }
+      : { params: ParamsRecord<T> });
 
   export function $path<T extends Route>(args: RouteOptions<T>): string;
-}`;
+}
+`;
 
   return await tryFormatPrettier(content);
 }

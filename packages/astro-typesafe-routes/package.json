@@ -33,6 +33,10 @@
     "./params": {
       "import": "./dist/params.js",
       "types": "./dist/params.d.ts"
+    },
+    "./standard-schema": {
+      "import": "./dist/standard-schema.js",
+      "types": "./dist/standard-schema.d.ts"
     }
   },
   "scripts": {
@@ -74,6 +78,7 @@
     "prompts": "^2.4.2",
     "react": "^19.0.0",
     "typescript": "^5.5.4",
-    "typescript-eslint": "rc-v8"
+    "typescript-eslint": "rc-v8",
+    "valibot": "^1.0.0-rc.3"
   }
 }
