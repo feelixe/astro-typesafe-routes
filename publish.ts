@@ -1,4 +1,4 @@
-import packageJson from "./package.json";
+import packageJson from "./packages/astro-typesafe-routes/package.json";
 import semver from "semver";
 import { $ } from "bun";
 import prompts from "prompts";
@@ -31,7 +31,7 @@ async function build() {
 }
 
 async function publishToNpm(tag: string) {
-	await $`bun publish --tag ${tag}`;
+	await $`cd packages/astro-typesafe-routes && bun publish --tag ${tag}`;
 }
 
 async function tagAndPush(version: string) {

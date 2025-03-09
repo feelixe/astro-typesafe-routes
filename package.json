@@ -4,8 +4,8 @@
 	"scripts": {
 		"build": "bun run --filter ./packages/* build",
 		"dev": "bun run --filter ./packages/* dev",
-		"publish": "bun run --filter ./packages/astro-typesafe-routes publish",
-		"lint": "biome lint"
+		"lint": "biome lint",
+		"publish": "bun publish.ts"
 	},
 	"workspaces": [
 		"packages/*",
