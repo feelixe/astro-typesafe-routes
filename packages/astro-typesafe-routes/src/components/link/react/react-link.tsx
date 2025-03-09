@@ -1,5 +1,5 @@
-import { ComponentProps } from "react";
-import { $path, RouteOptions } from "../../../path.js";
+import type { ComponentProps } from "react";
+import { $path, type RouteOptions } from "../../../path.js";
 
 export type ReactLinkProps = Omit<ComponentProps<"a">, "href"> & RouteOptions;
 

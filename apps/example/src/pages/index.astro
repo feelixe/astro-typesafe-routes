@@ -5,7 +5,7 @@ import * as v from "valibot";
 const params = getParams(Astro, "/[id]");
 
 export const searchSchema = v.object({
-  page: v.number(),
-  name: v.string(),
+	page: v.number(),
+	name: v.string(),
 });
 ---

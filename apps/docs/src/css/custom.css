@@ -1,22 +1,22 @@
 :root {
-  --ifm-color-primary: hsl(31, 80%, 55%);
-  --ifm-color-primary-dark: hsl(31, 80%, 50%);
-  --ifm-color-primary-darker: hsl(31, 80%, 45%);
-  --ifm-color-primary-darkest: hsl(31, 80%, 40%);
-  --ifm-color-primary-light: hsl(31, 80%, 60%);
-  --ifm-color-primary-lighter: hsl(31, 80%, 65%);
-  --ifm-color-primary-lightest: hsl(31, 80%, 70%);
-  --ifm-code-font-size: 95%;
-  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);
+	--ifm-color-primary: hsl(31, 80%, 55%);
+	--ifm-color-primary-dark: hsl(31, 80%, 50%);
+	--ifm-color-primary-darker: hsl(31, 80%, 45%);
+	--ifm-color-primary-darkest: hsl(31, 80%, 40%);
+	--ifm-color-primary-light: hsl(31, 80%, 60%);
+	--ifm-color-primary-lighter: hsl(31, 80%, 65%);
+	--ifm-color-primary-lightest: hsl(31, 80%, 70%);
+	--ifm-code-font-size: 95%;
+	--docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);
 }
 
 [data-theme="dark"] {
-  --ifm-color-primary: hsl(31, 80%, 55%);
-  --ifm-color-primary-dark: hsl(31, 80%, 50%);
-  --ifm-color-primary-darker: hsl(31, 80%, 45%);
-  --ifm-color-primary-darkest: hsl(31, 80%, 40%);
-  --ifm-color-primary-light: hsl(31, 80%, 60%);
-  --ifm-color-primary-lighter: hsl(31, 80%, 65%);
-  --ifm-color-primary-lightest: hsl(31, 80%, 70%);
-  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
+	--ifm-color-primary: hsl(31, 80%, 55%);
+	--ifm-color-primary-dark: hsl(31, 80%, 50%);
+	--ifm-color-primary-darker: hsl(31, 80%, 45%);
+	--ifm-color-primary-darkest: hsl(31, 80%, 40%);
+	--ifm-color-primary-light: hsl(31, 80%, 60%);
+	--ifm-color-primary-lighter: hsl(31, 80%, 65%);
+	--ifm-color-primary-lightest: hsl(31, 80%, 70%);
+	--docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
 }
