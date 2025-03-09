@@ -7,12 +7,11 @@ import {
   setupTestProject,
 } from "./project-utils.ts";
 
-const ROOT_DIR = import.meta.dir;
-const E2E_PROJECTS_DIR = path.join(ROOT_DIR, "../../../../e2e-projects");
-const PACKAGE_DIR = path.join(ROOT_DIR, "../../");
+const E2E_PROJECTS_DIR = path.join(import.meta.dir, "../../e2e-projects");
+const WORKSPACE_DIR = path.join(import.meta.dir, "../../");
 
 await beforeAll(async () => {
-  await buildPackage({ packageDir: PACKAGE_DIR });
+  await buildPackage({ dir: WORKSPACE_DIR });
 });
 
 const setups = [

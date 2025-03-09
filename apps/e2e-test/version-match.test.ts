@@ -8,15 +8,14 @@ import * as path from "node:path";
 import { $ } from "bun";
 import * as fs from "node:fs/promises";
 
-const ROOT_DIR = import.meta.dir;
-const E2E_PROJECTS_DIR = path.join(ROOT_DIR, "../../../../e2e-projects");
-const PACKAGE_DIR = path.join(ROOT_DIR, "../../");
+const E2E_PROJECTS_DIR = path.join(import.meta.dir, "../../e2e-projects");
+const WORKSPACE_DIR = path.join(import.meta.dir, "../../");
 
 const v4Dir = path.join(E2E_PROJECTS_DIR, "./v4-version-match");
 const v5Dir = path.join(E2E_PROJECTS_DIR, "./v5-version-match");
 
 await beforeAll(async () => {
-  await buildPackage({ packageDir: PACKAGE_DIR });
+  await buildPackage({ dir: WORKSPACE_DIR });
 });
 
 const declarationPath =

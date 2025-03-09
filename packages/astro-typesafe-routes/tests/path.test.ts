@@ -1,5 +1,5 @@
 import { it, describe, expect } from "bun:test";
-import { $path } from "../../src/path";
+import { $path } from "../src/path";
 
 describe("$path", () => {
   it("returns pathname", () => {
