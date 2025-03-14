@@ -6,43 +6,43 @@ import { tryFormatPrettier } from "./format.js";
 import { normalizeSeparators } from "./utils.js";
 
 type WriteDeclarationFileParams = {
-	filename: string;
-	content: string;
+  filename: string;
+  content: string;
 };
 
 export async function writeDeclarationFile(args: WriteDeclarationFileParams) {
-	return await fs.writeFile(args.filename, args.content, { encoding: "utf-8" });
+  return await fs.writeFile(args.filename, args.content, { encoding: "utf-8" });
 }
 
 export function logSuccess(logger: AstroIntegrationLogger) {
-	logger.info("Generated route type");
+  logger.info("Generated route type");
 }
 
 export type GetDeclarationContentParams = {
-	routes: ResolvedRoute[];
-	outPath: string;
+  routes: ResolvedRoute[];
+  outPath: string;
 };
 
 export async function getDeclarationContent(args: GetDeclarationContentParams) {
-	const rows = args.routes.map((route) => {
-		let search = "null";
-		if (route.hasSearchSchema) {
-			const declarationDir = path.dirname(args.outPath);
-			const relativeRoutePath = path.relative(
-				declarationDir,
-				route.absolutePath,
-			);
-			const normalizedSearchPath = normalizeSeparators(relativeRoutePath);
-			search = `typeof import("${normalizedSearchPath}").searchSchema`;
-		}
-		return `"${route.path}": { params: ${JSON.stringify(
-			route.params,
-		)}; search: ${search} }`;
-	});
+  const rows = args.routes.map((route) => {
+    let search = "null";
+    if (route.hasSearchSchema) {
+      const declarationDir = path.dirname(args.outPath);
+      const relativeRoutePath = path.relative(
+        declarationDir,
+        route.absolutePath,
+      );
+      const normalizedSearchPath = normalizeSeparators(relativeRoutePath);
+      search = `typeof import("${normalizedSearchPath}").searchSchema`;
+    }
+    return `"${route.path}": { params: ${JSON.stringify(
+      route.params,
+    )}; search: ${search} }`;
+  });
 
-	const routesType = `{${rows.join(",\n")}}`;
+  const routesType = `{${rows.join(",\n")}}`;
 
-	const content = `
+  const content = `
 declare module "astro-typesafe-routes/link" {
   import type { HTMLAttributes } from "astro/types";
   import type { RouteOptions, Route } from "astro-typesafe-routes/path";
@@ -105,5 +105,5 @@ declare module "astro-typesafe-routes/path" {
 }
 `;
 
-	return await tryFormatPrettier(content);
+  return await tryFormatPrettier(content);
 }

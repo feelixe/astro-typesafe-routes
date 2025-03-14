@@ -1,22 +1,22 @@
 {
-	"name": "example",
-	"type": "module",
-	"private": true,
-	"scripts": {
-		"dev": "astro dev",
-		"build": "astro check && astro build",
-		"preview": "astro preview",
-		"astro": "astro"
-	},
-	"dependencies": {
-		"@astrojs/check": "^0.9.4",
-		"@astrojs/node": "^9.0.2",
-		"astro": "^5.1.9",
-		"astro-typesafe-routes": "workspace:*",
-		"typescript": "^5.7.3",
-		"valibot": "^1.0.0-rc.3"
-	},
-	"devDependencies": {
-		"@astrojs/compiler": "^2.10.3"
-	}
+  "name": "example",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro check && astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/check": "^0.9.4",
+    "@astrojs/node": "^9.0.2",
+    "astro": "^5.1.9",
+    "astro-typesafe-routes": "workspace:*",
+    "typescript": "^5.7.3",
+    "valibot": "^1.0.0-rc.3"
+  },
+  "devDependencies": {
+    "@astrojs/compiler": "^2.10.3"
+  }
 }
