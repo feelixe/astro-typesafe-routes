@@ -1,8 +1,5 @@
 {
 	"compilerOptions": {
-		"paths": {
-			"~/*": ["./src/*"]
-		},
 		"jsx": "react-jsx",
 		"target": "esnext",
 		"module": "esnext",
@@ -14,7 +11,10 @@
 		"declaration": true,
 		"outDir": "./dist",
 		"baseUrl": "./src",
-		"typeRoots": ["./node_modules/@types", "./src/@types"],
+		"typeRoots": [
+			"./node_modules/@types",
+			"./src/@types"
+		],
 		"allowSyntheticDefaultImports": true,
 		"strictNullChecks": true,
 		"strictFunctionTypes": true,
@@ -33,6 +33,10 @@
 		"declarationMap": false,
 		"sourceMap": false
 	},
-	"include": ["src/**/*"],
-	"exclude": ["node_modules"]
+	"include": [
+		"src/**/*"
+	],
+	"exclude": [
+		"node_modules"
+	]
 }
