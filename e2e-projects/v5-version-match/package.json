@@ -1,17 +1,17 @@
 {
-	"name": "e2e-project-v5-version-match",
-	"type": "module",
-	"private": true,
-	"scripts": {
-		"dev": "astro dev",
-		"build": "astro check && astro build",
-		"preview": "astro preview",
-		"astro": "astro"
-	},
-	"dependencies": {
-		"@astrojs/check": "^0.9.4",
-		"astro": "^5.1.9",
-		"typescript": "^5.7.3",
-		"astro-typesafe-routes": "workspace:*"
-	}
+  "name": "e2e-project-v5-version-match",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro check && astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/check": "^0.9.4",
+    "astro": "^5.1.9",
+    "typescript": "^5.7.3",
+    "astro-typesafe-routes": "workspace:*"
+  }
 }
