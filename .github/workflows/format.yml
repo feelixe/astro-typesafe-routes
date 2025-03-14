@@ -11,11 +11,7 @@ on:
 
 jobs:
   format:
-    strategy:
-      matrix:
-        platform: [ubuntu-latest, windows-latest]
-
-    runs-on: ${{ matrix.platform }}
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repository
