@@ -1,4 +1,4 @@
-name: Lint
+name: Format
 
 on:
   push:
@@ -10,7 +10,7 @@ on:
       - "**"
 
 jobs:
-  lint:
+  format:
     strategy:
       matrix:
         platform: [ubuntu-latest, windows-latest]
@@ -37,5 +37,5 @@ jobs:
       - name: Install dependencies
         run: bun install
 
-      - name: Run lint
+      - name: Run format
         run: bun run format
