@@ -28,7 +28,7 @@ export async function getRoutes(
   args: GetRoutesParams,
 ): Promise<ResolvedRoute[]> {
   const withoutInternal = args.routes.filter(
-    (route) => route.origin !== "internal" && route.type !== 'redirect',
+    (route) => route.origin !== "internal" && route.type !== "redirect",
   );
   const promises = withoutInternal.map(async (route) => {
     const absolutePath = path.join(args.rootDir, route.entrypoint);
