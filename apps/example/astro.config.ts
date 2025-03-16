@@ -6,11 +6,11 @@ import node from "@astrojs/node";
 export default defineConfig({
   integrations: [
     astroTypesafeRoutes({
-      astroVersion: 5,
+      astroVersion: 4,
     }),
   ],
-  output: "server",
-  adapter: node({
-    mode: "standalone",
-  }),
+  output: "static",
+  // adapter: node({
+  //   mode: "standalone",
+  // }),
 });

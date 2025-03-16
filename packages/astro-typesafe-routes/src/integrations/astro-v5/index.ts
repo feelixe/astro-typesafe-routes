@@ -4,7 +4,7 @@ import type {
   InjectedType,
   IntegrationResolvedRoute,
 } from "astro";
-import type { ResolvedRoute } from "../common/types.js";
+import type { RequiredAstroConfig, ResolvedRoute } from "../common/types.js";
 import {
   getDeclarationContent,
   logSuccess,
@@ -14,14 +14,14 @@ import { fileURLToPath } from "node:url";
 import * as path from "node:path";
 import { doesRouteHaveSearchSchema } from "../common/search-params.js";
 import {
-  AstroRootDirDidNotResolveError,
+  AstroConfigDidNotResolveError,
   AstroRoutesDidNotResolveError,
 } from "../common/errors.js";
 import { DECLARATION_FILENAME } from "../common/constants.js";
 
 export type GetRoutesParams = {
   routes: IntegrationResolvedRoute[];
-  rootDir: string;
+  astroConfig: RequiredAstroConfig;
 };
 
 export async function getRoutes(
@@ -31,8 +31,13 @@ export async function getRoutes(
     (route) => route.origin !== "internal" && route.type !== "redirect",
   );
   const promises = withoutInternal.map(async (route) => {
-    const absolutePath = path.join(args.rootDir, route.entrypoint);
-    const hasSearchSchema = await doesRouteHaveSearchSchema(absolutePath);
+    const absolutePath = path.join(args.astroConfig.rootDir, route.entrypoint);
+
+    // Search params have no effect on static builds.
+    const shouldResolveSearchParams = args.astroConfig.buildOutput === "server";
+    const hasSearchSchema = shouldResolveSearchParams
+      ? await doesRouteHaveSearchSchema(absolutePath)
+      : false;
 
     return {
       path: route.pattern ?? "",
@@ -48,7 +53,7 @@ export async function getRoutes(
 export function astroTypesafeRoutesAstroV5(): AstroIntegration {
   let astroRoutes: IntegrationResolvedRoute[] | undefined;
   let declarationPath: string | undefined;
-  let rootDir: string | undefined;
+  let astroConfig: RequiredAstroConfig;
 
   async function generate(
     logger: AstroIntegrationLogger,
@@ -56,11 +61,11 @@ export function astroTypesafeRoutesAstroV5(): AstroIntegration {
   ) {
     if (!declarationPath) return;
     if (!astroRoutes) throw new AstroRoutesDidNotResolveError();
-    if (!rootDir) throw new AstroRootDirDidNotResolveError();
+    if (!astroConfig) throw new AstroConfigDidNotResolveError();
 
     const resolvedRoutes = await getRoutes({
       routes: astroRoutes,
-      rootDir,
+      astroConfig,
     });
 
     const declarationContent = await getDeclarationContent({
@@ -91,7 +96,10 @@ export function astroTypesafeRoutesAstroV5(): AstroIntegration {
         await generate(args.logger);
       },
       "astro:config:done": async (args) => {
-        rootDir = fileURLToPath(args.config.root);
+        astroConfig = {
+          rootDir: fileURLToPath(args.config.root),
+          buildOutput: args.buildOutput,
+        };
 
         const declarationUrl = args.injectTypes({
           filename: DECLARATION_FILENAME,

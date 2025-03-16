@@ -1,0 +1,10 @@
+---
+import Link from "astro-typesafe-routes/link";
+import { z } from "astro/zod";
+
+export const searchSchema = z.object({
+  hej: z.string(),
+});
+---
+
+<Link to="/">Hit me!</Link>

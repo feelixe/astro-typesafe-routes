@@ -8,8 +8,6 @@ export async function tryFormatPrettier(content: string) {
       plugins: [],
     });
     return content;
-  } catch {
-    console.log("failed to format with prettier");
-  }
+  } catch {}
   return formatted;
 }

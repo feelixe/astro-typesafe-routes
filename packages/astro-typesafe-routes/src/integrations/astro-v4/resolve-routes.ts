@@ -2,6 +2,7 @@ import * as path from "node:path";
 import fastGlob from "fast-glob";
 import { doesRouteHaveSearchSchema } from "../common/search-params.js";
 import type {
+  RequiredAstroConfig,
   ResolvedRoute,
   RouteFile,
   RouteFileWithSearch,
@@ -20,11 +21,17 @@ async function listAstroRouteFiles(rootDir: string): Promise<RouteFile[]> {
 
 async function getRouteSearch(
   routes: RouteFile[],
+  astroConfig: RequiredAstroConfig,
 ): Promise<RouteFileWithSearch[]> {
+  // Search params have no effect on static builds.
+  const shouldResolveSearchParams = astroConfig.buildOutput === "server";
+
   const promises = routes.map(async (route) => {
     return {
       absolutePath: route.absolutePath,
-      hasSearchSchema: await doesRouteHaveSearchSchema(route.absolutePath),
+      hasSearchSchema: shouldResolveSearchParams
+        ? await doesRouteHaveSearchSchema(route.absolutePath)
+        : false,
     };
   });
 
@@ -79,12 +86,13 @@ function getResolvedRoutes(args: getResolvedRoutesParams): ResolvedRoute[] {
 }
 
 export async function resolveRoutesAstroV4(
-  rootDir: string,
+  astroConfig: RequiredAstroConfig,
 ): Promise<ResolvedRoute[]> {
-  const routeFiles = await listAstroRouteFiles(rootDir);
-  const routesWithSearch = await getRouteSearch(routeFiles);
+  const routeFiles = await listAstroRouteFiles(astroConfig.rootDir);
+  const routesWithSearch = await getRouteSearch(routeFiles, astroConfig);
+
   return getResolvedRoutes({
     routesWithSearch,
-    rootDir,
+    rootDir: astroConfig.rootDir,
   });
 }

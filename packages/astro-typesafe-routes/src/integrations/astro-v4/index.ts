@@ -11,24 +11,25 @@ import {
 } from "../common/index.js";
 import { resolveRoutesAstroV4 } from "./resolve-routes.js";
 import {
-  AstroRootDirDidNotResolveError,
+  AstroConfigDidNotResolveError,
   NoDeclarationPathError,
 } from "../common/errors.js";
 import { DECLARATION_FILENAME } from "../common/constants.js";
+import type { RequiredAstroConfig } from "../common/types.js";
 
 export function astroTypesafeRoutesAstroV4(): AstroIntegration {
   let declarationPath: string | undefined;
-  let rootDir: string | undefined;
+  let astroConfig: RequiredAstroConfig;
 
   async function generate(
     logger: AstroIntegrationLogger,
     injectFn?: (injectedType: InjectedType) => unknown,
   ) {
-    if (!rootDir) throw new AstroRootDirDidNotResolveError();
+    if (!astroConfig) throw new AstroConfigDidNotResolveError();
     if (!declarationPath) {
       throw new NoDeclarationPathError();
     }
-    const routes = await resolveRoutesAstroV4(rootDir);
+    const routes = await resolveRoutesAstroV4(astroConfig);
 
     const declarationContent = await getDeclarationContent({
       outPath: declarationPath,
@@ -73,7 +74,10 @@ export function astroTypesafeRoutesAstroV4(): AstroIntegration {
         });
       },
       "astro:config:done": async (args) => {
-        rootDir = fileURLToPath(args.config.root);
+        astroConfig = {
+          rootDir: fileURLToPath(args.config.root),
+          buildOutput: args.buildOutput,
+        };
 
         const declarationUrl = args.injectTypes({
           filename: "astro-typesafe-routes.d.ts",

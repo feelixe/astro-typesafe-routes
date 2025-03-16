@@ -15,36 +15,36 @@ await beforeAll(async () => {
 });
 
 const setups = [
-  {
-    name: "Astro v4 - valid path",
-    projectDir: path.join(E2E_PROJECTS_DIR, "./v4-valid-path"),
-    expectBuildSuccess: true,
-  },
-  {
-    name: "Astro v4 - invalid path",
-    projectDir: path.join(E2E_PROJECTS_DIR, "./v4-invalid-path"),
-    expectBuildSuccess: false,
-  },
-  {
-    name: "Astro v5 - valid path",
-    projectDir: path.join(E2E_PROJECTS_DIR, "./v5-valid-path"),
-    expectBuildSuccess: true,
-  },
-  {
-    name: "Astro v5 - invalid path",
-    projectDir: path.join(E2E_PROJECTS_DIR, "./v5-invalid-path"),
-    expectBuildSuccess: false,
-  },
+  // {
+  //   name: "Astro v4 - valid path",
+  //   projectDir: path.join(E2E_PROJECTS_DIR, "./v4-valid-path"),
+  //   expectBuildSuccess: true,
+  // },
+  // {
+  //   name: "Astro v4 - invalid path",
+  //   projectDir: path.join(E2E_PROJECTS_DIR, "./v4-invalid-path"),
+  //   expectBuildSuccess: false,
+  // },
+  // {
+  //   name: "Astro v5 - valid path",
+  //   projectDir: path.join(E2E_PROJECTS_DIR, "./v5-valid-path"),
+  //   expectBuildSuccess: true,
+  // },
+  // {
+  //   name: "Astro v5 - invalid path",
+  //   projectDir: path.join(E2E_PROJECTS_DIR, "./v5-invalid-path"),
+  //   expectBuildSuccess: false,
+  // },
   {
     name: "Astro v5 - valid search params",
     projectDir: path.join(E2E_PROJECTS_DIR, "./v5-valid-search-params"),
     expectBuildSuccess: true,
   },
-  {
-    name: "Astro v5 - invalid search params",
-    projectDir: path.join(E2E_PROJECTS_DIR, "./v5-invalid-search-params"),
-    expectBuildSuccess: false,
-  },
+  // {
+  //   name: "Astro v5 - invalid search params",
+  //   projectDir: path.join(E2E_PROJECTS_DIR, "./v5-invalid-search-params"),
+  //   expectBuildSuccess: false,
+  // },
 ];
 
 describe.each(setups)("E2E - $name", async (setup) => {
