@@ -9,7 +9,7 @@ export default defineConfig({
       astroVersion: 5,
     }),
   ],
-  output: "static",
+  output: "server",
   adapter: node({
     mode: "standalone",
   }),
