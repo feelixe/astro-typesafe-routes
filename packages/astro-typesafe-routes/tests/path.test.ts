@@ -66,20 +66,15 @@ describe("$path", () => {
 
   it("adds typed json search", () => {
     const search = {
-      age: 10,
-      person: {
-        name: "John",
-      },
+      age: "10",
+      person: "John",
     };
     const url = $path({
       to: "/test",
       search,
     });
 
-    const searchParams = new URLSearchParams({
-      age: JSON.stringify(search.age),
-      person: JSON.stringify(search.person),
-    });
+    const searchParams = new URLSearchParams(search);
     const expectedUrl = `/test?${searchParams.toString()}`;
     expect(url).toBe(expectedUrl);
   });

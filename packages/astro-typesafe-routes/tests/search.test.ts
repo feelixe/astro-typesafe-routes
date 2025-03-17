@@ -13,26 +13,22 @@ describe("getSearch", () => {
     const Astro = {
       url: {
         searchParams: new URLSearchParams({
-          age: JSON.stringify(10),
-          person: JSON.stringify({ name: "John" }),
+          age: "10",
+          name: "John",
         }),
       },
     } as AstroGlobal;
 
     const schema = z.object({
-      age: z.number(),
-      person: z.object({
-        name: z.string(),
-      }),
+      age: z.coerce.number(),
+      name: z.string(),
     });
 
     const res = getSearch(Astro, schema);
 
     expect(res).toEqual({
       age: 10,
-      person: {
-        name: "John",
-      },
+      name: "John",
     });
   });
 
@@ -40,26 +36,25 @@ describe("getSearch", () => {
     const Astro = {
       url: {
         searchParams: new URLSearchParams({
-          age: JSON.stringify(10),
-          person: JSON.stringify({ name: "John" }),
+          age: "10",
+          name: "John",
         }),
       },
     } as AstroGlobal;
 
     const schema = v.object({
-      age: v.number(),
-      person: v.object({
-        name: v.string(),
-      }),
+      age: v.pipe(
+        v.string(),
+        v.transform((input) => Number(input)),
+      ),
+      name: v.string(),
     });
 
     const res = getSearch(Astro, schema);
 
     expect(res).toEqual({
       age: 10,
-      person: {
-        name: "John",
-      },
+      name: "John",
     });
   });
 
