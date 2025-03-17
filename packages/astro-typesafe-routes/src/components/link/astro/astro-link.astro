@@ -17,6 +17,4 @@ const {
 const href = $path({ to, params, search, searchParams, hash, trailingSlash });
 ---
 
-<a href={href} {...anchorProps}>
-  <slot />
-</a>
+<a href={href} {...anchorProps}><slot /></a>
