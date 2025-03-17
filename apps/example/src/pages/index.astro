@@ -2,7 +2,7 @@
 import { getParams } from "astro-typesafe-routes/params";
 import * as v from "valibot";
 
-const params = getParams(Astro, "/[id]");
+const params = getParams(Astro, "/");
 
 export const searchSchema = v.object({
   page: v.number(),
