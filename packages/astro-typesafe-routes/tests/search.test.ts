@@ -21,7 +21,14 @@ describe("getSearch", () => {
 
     const schema = z.object({
       age: z.coerce.number(),
-      person: z.string().transform((value) => JSON.parse(value)),
+      person: z
+        .string()
+        .transform((value) => JSON.parse(value))
+        .pipe(
+          z.object({
+            name: z.string(),
+          }),
+        ),
     });
 
     const res = getSearch(Astro, schema);
@@ -46,7 +53,13 @@ describe("getSearch", () => {
 
     const schema = v.object({
       age: v.pipe(v.string(), v.transform(Number)),
-      person: v.pipe(v.string(), v.transform(JSON.parse)),
+      person: v.pipe(
+        v.string(),
+        v.transform(JSON.parse),
+        v.object({
+          name: v.string(),
+        }),
+      ),
     });
 
     const res = getSearch(Astro, schema);
