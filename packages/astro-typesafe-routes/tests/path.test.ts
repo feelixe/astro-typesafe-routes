@@ -66,8 +66,8 @@ describe("$path", () => {
 
   it("adds typed json search", () => {
     const search = {
-      age: "10",
-      person: "John",
+      age: JSON.stringify(10),
+      person: JSON.stringify({ name: "John" }),
     };
     const url = $path({
       to: "/test",
