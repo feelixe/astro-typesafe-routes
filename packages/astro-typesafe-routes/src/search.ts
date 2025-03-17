@@ -1,5 +1,4 @@
 import type { AstroGlobal } from "astro";
-import { deserialize } from "./search-serializer.js";
 import type { StandardSchemaV1 } from "./standard-schema.js";
 
 export class ValidationError extends Error {
@@ -22,7 +21,7 @@ export function getSearchSafe<T extends StandardSchemaV1>(
   astro: AstroGlobal,
   schema: T,
 ) {
-  const deserializedSearch = deserialize(astro.url.searchParams);
+  const deserializedSearch = Object.fromEntries(astro.url.searchParams);
   const validation = schema["~standard"].validate(
     deserializedSearch,
   ) as StandardSchemaV1.Result<unknown>;
@@ -59,7 +58,7 @@ export async function getSearchSafeAsync<T extends StandardSchemaV1>(
   astro: AstroGlobal,
   schema: T,
 ) {
-  const deserializedSearch = deserialize(astro.url.searchParams);
+  const deserializedSearch = Object.fromEntries(astro.url.searchParams);
   const validation = await schema["~standard"].validate(deserializedSearch);
 
   if (validation.issues) {

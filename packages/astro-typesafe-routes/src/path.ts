@@ -1,9 +1,7 @@
-import { serialize } from "./search-serializer.js";
-
 export type RouteOptions = {
   to: string;
   searchParams?: ConstructorParameters<typeof URLSearchParams>[0];
-  search?: Record<string, unknown>;
+  search?: Record<string, string>;
   hash?: string;
   trailingSlash?: boolean;
   params?: Record<string, string | number>;
@@ -25,7 +23,7 @@ export function $path(args: RouteOptions) {
   }
 
   if (args.search) {
-    const search = serialize(args.search);
+    const search = new URLSearchParams(args.search);
     url += `?${search.toString()}`;
   }
 
