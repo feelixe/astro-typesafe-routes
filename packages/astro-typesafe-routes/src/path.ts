@@ -12,7 +12,7 @@ export type RouteOptions = {
 export function $path(args: RouteOptions) {
   const trailingSlash = args.trailingSlash ?? false;
 
-  let url: string = args.to;
+  let url = args.to;
 
   if (trailingSlash) {
     url += "/";
@@ -20,7 +20,13 @@ export function $path(args: RouteOptions) {
 
   if (args.params !== undefined) {
     for (const [paramKey, paramValue] of Object.entries(args.params)) {
-      url = url.replace(`[${paramKey}]`, paramValue.toString());
+      url = url.replace(
+        new RegExp(
+          // Disregard spread operators when matching params
+          `\[(\.{3})?${paramKey}\]`,
+        ),
+        paramValue.toString(),
+      );
     }
   }
 

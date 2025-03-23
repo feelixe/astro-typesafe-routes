@@ -18,6 +18,15 @@ describe("$path", () => {
     ).toBe("/test/sv/123");
   });
 
+  it("handles spread params correctly", () => {
+    expect(
+      $path({
+        to: "/test/[...rest]",
+        params: { rest: "a/b/c" },
+      }),
+    ).toBe("/test/a/b/c");
+  });
+
   it("adds search params", () => {
     expect($path({ to: "/test", searchParams: { key: "value" } })).toBe(
       "/test?key=value",
