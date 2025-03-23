@@ -50,7 +50,7 @@ export async function getRoutes(
       );
 
     return {
-      path: route.pattern ?? "",
+      path: route.pattern,
       params: params.length > 0 ? params : null,
       absolutePath,
       hasSearchSchema,
