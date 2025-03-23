@@ -23,7 +23,7 @@ export function $path(args: RouteOptions) {
       url = url.replace(
         new RegExp(
           // Disregard spread operators when matching params
-          `\[(\.{3})?${paramKey}\]`,
+          `\\[(\\.{3})?${paramKey}\\]`,
         ),
         paramValue.toString(),
       );
