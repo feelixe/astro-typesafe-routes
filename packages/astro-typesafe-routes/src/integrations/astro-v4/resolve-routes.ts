@@ -56,7 +56,8 @@ function addLeadingSlash(value: string) {
 
 function getRouteParams(value: string) {
   return (value.match(/(\[[^\]]+\])/g) || []).map((segment) =>
-    segment.replace(/\[|\]/g, ""),
+    // remove brackets and spread operator
+    segment.replace(/^\[(\.{3})?|\]$/g, ""),
   );
 }
 

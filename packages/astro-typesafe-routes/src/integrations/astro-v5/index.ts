@@ -39,9 +39,19 @@ export async function getRoutes(
       ? await doesRouteHaveSearchSchema(absolutePath)
       : false;
 
+    const params = route.segments
+      .flatMap((segment) =>
+        // Only include dynamic segments (params)
+        segment.filter((routePart) => routePart.dynamic),
+      )
+      .map((routePart) =>
+        // Remove the ellipsis if it's a spread param
+        routePart.spread ? routePart.content.slice(3) : routePart.content,
+      );
+
     return {
-      path: route.pattern ?? "",
-      params: route.params.length > 0 ? route.params : null,
+      path: route.pattern,
+      params: params.length > 0 ? params : null,
       absolutePath,
       hasSearchSchema,
     };
