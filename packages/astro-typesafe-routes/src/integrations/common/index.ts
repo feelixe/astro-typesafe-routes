@@ -69,11 +69,13 @@ declare module "astro-typesafe-routes/params" {
   import type { AstroGlobal } from "astro";
   import type { Route, Routes } from "astro-typesafe-routes/path";
 
+  type RemoveSpread<T extends string> = T extends \`...\${infer S}\` ? S : T;
+
   export function getParams<T extends Route>(
     astro: AstroGlobal,
     route: T,
   ): Routes[T]["params"] extends Array<unknown>
-    ? { [key in Routes[T]["params"][number]]: string }
+    ? Record<RemoveSpread<Routes[T]["params"][number]>, string>
     : never;
 }
 
