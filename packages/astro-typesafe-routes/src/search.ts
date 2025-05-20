@@ -1,6 +1,9 @@
-import type { AstroGlobal } from "astro";
 import { deserialize } from "./search-serializer.js";
 import type { StandardSchemaV1 } from "./standard-schema.js";
+
+type AstroGlobal = {
+  url: URL;
+};
 
 export class ValidationError extends Error {
   private _issues: readonly StandardSchemaV1.Issue[];

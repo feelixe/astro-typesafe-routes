@@ -1,5 +1,16 @@
 ---
+import { getSearch } from "astro-typesafe-routes";
 import Link from "astro-typesafe-routes/link";
+import { z } from "astro/zod";
+
+export const searchSchema = z.object({
+  name: z.string(),
+  page: z.number().int(),
+});
+
+const search = getSearch(Astro, searchSchema);
+
+console.log("search");
 ---
 
-<Link to="/" search={{ name: "John Doe", page: 30 }}>Hit me!</Link>
+<Link to="/">Hit me!</Link>
