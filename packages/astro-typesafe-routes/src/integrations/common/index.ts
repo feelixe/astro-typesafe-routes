@@ -119,7 +119,5 @@ declare module "astro-typesafe-routes/path" {
 }
 `;
 
-  // { search: StandardSchemaV1.InferInput<Routes[T]["search"]> }
-
   return await tryFormatPrettier(content);
 }
