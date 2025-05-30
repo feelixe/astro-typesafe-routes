@@ -89,14 +89,28 @@ declare module "astro-typesafe-routes/path" {
       ? { [key in Routes[T]["params"][number]]: string | number }
       : null;
 
+  type AreAllFieldsOptional<T> = {
+    [K in keyof T]-?: undefined extends T[K] ? true : false;
+  }[keyof T] extends true
+    ? true
+    : false;
+
   export type RouteOptions<T extends Route> = {
     to: T;
     hash?: string;
     trailingSlash?: boolean;
     searchParams?: ConstructorParameters<typeof URLSearchParams>[0];
-  } & (Routes[T]["search"] extends StandardSchemaV1
-    ? { search: StandardSchemaV1.InferInput<Routes[T]["search"]> }
-    : { search?: never }) &
+  } & (Routes[T]["search"] extends null
+    ? { search?: never }
+    : AreAllFieldsOptional<
+          StandardSchemaV1.InferInput<Routes[T]["search"]>
+        > extends true
+      ? {
+          search?: StandardSchemaV1.InferInput<Routes[T]["search"]>;
+        }
+      : {
+          search: StandardSchemaV1.InferInput<Routes[T]["search"]>;
+        }) &
     (Routes[T]["params"] extends null
       ? { params?: never }
       : { params: ParamsRecord<T> });
