@@ -1,10 +1,14 @@
+import { createRequire } from "node:module";
 import semver from "semver";
-import packageJson from "astro/package.json" with { type: "json" };
+import * as fs from "node:fs";
 
 const SUPPORTED_VERSIONS = ">=4.14.0 <6.0.0";
 
 function getAstroVersion() {
-  return packageJson.version;
+  const require = createRequire(import.meta.url);
+  const astroPkgPath = require.resolve("astro/package.json");
+  const astroPkg = JSON.parse(fs.readFileSync(astroPkgPath, "utf-8"));
+  return astroPkg.version as string;
 }
 
 export function getAstroMajorVersion() {
