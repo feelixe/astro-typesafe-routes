@@ -2,7 +2,7 @@
   "name": "astro-typesafe-routes",
   "type": "module",
   "description": "Astro Integration for typesafe URLs",
-  "version": "4.2.3",
+  "version": "4.2.4",
   "keywords": ["astro-integration"],
   "author": "Felix Eklöf",
   "license": "MIT",
