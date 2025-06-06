@@ -3,6 +3,7 @@ import type {
   AstroIntegrationLogger,
   InjectedType,
   IntegrationResolvedRoute,
+  RoutePart,
 } from "astro";
 import type { RequiredAstroConfig, ResolvedRoute } from "../common/types.js";
 import {
@@ -18,6 +19,21 @@ import {
   AstroRoutesDidNotResolveError,
 } from "../common/errors.js";
 import { DECLARATION_FILENAME } from "../common/constants.js";
+
+function segmentsToPath(segments: RoutePart[][]) {
+  const routeParts = segments.map((segment) => {
+    return segment
+      .map((part) => {
+        if (part.dynamic) {
+          return `[${part.content}]`;
+        }
+        return part.content;
+      })
+      .join("");
+  });
+
+  return `/${routeParts.join("/")}`;
+}
 
 export type GetRoutesParams = {
   routes: IntegrationResolvedRoute[];
@@ -39,8 +55,10 @@ export async function getRoutes(
       ? await doesRouteHaveSearchSchema(absolutePath)
       : false;
 
+    const routePath = segmentsToPath(route.segments);
+
     return {
-      path: route.pattern ?? "",
+      path: routePath,
       params: route.params.length > 0 ? route.params : null,
       absolutePath,
       hasSearchSchema,
