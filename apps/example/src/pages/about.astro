@@ -9,8 +9,8 @@ export const searchSchema = z.object({
 });
 
 const search = getSearch(Astro, searchSchema);
-
-console.log("search");
 ---
 
 <Link to="/">Hit me!</Link>
+
+{search}

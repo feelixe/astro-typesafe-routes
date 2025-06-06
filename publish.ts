@@ -16,17 +16,17 @@ async function doesTagAlreadyExist(version: string) {
 }
 
 async function lint() {
-  console.log("Linting...");
+  console.info("Linting...");
   await $`bun run lint`;
 }
 
 async function runTests() {
-  console.log("Running tests...");
+  console.info("Running tests...");
   await $`bun test`;
 }
 
 async function build() {
-  console.log("Building...");
+  console.info("Building...");
   await $`bun run build`;
 }
 
