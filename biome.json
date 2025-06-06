@@ -22,7 +22,7 @@
     "rules": {
       "recommended": true,
       "suspicious": {
-        "noConsole": "error"
+        "noConsoleLog": "error"
       }
     }
   },
