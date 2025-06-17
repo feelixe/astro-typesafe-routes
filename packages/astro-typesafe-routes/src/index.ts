@@ -1,34 +1,145 @@
-import type { AstroIntegration } from "astro";
+import type {
+  AstroIntegration,
+  AstroIntegrationLogger,
+  InjectedType,
+  IntegrationResolvedRoute,
+  RoutePart,
+} from "astro";
+import type {
+  RequiredAstroConfig,
+  ResolvedRoute,
+} from "./integrations/common/types.js";
+import { fileURLToPath } from "node:url";
+import * as path from "node:path";
+import { doesRouteHaveSearchSchema } from "./integrations/common/search-params.js";
 import {
-  assertSupportedVersion,
-  getAstroMajorVersion,
-} from "./astro-version.js";
-import { astroTypesafeRoutesAstroV5 } from "./integrations/astro-v5/index.js";
-import { astroTypesafeRoutesAstroV4 } from "./integrations/astro-v4/index.js";
+  AstroConfigDidNotResolveError,
+  AstroRoutesDidNotResolveError,
+} from "./integrations/common/errors.js";
+import {
+  getDeclarationContent,
+  logSuccess,
+  writeDeclarationFile,
+} from "./integrations/common/index.js";
+import { DECLARATION_FILENAME } from "./integrations/common/constants.js";
 
-export * from "./search.js";
+function segmentsToPath(segments: RoutePart[][]) {
+  const routeParts = segments.map((segment) => {
+    return segment
+      .map((part) => {
+        if (part.dynamic) {
+          return `[${part.content}]`;
+        }
+        return part.content;
+      })
+      .join("");
+  });
 
-export type AstroTypesafeRoutesParams = {
-  astroVersion?: 4 | 5;
+  return `/${routeParts.join("/")}`;
+}
+
+export type GetRoutesParams = {
+  routes: IntegrationResolvedRoute[];
+  astroConfig: RequiredAstroConfig;
 };
 
-export default function astroTypesafeRoutes(
-  args?: AstroTypesafeRoutesParams,
-): AstroIntegration {
-  if (args?.astroVersion === undefined) {
-    assertSupportedVersion();
-  }
-
-  const astroMajorVersion = args?.astroVersion ?? getAstroMajorVersion();
-
-  if (astroMajorVersion === 5) {
-    return astroTypesafeRoutesAstroV5();
-  }
-  if (astroMajorVersion === 4) {
-    return astroTypesafeRoutesAstroV4();
-  }
-
-  throw new Error(
-    `astro-typesafe-routes is not compatible with this Astro version ${astroMajorVersion}`,
+export async function getRoutes(
+  args: GetRoutesParams,
+): Promise<ResolvedRoute[]> {
+  const withoutInternal = args.routes.filter(
+    (route) => route.origin !== "internal" && route.type !== "redirect",
   );
+  const promises = withoutInternal.map(async (route) => {
+    const absolutePath = path.join(args.astroConfig.rootDir, route.entrypoint);
+
+    // Search params have no effect on static builds.
+    const shouldResolveSearchParams = args.astroConfig.buildOutput === "server";
+    const hasSearchSchema = shouldResolveSearchParams
+      ? await doesRouteHaveSearchSchema(absolutePath)
+      : false;
+
+    const params = route.segments
+      .flatMap((segment) =>
+        // Only include dynamic segments (params)
+        segment.filter((routePart) => routePart.dynamic),
+      )
+      .map((routePart) =>
+        // Remove the ellipsis if it's a spread param
+        routePart.spread ? routePart.content.slice(3) : routePart.content,
+      );
+
+    const routePath = segmentsToPath(route.segments);
+
+    return {
+      path: routePath,
+      params: params.length > 0 ? params : null,
+      absolutePath,
+      hasSearchSchema,
+    };
+  });
+
+  return await Promise.all(promises);
+}
+
+export default function astroTypesafeRoutes(): AstroIntegration {
+  let astroRoutes: IntegrationResolvedRoute[] | undefined;
+  let declarationPath: string | undefined;
+  let astroConfig: RequiredAstroConfig;
+
+  async function generate(
+    logger: AstroIntegrationLogger,
+    injectFn?: (injectedType: InjectedType) => unknown,
+  ) {
+    if (!declarationPath) return;
+    if (!astroRoutes) throw new AstroRoutesDidNotResolveError();
+    if (!astroConfig) throw new AstroConfigDidNotResolveError();
+
+    const resolvedRoutes = await getRoutes({
+      routes: astroRoutes,
+      astroConfig,
+    });
+
+    const declarationContent = await getDeclarationContent({
+      routes: resolvedRoutes,
+      outPath: declarationPath,
+    });
+
+    if (!injectFn) {
+      await writeDeclarationFile({
+        filename: declarationPath,
+        content: declarationContent,
+      });
+    } else {
+      await injectFn({
+        content: declarationContent,
+        filename: DECLARATION_FILENAME,
+      });
+    }
+
+    logSuccess(logger);
+  }
+
+  return {
+    name: "astro-typesafe-routes",
+    hooks: {
+      "astro:routes:resolved": async (args) => {
+        astroRoutes = args.routes;
+        await generate(args.logger);
+      },
+      "astro:config:done": async (args) => {
+        astroConfig = {
+          rootDir: fileURLToPath(args.config.root),
+          buildOutput: args.buildOutput,
+        };
+
+        const declarationUrl = args.injectTypes({
+          filename: DECLARATION_FILENAME,
+          content: "",
+        });
+
+        declarationPath = fileURLToPath(declarationUrl);
+        await generate(args.logger, args.injectTypes);
+      },
+    },
+  };
 }
