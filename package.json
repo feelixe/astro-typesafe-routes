@@ -10,6 +10,7 @@
   },
   "workspaces": ["packages/*", "apps/*", "e2e-projects/*"],
   "devDependencies": {
-    "@biomejs/biome": "1.9.4"
+    "@biomejs/biome": "1.9.4",
+    "prompts": "^2.4.2"
   }
 }
