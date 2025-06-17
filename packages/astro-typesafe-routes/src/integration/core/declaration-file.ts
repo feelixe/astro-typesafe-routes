@@ -1,9 +1,9 @@
-import type { AstroIntegrationLogger } from "astro";
-import type { ResolvedRoute } from "./types.js";
 import * as fs from "node:fs/promises";
 import * as path from "node:path";
-import { tryFormatPrettier } from "./format.js";
-import { normalizeSeparators } from "./utils.js";
+import type { AstroIntegrationLogger } from "astro";
+import type { ResolvedRoute } from "./types.js";
+import { tryFormatPrettier } from "../helpers/format.js";
+import { normalizeSeparators } from "../helpers/path.js";
 
 type WriteDeclarationFileParams = {
   filename: string;
