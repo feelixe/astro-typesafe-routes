@@ -30,7 +30,9 @@
 * 🧩 **Custom Component Support**: Add type safety to custom links with the types `Route` and `RouteOptions`.
 
 ## Requirements
-Compatible with Astro version 4 and 5, with a minimum of `4.14.0`.
+Compatible with Astro version `^5.0.0`.
+
+If you're using Astro 4, install `astro-typesafe-routes@^4.0.0`.
 
 ## Installation
 1. Add integration:
