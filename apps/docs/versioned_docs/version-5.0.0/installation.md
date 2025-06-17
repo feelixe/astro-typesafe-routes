@@ -7,7 +7,7 @@ Astro Typesafe Routes integrates seamlessly into your Astro project, offering au
 
 ## Requirements
 * Astro Typesafe Routes is compatible with Astro `^5.0.0`.
-* **Astro** is a required peer dependencies.
+* **Astro** is a required peer dependency.
   
 ## Automatic Installation
 1. [Setup Typescript for your Astro project.](https://docs.astro.build/en/guides/typescript/#setup)
