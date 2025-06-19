@@ -10,9 +10,11 @@ export type RouteOptions = {
 };
 
 export function $path(args: RouteOptions) {
+  // @ts-expect-error Can't recognise import.meta.env
+  const baseUrl: string = import.meta.env.BASE_URL;
   const trailingSlash = args.trailingSlash ?? false;
 
-  let url: string = args.to;
+  let url = baseUrl.replace(/\/$/, "") + args.to;
 
   if (trailingSlash) {
     url += "/";

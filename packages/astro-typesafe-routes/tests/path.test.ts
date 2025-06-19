@@ -1,6 +1,8 @@
 import { it, describe, expect } from "bun:test";
 import { $path } from "../src/path";
 
+import.meta.env.BASE_URL = "/";
+
 describe("$path", () => {
   it("returns pathname", () => {
     expect($path({ to: "/test" })).toBe("/test");
