@@ -14,9 +14,7 @@ export function $path(args: RouteOptions) {
 	const baseUrl: string = import.meta.env.BASE_URL;
 	const trailingSlash = args.trailingSlash ?? false;
 
-	let url: string = baseUrl === "/" ? "" : baseUrl;
-
-	url += args.to;
+	let url = baseUrl.replace(/\/$/, "") + args.to;
 
 	if (trailingSlash) {
 		url += "/";
