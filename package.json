@@ -1,18 +1,15 @@
 {
-	"name": "astro-typesafe-routes-workspace",
-	"private": true,
-	"scripts": {
-		"build": "bun run --filter ./packages/* build",
-		"dev": "bun run --filter ./packages/* dev",
-		"lint": "biome lint",
-		"publish": "bun publish.ts"
-	},
-	"workspaces": [
-		"packages/*",
-		"apps/*",
-		"e2e-projects/*"
-	],
-	"devDependencies": {
-		"@biomejs/biome": "1.9.4"
-	}
+  "name": "astro-typesafe-routes-workspace",
+  "private": true,
+  "scripts": {
+    "build": "bun run --filter ./packages/* build",
+    "dev": "bun run --filter ./packages/* dev",
+    "lint": "biome lint",
+    "format": "biome format",
+    "publish": "bun publish.ts"
+  },
+  "workspaces": ["packages/*", "apps/*", "e2e-projects/*"],
+  "devDependencies": {
+    "@biomejs/biome": "1.9.4"
+  }
 }
