@@ -1,12 +1,24 @@
-import { it, describe, expect, jest } from "bun:test";
+import { it, describe, expect, jest, beforeEach } from "bun:test";
 import { $path } from "../src/path.js";
 
-import.meta.env.BASE_URL = "/";
-import.meta.env.TRAILING_SLASH = "ignore";
-
 describe("$path", () => {
+  beforeEach(() => {
+    import.meta.env.BASE_URL = "/";
+    import.meta.env.TRAILING_SLASH = "ignore";
+  });
+
   it("returns pathname", () => {
     expect($path({ to: "/test" })).toBe("/test");
+  });
+
+  it("adds base url", () => {
+    import.meta.env.BASE_URL = "/base";
+    expect($path({ to: "/test" })).toBe("/base/test");
+  });
+
+  it("adds base url with trailing slash", () => {
+    import.meta.env.BASE_URL = "/base/";
+    expect($path({ to: "/test" })).toBe("/base/test");
   });
 
   it("replaces dynamic paths with params", () => {
@@ -50,7 +62,17 @@ describe("$path", () => {
     ).toBe("/test?key=value#hash");
   });
 
-  it("adds a trailing slash", () => {
+  it("does not add trailing slash if not configured", () => {
+    import.meta.env.TRAILING_SLASH = "ignore";
+    expect($path({ to: "/test" })).toBe("/test");
+  });
+
+  it("adds trailing slash if configured", () => {
+    import.meta.env.TRAILING_SLASH = "always";
+    expect($path({ to: "/test" })).toBe("/test/");
+  });
+
+  it("adds a trailing slash if explicitly requested", () => {
     expect($path({ to: "/test", trailingSlash: true })).toBe("/test/");
   });
 
