@@ -12,11 +12,17 @@ export type RouteOptions = {
 export function $path(args: RouteOptions) {
   // @ts-expect-error Can't recognise import.meta.env
   const baseUrl: string = import.meta.env.BASE_URL;
-  const trailingSlash = args.trailingSlash ?? false;
+
+  // @ts-expect-error Can't recognise import.meta.env
+  const trailingSlashEnv: string = import.meta.env.TRAILING_SLASH;
+
+  const defaultTrailingSlash = trailingSlashEnv === "always";
+  const shouldAddTrailingSlash = args.trailingSlash ?? defaultTrailingSlash;
 
   let url = baseUrl.replace(/\/$/, "") + args.to;
 
-  if (trailingSlash) {
+  const hasTrailingSlash = url.endsWith("/");
+  if (shouldAddTrailingSlash && !hasTrailingSlash) {
     url += "/";
   }
 
