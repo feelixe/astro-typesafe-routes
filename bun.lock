@@ -42,8 +42,8 @@
         "@astrojs/compiler": "^2.10.3",
       },
     },
-    "e2e-projects/get-params": {
-      "name": "e2e-project-get-params",
+    "e2e-projects/imports": {
+      "name": "e2e-project-imports",
       "dependencies": {
         "@astrojs/check": "^0.9.4",
         "astro": "^5.10.0",
@@ -1316,7 +1316,7 @@
 
     "duplexer3": ["duplexer3@0.1.5", "", {}, "sha512-1A8za6ws41LQgv9HrE/66jyC5yuSjQ3L/KOpFtoBilsAK2iA2wuS5rTt1OCzIvtS2V7nVmedsUU+DGRcjBmOYA=="],
 
-    "e2e-project-get-params": ["e2e-project-get-params@workspace:e2e-projects/get-params"],
+    "e2e-project-imports": ["e2e-project-imports@workspace:e2e-projects/imports"],
 
     "e2e-project-invalid-path": ["e2e-project-invalid-path@workspace:e2e-projects/invalid-path"],
 

@@ -16,6 +16,11 @@ await beforeAll(async () => {
 
 const setups = [
   {
+    name: "Imports",
+    projectDir: path.join(E2E_PROJECTS_DIR, "./imports"),
+    expectBuildSuccess: true,
+  },
+  {
     name: "Valid path",
     projectDir: path.join(E2E_PROJECTS_DIR, "./valid-path"),
     expectBuildSuccess: true,
