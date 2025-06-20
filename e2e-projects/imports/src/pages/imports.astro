@@ -1,0 +1,17 @@
+---
+import { getParams } from "astro-typesafe-routes/params";
+import Link from "astro-typesafe-routes/link";
+import { $path } from "astro-typesafe-routes/path";
+import { getSearch } from "astro-typesafe-routes";
+import { z } from "astro/zod";
+
+getParams(Astro, "/imports");
+
+const search = getSearch(Astro, z.object({}));
+---
+
+<pre>{JSON.stringify(search)}</pre>
+
+<Link to="/imports">link</Link>
+
+<a href={$path({ to: "/imports" })}>link</a>

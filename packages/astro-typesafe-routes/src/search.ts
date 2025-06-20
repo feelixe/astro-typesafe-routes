@@ -51,7 +51,6 @@ export function getSearch<T extends StandardSchemaV1>(
   schema: T,
 ) {
   const validation = getSearchSafe(astro, schema);
-
   if (!validation.success) {
     throw new ValidationError(validation.error.issues);
   }

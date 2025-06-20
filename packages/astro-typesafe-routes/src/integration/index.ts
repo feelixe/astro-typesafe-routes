@@ -3,7 +3,6 @@ import type {
   AstroIntegrationLogger,
   InjectedType,
   IntegrationResolvedRoute,
-  RoutePart,
 } from "astro";
 import type { RequiredAstroConfig, ResolvedRoute } from "./core/types.js";
 import { fileURLToPath } from "node:url";
@@ -19,21 +18,7 @@ import {
   writeDeclarationFile,
 } from "./core/declaration-file.js";
 import { DECLARATION_FILENAME } from "./core/constants.js";
-
-function segmentsToPath(segments: RoutePart[][]) {
-  const routeParts = segments.map((segment) => {
-    return segment
-      .map((part) => {
-        if (part.dynamic) {
-          return `[${part.content}]`;
-        }
-        return part.content;
-      })
-      .join("");
-  });
-
-  return `/${routeParts.join("/")}`;
-}
+import { segmentsToPath } from "./core/segment.js";
 
 export type GetRoutesParams = {
   routes: IntegrationResolvedRoute[];
@@ -136,6 +121,17 @@ export default function astroTypesafeRoutes(): AstroIntegration {
 
         declarationPath = fileURLToPath(declarationUrl);
         await generate(args.logger, args.injectTypes);
+      },
+      "astro:config:setup": (args) => {
+        const trailingSlash = args.config.trailingSlash;
+
+        args.updateConfig({
+          vite: {
+            define: {
+              "import.meta.env.TRAILING_SLASH": JSON.stringify(trailingSlash),
+            },
+          },
+        });
       },
     },
   };
