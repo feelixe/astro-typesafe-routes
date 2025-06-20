@@ -1,7 +1,8 @@
-import { it, describe, expect } from "bun:test";
+import { it, describe, expect, jest } from "bun:test";
 import { $path } from "../src/path.js";
 
 import.meta.env.BASE_URL = "/";
+import.meta.env.TRAILING_SLASH = "ignore";
 
 describe("$path", () => {
   it("returns pathname", () => {
@@ -81,7 +82,9 @@ describe("$path", () => {
       person: {
         name: "John",
       },
+      job: "developer",
     };
+
     const url = $path({
       to: "/test",
       search,
@@ -90,8 +93,10 @@ describe("$path", () => {
     const searchParams = new URLSearchParams({
       age: JSON.stringify(search.age),
       person: JSON.stringify(search.person),
+      job: "developer",
     });
     const expectedUrl = `/test?${searchParams.toString()}`;
+
     expect(url).toBe(expectedUrl);
   });
 });

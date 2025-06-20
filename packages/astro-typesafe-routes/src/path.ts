@@ -1,3 +1,4 @@
+/// <reference types="vite/client" />
 import { serialize } from "./search-serializer.js";
 
 export type RouteOptions = {
@@ -10,16 +11,12 @@ export type RouteOptions = {
 };
 
 export function $path(args: RouteOptions) {
-  // @ts-expect-error Can't recognise import.meta.env
-  const baseUrl: string = import.meta.env.BASE_URL;
-
-  // @ts-expect-error Can't recognise import.meta.env
-  const trailingSlashEnv: string = import.meta.env.TRAILING_SLASH;
-
-  const defaultTrailingSlash = trailingSlashEnv === "always";
-  const shouldAddTrailingSlash = args.trailingSlash ?? defaultTrailingSlash;
-
+  const baseUrl = import.meta.env.BASE_URL;
   let url = baseUrl.replace(/\/$/, "") + args.to;
+
+  const trailingSlashConfig = import.meta.env.TRAILING_SLASH ?? "ignore";
+  const defaultTrailingSlash = trailingSlashConfig === "always";
+  const shouldAddTrailingSlash = args.trailingSlash ?? defaultTrailingSlash;
 
   const hasTrailingSlash = url.endsWith("/");
   if (shouldAddTrailingSlash && !hasTrailingSlash) {
