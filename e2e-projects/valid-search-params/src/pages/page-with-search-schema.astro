@@ -1,7 +1,12 @@
 ---
 import { z } from "astro/zod";
+import { getSearch } from "astro-typesafe-routes";
 
 export const searchSchema = z.object({
   page: z.number().int(),
 });
+
+const search = getSearch(Astro, searchSchema);
 ---
+
+<pre>{JSON.stringify(search)}</pre>
