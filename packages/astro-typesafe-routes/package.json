@@ -56,9 +56,6 @@
       "optional": true
     }
   },
-  "dependencies": {
-    "fast-glob": "^3.3.2"
-  },
   "devDependencies": {
     "@types/bun": "latest",
     "astro": "^5.0.0",
