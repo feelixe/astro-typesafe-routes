@@ -1,11 +1,7 @@
 import { describe, it, expect, beforeAll, afterAll } from "bun:test";
 import { $ } from "bun";
 import * as path from "node:path";
-import {
-  buildPackage,
-  cleanUpTestProject,
-  setupTestProject,
-} from "./project-utils.ts";
+import { buildPackage, cleanUpTestProject, setupTestProject } from "./project-utils.ts";
 
 const E2E_PROJECTS_DIR = path.join(import.meta.dir, "../../e2e-projects");
 const WORKSPACE_DIR = path.join(import.meta.dir, "../../");

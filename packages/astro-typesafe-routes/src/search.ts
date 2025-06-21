@@ -21,10 +21,7 @@ export class ValidationError extends Error {
   }
 }
 
-export function getSearchSafe<T extends StandardSchemaV1>(
-  astro: AstroGlobal,
-  schema: T,
-) {
+export function getSearchSafe<T extends StandardSchemaV1>(astro: AstroGlobal, schema: T) {
   const deserializedSearch = deserialize(astro.url.searchParams);
   const validation = schema["~standard"].validate(
     deserializedSearch,
@@ -46,10 +43,7 @@ export function getSearchSafe<T extends StandardSchemaV1>(
   } as const;
 }
 
-export function getSearch<T extends StandardSchemaV1>(
-  astro: AstroGlobal,
-  schema: T,
-) {
+export function getSearch<T extends StandardSchemaV1>(astro: AstroGlobal, schema: T) {
   const validation = getSearchSafe(astro, schema);
   if (!validation.success) {
     throw new ValidationError(validation.error.issues);
@@ -80,10 +74,7 @@ export async function getSearchSafeAsync<T extends StandardSchemaV1>(
   } as const;
 }
 
-export async function getSearchAsync<T extends StandardSchemaV1>(
-  astro: AstroGlobal,
-  schema: T,
-) {
+export async function getSearchAsync<T extends StandardSchemaV1>(astro: AstroGlobal, schema: T) {
   const validation = await getSearchSafeAsync(astro, schema);
 
   if (!validation.success) {

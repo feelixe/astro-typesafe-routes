@@ -22,15 +22,13 @@ describe("$path", () => {
   });
 
   it("replaces dynamic paths with params", () => {
-    expect($path({ to: "/test/[id]", params: { id: "123" } })).toBe(
-      "/test/123",
-    );
+    expect($path({ to: "/test/[id]", params: { id: "123" } })).toBe("/test/123");
   });
 
   it("replaces multiple dynamic paths with params", () => {
-    expect(
-      $path({ to: "/test/[lang]/[id]", params: { id: "123", lang: "sv" } }),
-    ).toBe("/test/sv/123");
+    expect($path({ to: "/test/[lang]/[id]", params: { id: "123", lang: "sv" } })).toBe(
+      "/test/sv/123",
+    );
   });
 
   it("handles spread params correctly", () => {
@@ -43,9 +41,7 @@ describe("$path", () => {
   });
 
   it("adds search params", () => {
-    expect($path({ to: "/test", searchParams: { key: "value" } })).toBe(
-      "/test?key=value",
-    );
+    expect($path({ to: "/test", searchParams: { key: "value" } })).toBe("/test?key=value");
   });
 
   it("does not add search params if size is zero", () => {
@@ -57,9 +53,9 @@ describe("$path", () => {
   });
 
   it("adds hash and search param in correct order", () => {
-    expect(
-      $path({ to: "/test", hash: "hash", searchParams: { key: "value" } }),
-    ).toBe("/test?key=value#hash");
+    expect($path({ to: "/test", hash: "hash", searchParams: { key: "value" } })).toBe(
+      "/test?key=value#hash",
+    );
   });
 
   it("does not add trailing slash if not configured", () => {

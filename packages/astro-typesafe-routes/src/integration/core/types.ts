@@ -1,10 +1,6 @@
-export type RouteFile = { absolutePath: string };
-
-export type RouteFileWithSearch = RouteFile & {
+export type ResolvedRoute = {
+  absolutePath: string;
   hasSearchSchema: boolean;
-};
-
-export type ResolvedRoute = RouteFileWithSearch & {
   path: string;
   params: string[] | null;
 };

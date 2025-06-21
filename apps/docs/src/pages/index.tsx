@@ -17,10 +17,7 @@ function HomepageHeader() {
         </Heading>
         <p className="hero__subtitle">{siteConfig.tagline}</p>
         <div className={styles.buttons}>
-          <Link
-            className="button button--secondary button--lg"
-            to="/docs/installation"
-          >
+          <Link className="button button--secondary button--lg" to="/docs/installation">
             Installation
           </Link>
         </div>
@@ -32,10 +29,7 @@ function HomepageHeader() {
 export default function Home(): ReactNode {
   const { siteConfig } = useDocusaurusContext();
   return (
-    <Layout
-      title={`${siteConfig.title}`}
-      description="Documentation for Astro Typesafe Routes"
-    >
+    <Layout title={`${siteConfig.title}`} description="Documentation for Astro Typesafe Routes">
       <HomepageHeader />
     </Layout>
   );

@@ -1,15 +1,9 @@
 import { it, describe, expect, afterEach, jest } from "bun:test";
-import {
-  canStringifyBeSkipped,
-  deserialize,
-  serialize,
-} from "../src/search-serializer.ts";
+import { canStringifyBeSkipped, deserialize, serialize } from "../src/search-serializer.ts";
 
 describe("deserialize", () => {
   it("returns correct values", () => {
-    const search = deserialize(
-      new URLSearchParams({ isActive: "true", foo: "bar" }),
-    );
+    const search = deserialize(new URLSearchParams({ isActive: "true", foo: "bar" }));
     expect(search).toEqual({ isActive: true, foo: "bar" });
   });
 });
