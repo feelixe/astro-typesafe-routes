@@ -38,6 +38,7 @@ export async function getDeclarationContent(args: GetDeclarationContentParams) {
   const routesType = `{${rows.join(",\n")}}`;
 
   const content = `
+
 declare module "astro-typesafe-routes/link" {
   import type { HTMLAttributes } from "astro/types";
   import type { RouteOptions, Route } from "astro-typesafe-routes/path";
@@ -70,6 +71,24 @@ declare module "astro-typesafe-routes/params" {
   ): Routes[T]["params"] extends Array<unknown>
     ? { [key in Routes[T]["params"][number]]: string }
     : never;
+}
+
+
+
+declare module "astro-typesafe-routes/create-route" {
+  import type { AstroGlobal } from "astro";
+  import type { Route, Routes } from "astro-typesafe-routes/path";
+  import type { StandardSchemaV1 } from "astro-typesafe-routes/standard-schema";
+
+  export type CreateRouteParams<T extends Route, S extends StandardSchemaV1> = {
+    id: T;
+    searchSchema?: S;
+  };
+
+  export function createRoute<T extends Route, S extends StandardSchemaV1>(astro: AstroGlobal, args: CreateRouteParams<T, S>): {
+    params: Routes[T]["params"] extends null ? never : Record<Routes[T]["params"][number], string>;
+    search: StandardSchemaV1.InferOutput<S>;
+  };
 }
 
 declare module "astro-typesafe-routes/path" {
