@@ -28,16 +28,11 @@ export async function getDeclarationContent(args: GetDeclarationContentParams) {
     let search = "null";
     if (route.hasSearchSchema) {
       const declarationDir = path.dirname(args.outPath);
-      const relativeRoutePath = path.relative(
-        declarationDir,
-        route.absolutePath,
-      );
+      const relativeRoutePath = path.relative(declarationDir, route.absolutePath);
       const normalizedSearchPath = normalizeSeparators(relativeRoutePath);
       search = `typeof import("${normalizedSearchPath}").searchSchema`;
     }
-    return `"${route.path}": { params: ${JSON.stringify(
-      route.params,
-    )}; search: ${search} }`;
+    return `"${route.path}": { params: ${JSON.stringify(route.params)}; search: ${search} }`;
   });
 
   const routesType = `{${rows.join(",\n")}}`;
