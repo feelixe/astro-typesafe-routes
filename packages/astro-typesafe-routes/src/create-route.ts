@@ -4,13 +4,14 @@ import type { AstroGlobal } from "astro";
 
 export type CreateRouteParams = {
   id: string;
+  Astro: AstroGlobal;
   searchSchema?: StandardSchemaV1;
 };
 
-export function createRoute(astro: AstroGlobal, args: CreateRouteParams) {
+export function createRoute(args: CreateRouteParams) {
   return {
-    params: astro.params,
-    search: args.searchSchema ? getSearch(astro, args.searchSchema) : undefined,
+    params: args.Astro.params,
+    search: args.searchSchema ? getSearch(args.Astro, args.searchSchema) : undefined,
   };
 }
 

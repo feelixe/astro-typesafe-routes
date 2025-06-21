@@ -14,6 +14,7 @@ import {
 } from "./core/declaration-file.js";
 import { DECLARATION_FILENAME } from "./core/constants.js";
 import { getRoutes } from "./core/routes.js";
+import { routeGenerator } from "./core/route-generator.js";
 
 export default function astroTypesafeRoutes(): AstroIntegration {
   let astroRoutes: IntegrationResolvedRoute[] | undefined;
@@ -32,6 +33,10 @@ export default function astroTypesafeRoutes(): AstroIntegration {
       routes: astroRoutes,
       astroConfig,
     });
+
+    for (const route of resolvedRoutes) {
+      await routeGenerator(route);
+    }
 
     const declarationContent = await getDeclarationContent({
       routes: resolvedRoutes,

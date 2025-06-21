@@ -3,7 +3,8 @@ import Link from "astro-typesafe-routes/link";
 import { createRoute } from "astro-typesafe-routes/create-route";
 import { z } from "astro/zod";
 
-export const route = createRoute(Astro, {
+export const route = createRoute({
+  Astro,
   id: "/",
   searchSchema: z.object({
     name: z.string().optional(),
