@@ -23,14 +23,19 @@
 
 
 ## Features
-* 🛟 **Typesafe:** Ensures all URLs matches a route in your Astro project.
-* 🔗 **Typed Link Component:** Replace your anchor links with the typesafe `Link` component.
-* 🔎 **Typesafe Search Params**: Support for typesafe and JSON serialized search params when using a SSR adapter.
-* 🛠️ **Automatic Type Generation**: Simple installation as an Astro integration.
-* 🧩 **Custom Component Support**: Add type safety to custom links with the types `Route` and `RouteOptions`.
+* 🛟 **Typesafe**
+Ensures all URLs matches a route in your Astro project.
+* 🔗 **Typed Link Component**
+Replace your anchor links with the typesafe `Link` component.
+* 🔎 **Typesafe Search Params**
+Support for typesafe and JSON serialized search params when using an SSR adapter.
+* 🧩 **Custom Component Support**
+Add type safety to custom links with the types `Route` and `RouteOptions`.
+* 🤸 **Zero Dependencies**
+No 3rd party packages.
 
 ## Requirements
-Compatible with Astro version `^5.0.0`.
+Compatible with Astro `^5.0.0`.
 
 If you're using Astro 4, install `astro-typesafe-routes@^4.0.0`.
 
