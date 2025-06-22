@@ -21,13 +21,9 @@ function isCreateRouteCall(node: ts.Node): node is ts.CallExpression {
 /**
  * Returns the `id` argument of the `createRoute` call
  */
-function getIdCallArg(node: ts.CallExpression) {
+function extractIdCallArgumentFromNode(node: ts.CallExpression) {
   const firstCallArg = node.arguments[0];
-  if (!firstCallArg) {
-    return;
-  }
-
-  if (!ts.isObjectLiteralExpression(firstCallArg)) {
+  if (!firstCallArg || !ts.isObjectLiteralExpression(firstCallArg)) {
     return;
   }
 
@@ -38,17 +34,15 @@ function getIdCallArg(node: ts.CallExpression) {
   return match?.initializer;
 }
 
-function findIdCallArg(node: ts.Node): ts.Expression | undefined {
-  const children = node.getChildren();
+function getIdCallArgument(node: ts.Node): ts.Expression | undefined {
+  const callArg = isCreateRouteCall(node) && extractIdCallArgumentFromNode(node);
+  if (callArg) {
+    return callArg;
+  }
 
+  const children = node.getChildren();
   for (const child of children) {
-    if (isCreateRouteCall(child)) {
-      const callArg = getIdCallArg(child);
-      if (callArg) {
-        return callArg;
-      }
-    }
-    const result = findIdCallArg(child);
+    const result = getIdCallArgument(child);
     if (result) {
       return result;
     }
@@ -57,15 +51,23 @@ function findIdCallArg(node: ts.Node): ts.Expression | undefined {
 }
 
 export async function routeGenerator(route: ResolvedRoute) {
+  // Load and parse the Astro route file.
   const astroFile = await fs.readFile(route.absolutePath, "utf-8");
-
   const parseResult = await parse(astroFile);
 
+  // Check if there is a frontmatter.
   const frontmatter = parseResult.ast.children.find((child) => child.type === "frontmatter");
   if (!frontmatter || !frontmatter.position) {
     return;
   }
 
+  // Check if the frontmatter can be found in the original file, should always be true.
+  const leadingLength = astroFile.indexOf(frontmatter.value);
+  if (leadingLength === -1) {
+    return;
+  }
+
+  // Parse the frontmatter with Typescript.
   const sourceFile = ts.createSourceFile(
     "index.ts",
     frontmatter.value,
@@ -73,27 +75,24 @@ export async function routeGenerator(route: ResolvedRoute) {
     true,
   );
 
-  const callArg = findIdCallArg(sourceFile);
-
+  // Try to find the `id` argument of a call to `createRoute`.
+  const callArg = getIdCallArgument(sourceFile);
   if (!callArg) {
     return;
   }
 
+  // Calculate the start and end position of the `id` argument.
   const frontmatterStart = frontmatter.position.start;
-  const leadingLength = astroFile.indexOf(frontmatter.value);
-  if (leadingLength === -1) {
-    return;
-  }
-
   const replaceStart = leadingLength + frontmatterStart.offset + callArg.getStart() + 1;
   const replaceEnd = leadingLength + frontmatterStart.offset + callArg.getEnd() - 1;
 
+  // If the `id` argument matches the current route, do nothing.
   const currentRouteId = astroFile.slice(replaceStart, replaceEnd);
   if (currentRouteId === route.path) {
     return;
   }
 
+  // Replace the `id` argument with the new routeId.
   const newContent = replaceBetweenOffsets(astroFile, route.path, replaceStart, replaceEnd);
-
   await fs.writeFile(route.absolutePath, newContent, { encoding: "utf-8" });
 }
