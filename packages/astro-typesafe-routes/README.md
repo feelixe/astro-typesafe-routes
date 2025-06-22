@@ -110,9 +110,9 @@ export const routeSchema = createRouteSchema({
   routeId: "/blog/[postId]",
 });
 
-const { params } = routeSchema.parse(Astro);
+const route = routeSchema.parse(Astro);
 
-params.postId;
+route.params.postId;
 ---
 ```
 
