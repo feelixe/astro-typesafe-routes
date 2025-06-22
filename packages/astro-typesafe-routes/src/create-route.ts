@@ -2,17 +2,14 @@ import { getSearch } from "./search.js";
 import type { StandardSchemaV1 } from "./standard-schema.js";
 import type { AstroGlobal } from "astro";
 
-export type CreateRouteParams = {
-  id: string;
+export type CreateRouteOpts = {
   Astro: AstroGlobal;
   searchSchema?: StandardSchemaV1;
 };
 
-export function createRoute(args: CreateRouteParams) {
+export function createRoute(_routeId: string, opts: CreateRouteOpts) {
   return {
-    params: args.Astro.params,
-    search: args.searchSchema ? getSearch(args.Astro, args.searchSchema) : undefined,
+    params: opts.Astro.params,
+    search: opts?.searchSchema ? getSearch(opts.Astro, opts.searchSchema) : undefined,
   };
 }
-
-export const hej = 123;

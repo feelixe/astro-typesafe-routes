@@ -8,10 +8,7 @@ function getRouteBoilerplate(routeId: string) {
   return `---
 import { createRoute } from "astro-typesafe-routes/create-route";
 
-export const route = createRoute({
-  Astro,
-  id: "${routeId}",
-});
+const route = createRoute("${routeId}", { Astro });
 ---
 `;
 }
