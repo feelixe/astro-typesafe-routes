@@ -2,6 +2,19 @@ import * as fs from "node:fs/promises";
 import * as ts from "typescript";
 import { parse } from "@astrojs/compiler";
 import type { ResolvedRoute } from "./types.js";
+import { replaceRange } from "../helpers/string.js";
+
+function getRouteBoilerplate(routeId: string) {
+  return `---
+import { createRoute } from "astro-typesafe-routes/create-route";
+
+export const route = createRoute({
+  Astro,
+  id: "${routeId}",
+});
+---
+`;
+}
 
 /**
  * Checks if the node is a call to `createRoute`
@@ -49,10 +62,18 @@ function getIdCallArgument(node: ts.Node): ts.Expression | undefined {
 export async function routeGenerator(route: ResolvedRoute) {
   // Load and parse the Astro route file.
   const astroFile = await fs.readFile(route.absolutePath, "utf-8");
+
+  // Check if the file is empty (assumed to be a new route).
+  if (astroFile.length <= 0) {
+    const boilerplate = getRouteBoilerplate(route.path);
+    await fs.writeFile(route.absolutePath, boilerplate, { encoding: "utf-8" });
+    return;
+  }
+
   const parseResult = await parse(astroFile);
 
   // Check if there is a frontmatter.
-  const frontmatter = parseResult.ast.children.find((child) => child.type === "frontmatter");
+  const frontmatter = parseResult.ast.children?.find((child) => child.type === "frontmatter");
   if (!frontmatter || !frontmatter.position) {
     return;
   }
