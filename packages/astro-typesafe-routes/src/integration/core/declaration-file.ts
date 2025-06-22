@@ -85,8 +85,8 @@ declare module "astro-typesafe-routes/route-schema" {
     parse: (astro: AstroGlobal) => {
       params: Routes[T]["params"] extends null ? never : { [key in Routes[T]["params"][number]]: string };
       search: StandardSchemaV1.InferOutput<S>;
-      redirect: <T extends Route>(args: RouteOptions<T>) => Response;
-      rewrite: <T extends Route>(args: RouteOptions<T>) => Promise<Response>;
+      redirect: (args: RouteOptions<T>) => Response;
+      rewrite: (args: RouteOptions<T>) => Promise<Response>;
     };
   }
 }

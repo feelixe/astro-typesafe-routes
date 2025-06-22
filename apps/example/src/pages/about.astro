@@ -1,7 +1,5 @@
 ---
-import { createRouteSchema } from "astro-typesafe-routes/route-schema";
+import { $path } from "astro-typesafe-routes/path";
 
-export const routeSchema = createRouteSchema({ routeId: "/about" });
+return Astro.redirect($path({ to: "/" }));
 ---
-
-about

@@ -2,10 +2,10 @@
 sidebar_position: 5
 ---
 # Typesafe Search Params
-Astro Typesafe Routes supports generation types for typesafe search params.
+Astro Typesafe Routes supports type generation for typesafe search parameters.
 
-* Only supported when using [on-demand Rendering](https://docs.astro.build/en/guides/on-demand-rendering/).
-* Typed search params are optional, if you want to pass untyped search params, use field `searchParams` instead.
+* Requires [on-demand rendering](https://docs.astro.build/en/guides/on-demand-rendering/).
+* Typed search params are optional, if you want to pass untyped search params, use the field `searchParams` instead.
 
 ## Setup
 
@@ -41,7 +41,6 @@ Astro Typesafe Routes supports generation types for typesafe search params.
 
 3. When linking to the page, pass the required search params to field `search`. Typescript will give an error if field `search` does not match the schema's input:
     ```tsx
-    // src/pages/my-other-route.astro
     ---
     import Link from "astro-typesafe-routes/link";
     ---
@@ -73,9 +72,8 @@ Astro Typesafe Routes supports generation types for typesafe search params.
         limit: z.number().catch(1),
       }),
     });
+    const route = routeSchema.parse(Astro);
 
-    const { search } = routeSchema.parse(Astro);
-
-    search.limit;
+    route.search.limit;
     ---
     ```
