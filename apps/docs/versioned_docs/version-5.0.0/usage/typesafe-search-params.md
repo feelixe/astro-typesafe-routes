@@ -12,7 +12,7 @@ Astro Typesafe Routes supports generation types for typesafe search params.
 1. Add a [Standard Schema](https://github.com/standard-schema/standard-schema?tab=readme-ov-file#what-schema-libraries-implement-the-spec) (Zod, Valibot etc.) compatible schema to the route schema. The top most type of the schema must be an `object`. While the inner fields can be nested and of any type that is JSON serializable:
     ```tsx
     ---
-    import { createRouteSchema } from "astro-typesafe-routes/create-route";
+    import { createRouteSchema } from "astro-typesafe-routes/route-schema";
     import { z } from "astro/zod";
 
     export const routeSchema = createRouteSchema({
@@ -27,7 +27,7 @@ Astro Typesafe Routes supports generation types for typesafe search params.
 2. It is usually a good practice to have optional search params or catch errors to avoid crashing the page if invalid search params are received.
     ```tsx
     ---
-    import { createRouteSchema } from "astro-typesafe-routes/create-route";
+    import { createRouteSchema } from "astro-typesafe-routes/route-schema";
     import { z } from "astro/zod";
 
     export const routeSchema = createRouteSchema({
@@ -64,7 +64,7 @@ Astro Typesafe Routes supports generation types for typesafe search params.
 5. To read the search params, call `parse` on the route schema.
     ```tsx
     ---
-    import { createRouteSchema } from "astro-typesafe-routes/   create-route";
+    import { createRouteSchema } from "astro-typesafe-routes/route-schema";
     import { z } from "astro/zod";
 
     export const routeSchema = createRouteSchema({

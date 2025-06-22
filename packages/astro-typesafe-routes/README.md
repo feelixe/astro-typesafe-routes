@@ -31,8 +31,8 @@
 * 🤸 **Zero Dependencies** — No 3rd party packages.
 
 ## Prerequisites
-1. Astro `^5.0.0` is required
-2. Typescript must be installed
+1. **Astro** `^5.0.0` is required
+2. **Typescript** must be installed
 ```bash
 npm i -D typescript
 ```

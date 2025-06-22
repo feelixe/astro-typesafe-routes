@@ -1,16 +1,5 @@
 ---
-import { createRouteSchema } from "astro-typesafe-routes/create-route";
-import { z } from "astro/zod";
-
-export const routeSchema = createRouteSchema({
-  routeId: "/",
-  searchSchema: z.object({
-    limit: z.number().catch(1),
-  }),
-});
-
-const { search } = routeSchema.parse(Astro);
-
-search.limit;
+import Link from "astro-typesafe-routes/link";
 ---
 
+<Link to="/blog/[postId]" params={{ postId: "1" }}>About</Link>
