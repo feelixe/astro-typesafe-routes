@@ -23,7 +23,7 @@ To link to a page with typed URLs, import the `Link` component.
 import Link from "astro-typesafe-routes/link";
 ---
 
-<Link to="/blog/[postId]" params={{ postId: "1" }}>About</Link>
+<Link to="/blog/[postId]" params={{ postId: "1" }}>Post</Link>
 ```
 
 ## Reading Params
