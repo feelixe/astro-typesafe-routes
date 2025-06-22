@@ -79,14 +79,16 @@ export async function routeGenerator(route: ResolvedRoute) {
     return;
   }
 
-  const leadingLength = astroFile.indexOf(frontmatter.value);
   const frontmatterStart = frontmatter.position.start;
+  const leadingLength = astroFile.indexOf(frontmatter.value);
+  if (leadingLength === -1) {
+    return;
+  }
 
   const replaceStart = leadingLength + frontmatterStart.offset + callArg.getStart() + 1;
   const replaceEnd = leadingLength + frontmatterStart.offset + callArg.getEnd() - 1;
 
   const currentRouteId = astroFile.slice(replaceStart, replaceEnd);
-  console.info("currentRouteId", currentRouteId);
   if (currentRouteId === route.path) {
     return;
   }
