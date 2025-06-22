@@ -3,10 +3,6 @@ import * as ts from "typescript";
 import { parse } from "@astrojs/compiler";
 import type { ResolvedRoute } from "./types.js";
 
-function replaceBetweenOffsets(original: string, newText: string, start: number, end: number) {
-  return original.substring(0, start) + newText + original.substring(end);
-}
-
 /**
  * Checks if the node is a call to `createRoute`
  */
@@ -93,6 +89,6 @@ export async function routeGenerator(route: ResolvedRoute) {
   }
 
   // Replace the `id` argument with the new routeId.
-  const newContent = replaceBetweenOffsets(astroFile, route.path, replaceStart, replaceEnd);
+  const newContent = replaceRange(astroFile, route.path, replaceStart, replaceEnd);
   await fs.writeFile(route.absolutePath, newContent, { encoding: "utf-8" });
 }
