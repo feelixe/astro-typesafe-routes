@@ -2,7 +2,7 @@
 import { createRoute } from "astro-typesafe-routes/create-route";
 import { z } from "astro/zod";
 
-export const route = createRoute(Astro, {
+const route = createRoute(Astro, {
   routeId: "/blog/[postId]",
   searchSchema: z.object({
     name: z.string().optional(),
@@ -12,3 +12,5 @@ export const route = createRoute(Astro, {
 route.params.postId;
 route.search.name;
 ---
+
+postid
