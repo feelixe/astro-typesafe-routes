@@ -1,12 +1,15 @@
 ---
-import { z } from "astro/zod";
-import { getSearch } from "astro-typesafe-routes";
+import { z } from "zod";
+import { createRouteSchema } from "astro-typesafe-routes/create-route";
 
-export const searchSchema = z.object({
-  page: z.number().int(),
+export const routeSchema = createRouteSchema({
+  routeId: "/page-with-search-schema",
+  searchSchema: z.object({
+    page: z.number().int(),
+  }),
 });
 
-const search = getSearch(Astro, searchSchema);
+const route = routeSchema.parse(Astro);
 ---
 
-<pre>{JSON.stringify(search)}</pre>
+{JSON.stringify(route.search)}
