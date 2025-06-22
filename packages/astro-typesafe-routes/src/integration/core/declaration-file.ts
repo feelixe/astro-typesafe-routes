@@ -38,34 +38,31 @@ export async function getDeclarationContent(args: GetDeclarationContentParams) {
   const routesType = `{${rows.join(",\n")}}`;
 
   const content = `
-
 declare module "astro-typesafe-routes/link" {
   import type { HTMLAttributes } from "astro/types";
-  import type { RouteOptions, Route } from "astro-typesafe-routes/path";
+  import type { RouteOptions, RouteId } from "astro-typesafe-routes/path";
 
   type LinkBaseProps = Omit<HTMLAttributes<"a">, "href">;
 
-  export type LinkProps<T extends Route> = LinkBaseProps & RouteOptions<T>;
-
-  export default function Link<T extends Route>(props: LinkProps<T>): any;
+  export type LinkProps<T extends RouteId> = LinkBaseProps & RouteOptions<T>;
+  export default function Link<T extends RouteId>(props: LinkProps<T>): any;
 }
 
 declare module "astro-typesafe-routes/link/react" {
   import type { ComponentProps } from "react";
-  import type { RouteOptions, Route } from "astro-typesafe-routes/path";
+  import type { RouteOptions, RouteId } from "astro-typesafe-routes/path";
 
   type LinkBaseProps = Omit<ComponentProps<"a">, "href">;
 
-  export type LinkProps<T extends Route> = LinkBaseProps & RouteOptions<T>;
-
-  export default function Link<T extends Route>(props: LinkProps<T>): any;
+  export type LinkProps<T extends RouteId> = LinkBaseProps & RouteOptions<T>;
+  export default function Link<T extends RouteId>(props: LinkProps<T>): any;
 }
 
 declare module "astro-typesafe-routes/params" {
   import type { AstroGlobal } from "astro";
-  import type { Route, Routes } from "astro-typesafe-routes/path";
+  import type { RouteId, Routes } from "astro-typesafe-routes/path";
 
-  export function getParams<T extends Route>(
+  export function getParams<T extends RouteId>(
     astro: AstroGlobal,
     route: T,
   ): Routes[T]["params"] extends Array<unknown>
@@ -73,26 +70,24 @@ declare module "astro-typesafe-routes/params" {
     : never;
 }
 
-
-
 declare module "astro-typesafe-routes/create-route" {
   import type { AstroGlobal } from "astro";
-  import type { Route, Routes, RouteOptions } from "astro-typesafe-routes/path";
+  import type { RouteId, Routes, RouteOptions } from "astro-typesafe-routes/path";
   import type { StandardSchemaV1 } from "astro-typesafe-routes/standard-schema";
 
-  export type CreateRouteOpts<T extends Route, S extends StandardSchemaV1> = {
+  export type CreateRouteOpts<T extends RouteId, S extends StandardSchemaV1> = {
     routeId: T;
     searchSchema?: S;
   };
 
-  export function createRoute<T extends Route, S extends StandardSchemaV1>(
+  export function createRoute<T extends RouteId, S extends StandardSchemaV1>(
     Astro: AstroGlobal,
     opts: CreateRouteOpts<T, S>
   ): {
     params: Routes[T]["params"] extends null ? never : Record<Routes[T]["params"][number], string>;
     search: StandardSchemaV1.InferOutput<S>;
-    redirect: <T extends Route>(args: RouteOptions<T>) => Response;
-    rewrite: <T extends Route>(args: RouteOptions<T>) => Promise<Response>;
+    redirect: <T extends RouteId>(args: RouteOptions<T>) => Response;
+    rewrite: <T extends RouteId>(args: RouteOptions<T>) => Promise<Response>;
   };
 }
 
@@ -101,9 +96,9 @@ declare module "astro-typesafe-routes/path" {
 
   export type Routes = ${routesType};
 
-  export type Route = keyof Routes;
+  export type RouteId = keyof Routes;
 
-  export type ParamsRecord<T extends Route> =
+  export type ParamsRecord<T extends RouteId> =
     Routes[T]["params"] extends Array<string>
       ? { [key in Routes[T]["params"][number]]: string | number }
       : null;
@@ -114,7 +109,7 @@ declare module "astro-typesafe-routes/path" {
     ? true
     : false;
 
-  export type RouteOptions<T extends Route> = {
+  export type RouteOptions<T extends RouteId> = {
     to: T;
     hash?: string;
     trailingSlash?: boolean;
@@ -134,7 +129,7 @@ declare module "astro-typesafe-routes/path" {
       ? { params?: never }
       : { params: ParamsRecord<T> });
 
-  export function $path<T extends Route>(args: RouteOptions<T>): string;
+  export function $path<T extends RouteId>(args: RouteOptions<T>): string;
 }
 `;
 

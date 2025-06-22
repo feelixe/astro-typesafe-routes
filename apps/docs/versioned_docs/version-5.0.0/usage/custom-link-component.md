@@ -2,14 +2,14 @@
 sidebar_position: 4
 ---
 # Custom Link Component
-Sometimes, you may need to create your own custom `Link` component while still maintaining type safety. To achieve this, you can import the `Route` and `RouteOptions` types, which allow you to add type-safe routing to your custom implementation.
+Sometimes, you may need to create your own custom `Link` component while still maintaining type safety. To achieve this, you can import the `RouteId` and `RouteOptions` types, which allow you to add type-safe routing to your custom implementation.
 ```tsx
 ---
 import type { HTMLAttributes } from "astro/types";
-import type { RouteOptions, Route } from "astro-typesafe-routes/path";
+import type { RouteOptions, RouteId } from "astro-typesafe-routes/path";
 import { $path } from "astro-typesafe-routes/path";
 
-export type Props<T extends Route> = Omit<HTMLAttributes<"a">, "href"> &
+export type Props<T extends RouteId> = Omit<HTMLAttributes<"a">, "href"> &
   RouteOptions<T>;
 
 const {
