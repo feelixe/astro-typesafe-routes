@@ -11,7 +11,7 @@ function getRouteBoilerplate(routeId: string) {
   return `---
 import { ${createRouteSchemaFnName} } from "astro-typesafe-routes/create-route";
 
-export const route = ${createRouteSchemaFnName}({ ${routeIdFieldName}: "${routeId}" });
+export const routeSchema = ${createRouteSchemaFnName}({ ${routeIdFieldName}: "${routeId}" });
 ---
 `;
 }

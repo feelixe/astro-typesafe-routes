@@ -3,14 +3,12 @@ import { createRouteSchema } from "astro-typesafe-routes/create-route";
 import Link from "astro-typesafe-routes/link";
 import { z } from "astro/zod";
 
-export const route = createRouteSchema({
+export const routeSchema = createRouteSchema({
   routeId: "/",
   searchSchema: z.object({
     name: z.string().catch("hej"),
   }),
 });
-
-const { params, search } = route.parse(Astro);
 ---
 
 <Link to="/blog/[postId]" params={{ postId: "1" }} search={{ name: "felix" }}>
