@@ -3,13 +3,14 @@ import { createRoute } from "astro-typesafe-routes/create-route";
 import { z } from "astro/zod";
 
 const route = createRoute(Astro, {
-  routeId: "/",
+  routeId: "/blog/[postId]",
   searchSchema: z.object({
     name: z.string().optional(),
   }),
 });
 
-return route.rewrite({ to: "/blog/[postId]", params: { postId: "1" } });
+route.params.postId;
+route.search.name;
 ---
 
-<div>index</div>
+postid
