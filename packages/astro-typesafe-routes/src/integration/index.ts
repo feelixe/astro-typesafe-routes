@@ -16,7 +16,11 @@ import { DECLARATION_FILENAME } from "./core/constants.js";
 import { getRoutes } from "./core/routes.js";
 import { routeGenerator } from "./core/route-generator.js";
 
-export default function astroTypesafeRoutes(): AstroIntegration {
+export type AstroTypesafeRoutesParams = {
+  disableRouteGeneration?: boolean;
+};
+
+export default function astroTypesafeRoutes(args?: AstroTypesafeRoutesParams): AstroIntegration {
   let astroRoutes: IntegrationResolvedRoute[] | undefined;
   let declarationPath: string | undefined;
   let astroConfig: RequiredAstroConfig;
@@ -34,8 +38,8 @@ export default function astroTypesafeRoutes(): AstroIntegration {
       astroConfig,
     });
 
-    for (const route of resolvedRoutes) {
-      await routeGenerator(route);
+    if (!args?.disableRouteGeneration) {
+      await Promise.all(resolvedRoutes.map(routeGenerator));
     }
 
     const declarationContent = await getDeclarationContent({
