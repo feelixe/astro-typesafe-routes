@@ -80,14 +80,14 @@ declare module "astro-typesafe-routes/create-route" {
   import type { Route, Routes, RouteOptions } from "astro-typesafe-routes/path";
   import type { StandardSchemaV1 } from "astro-typesafe-routes/standard-schema";
 
-  export type CreateRouteOpts<S extends StandardSchemaV1> = {
-    Astro: AstroGlobal;
+  export type CreateRouteOpts<T extends Route, S extends StandardSchemaV1> = {
+    routeId: T;
     searchSchema?: S;
   };
 
   export function createRoute<T extends Route, S extends StandardSchemaV1>(
-    routeId: T,
-    opts: CreateRouteOpts<S>
+    Astro: AstroGlobal,
+    opts: CreateRouteOpts<T, S>
   ): {
     params: Routes[T]["params"] extends null ? never : Record<Routes[T]["params"][number], string>;
     search: StandardSchemaV1.InferOutput<S>;

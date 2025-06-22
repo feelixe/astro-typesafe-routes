@@ -1,5 +1,5 @@
 ---
 import { createRoute } from "astro-typesafe-routes/create-route";
 
-const route = createRoute("/about", { Astro });
+const route = createRoute(Astro, { routeId: "/about" });
 ---

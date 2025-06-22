@@ -8,7 +8,7 @@ function getRouteBoilerplate(routeId: string) {
   return `---
 import { createRoute } from "astro-typesafe-routes/create-route";
 
-const route = createRoute("${routeId}", { Astro });
+const route = createRoute(Astro, { routeId: "${routeId}" });
 ---
 `;
 }
@@ -27,28 +27,28 @@ function isCreateRouteCall(node: ts.Node): node is ts.CallExpression {
 /**
  * Returns the `id` argument of the `createRoute` call
  */
-function extractIdCallArgumentFromNode(node: ts.CallExpression) {
-  const firstCallArg = node.arguments[0];
-  if (!firstCallArg || !ts.isObjectLiteralExpression(firstCallArg)) {
+function extractRouteIdCallArgumentFromNode(node: ts.CallExpression) {
+  const secondCallArg = node.arguments[1];
+  if (!secondCallArg || !ts.isObjectLiteralExpression(secondCallArg)) {
     return;
   }
 
-  const match = firstCallArg.properties.find(
-    (el) => ts.isPropertyAssignment(el) && ts.isIdentifier(el.name) && el.name.text === "id",
+  const match = secondCallArg.properties.find(
+    (el) => ts.isPropertyAssignment(el) && ts.isIdentifier(el.name) && el.name.text === "routeId",
   ) as ts.PropertyAssignment | undefined;
 
   return match?.initializer;
 }
 
-function getIdCallArgument(node: ts.Node): ts.Expression | undefined {
-  const callArg = isCreateRouteCall(node) && extractIdCallArgumentFromNode(node);
+function getRouteIdCallArgument(node: ts.Node): ts.Expression | undefined {
+  const callArg = isCreateRouteCall(node) && extractRouteIdCallArgumentFromNode(node);
   if (callArg) {
     return callArg;
   }
 
   const children = node.getChildren();
   for (const child of children) {
-    const result = getIdCallArgument(child);
+    const result = getRouteIdCallArgument(child);
     if (result) {
       return result;
     }
@@ -56,6 +56,10 @@ function getIdCallArgument(node: ts.Node): ts.Expression | undefined {
   return undefined;
 }
 
+/**
+ * - Populates empty route files with boilerplate.
+ * - Updates the `routeId` argument of the `createRoute` call.
+ */
 export async function routeGenerator(route: ResolvedRoute) {
   // Load and parse the Astro route file.
   const astroFile = await fs.readFile(route.absolutePath, "utf-8");
@@ -90,7 +94,7 @@ export async function routeGenerator(route: ResolvedRoute) {
   );
 
   // Try to find the `id` argument of a call to `createRoute`.
-  const callArg = getIdCallArgument(sourceFile);
+  const callArg = getRouteIdCallArgument(sourceFile);
   if (!callArg) {
     return;
   }

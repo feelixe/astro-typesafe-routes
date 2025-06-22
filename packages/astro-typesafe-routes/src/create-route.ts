@@ -4,19 +4,20 @@ import type { StandardSchemaV1 } from "./standard-schema.js";
 import type { AstroGlobal } from "astro";
 
 export type CreateRouteOptions = {
-  Astro: AstroGlobal;
+  routeId: string;
+
   searchSchema?: StandardSchemaV1;
 };
 
-export function createRoute(_routeId: string, opts: CreateRouteOptions) {
+export function createRoute(Astro: AstroGlobal, opts: CreateRouteOptions) {
   return {
-    params: opts.Astro.params,
-    search: opts?.searchSchema ? getSearch(opts.Astro, opts.searchSchema) : undefined,
+    params: Astro.params,
+    search: opts?.searchSchema ? getSearch(Astro, opts.searchSchema) : undefined,
     redirect: (args: RouteOptions) => {
-      return opts.Astro.redirect($path(args));
+      return Astro.redirect($path(args));
     },
     rewrite: (args: RouteOptions) => {
-      return opts.Astro.rewrite($path(args));
+      return Astro.rewrite($path(args));
     },
   };
 }
