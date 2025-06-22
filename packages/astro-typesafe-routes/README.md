@@ -1,6 +1,7 @@
 <h1 align="center">Astro Typesafe Routes</h1>
 <p align="center">
-  Enhance your Astro development experience with rigorous type safety for every route in your application. This integration automatically generates TypeScript definitions from your project's route structure.
+  <sub>Enhance your Astro development experience with rigorous type safety for every route in your application. This integration automatically generates TypeScript definitions from your project's route structure.
+  </sub>
   <br />
   <br />
   <a href="https://www.npmjs.com/package/astro-typesafe-routes"><img src="https://badge.fury.io/js/astro-typesafe-routes.svg?icon=si%3Anpm" alt="npm version" height="18"></a>
@@ -29,10 +30,12 @@
 * 🧩 **Custom Component Support** — Add type safety to custom links components.
 * 🤸 **Zero Dependencies** — No 3rd party packages.
 
-## Requirements
-Compatible with Astro `^5.0.0`.
-
-If you're using Astro 4, install `astro-typesafe-routes@^4.0.0`.
+## Prerequisites
+1. Astro `^5.0.0` is required
+2. Typescript must be installed
+```bash
+npm i -D typescript
+```
 
 ## Installation
 1. Add integration:

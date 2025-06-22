@@ -4,11 +4,14 @@ import { parse } from "@astrojs/compiler";
 import type { ResolvedRoute } from "./types.js";
 import { replaceRange } from "../helpers/string.js";
 
+const createRouteSchemaFnName = "createRouteSchema";
+const routeIdFieldName = "routeId";
+
 function getRouteBoilerplate(routeId: string) {
   return `---
-import { createRoute } from "astro-typesafe-routes/create-route";
+import { ${createRouteSchemaFnName} } from "astro-typesafe-routes/create-route";
 
-const route = createRoute(Astro, { routeId: "${routeId}" });
+export const routeSchema = ${createRouteSchemaFnName}({ ${routeIdFieldName}: "${routeId}" });
 ---
 `;
 }
@@ -21,20 +24,21 @@ function isCreateRouteCall(node: ts.Node): node is ts.CallExpression {
     return false;
   }
   const expr = node.expression;
-  return expr.getText() === "createRoute";
+  return expr.getText() === createRouteSchemaFnName;
 }
 
 /**
  * Returns the `id` argument of the `createRoute` call
  */
 function extractRouteIdCallArgumentFromNode(node: ts.CallExpression) {
-  const secondCallArg = node.arguments[1];
-  if (!secondCallArg || !ts.isObjectLiteralExpression(secondCallArg)) {
+  const firstArgument = node.arguments[0];
+  if (!firstArgument || !ts.isObjectLiteralExpression(firstArgument)) {
     return;
   }
 
-  const match = secondCallArg.properties.find(
-    (el) => ts.isPropertyAssignment(el) && ts.isIdentifier(el.name) && el.name.text === "routeId",
+  const match = firstArgument.properties.find(
+    (el) =>
+      ts.isPropertyAssignment(el) && ts.isIdentifier(el.name) && el.name.text === routeIdFieldName,
   ) as ts.PropertyAssignment | undefined;
 
   return match?.initializer;

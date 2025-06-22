@@ -30,7 +30,7 @@ export async function getDeclarationContent(args: GetDeclarationContentParams) {
       const declarationDir = path.dirname(args.outPath);
       const relativeRoutePath = path.relative(declarationDir, route.absolutePath);
       const normalizedSearchPath = normalizeSeparators(relativeRoutePath);
-      search = `typeof import("${normalizedSearchPath}").searchSchema`;
+      search = `typeof import("${normalizedSearchPath}").routeSchema.searchSchema`;
     }
     return `"${route.path}": { params: ${JSON.stringify(route.params)}; search: ${search} }`;
   });
@@ -75,20 +75,20 @@ declare module "astro-typesafe-routes/create-route" {
   import type { RouteId, Routes, RouteOptions } from "astro-typesafe-routes/path";
   import type { StandardSchemaV1 } from "astro-typesafe-routes/standard-schema";
 
-  export type CreateRouteOpts<T extends RouteId, S extends StandardSchemaV1> = {
+  export type CreateRouteSchemaParams<T extends RouteId, S extends StandardSchemaV1> = {
     routeId: T;
     searchSchema?: S;
   };
 
-  export function createRoute<T extends RouteId, S extends StandardSchemaV1>(
-    Astro: AstroGlobal,
-    opts: CreateRouteOpts<T, S>
-  ): {
-    params: Routes[T]["params"] extends null ? never : Record<Routes[T]["params"][number], string>;
-    search: StandardSchemaV1.InferOutput<S>;
-    redirect: <T extends RouteId>(args: RouteOptions<T>) => Response;
-    rewrite: <T extends RouteId>(args: RouteOptions<T>) => Promise<Response>;
-  };
+  function createRouteSchema<T extends RouteId, S extends StandardSchemaV1>(opts: CreateRouteSchemaParams<T, S>): {
+    searchSchema: S;
+    parse: (astro: AstroGlobal) => {
+      params: Routes[T]["params"] extends null ? never : { [key in Routes[T]["params"][number]]: string };
+      search: StandardSchemaV1.InferOutput<S>;
+      redirect: <T extends Route>(args: RouteOptions<T>) => Response;
+      rewrite: <T extends Route>(args: RouteOptions<T>) => Promise<Response>;
+    };
+  }
 }
 
 declare module "astro-typesafe-routes/path" {
