@@ -1,15 +1,16 @@
 ---
-import { createRoute } from "astro-typesafe-routes/create-route";
+import { createRouteSchema } from "astro-typesafe-routes/create-route";
+import Link from "astro-typesafe-routes/link";
 import { z } from "astro/zod";
 
-const route = createRoute(Astro, {
+export const route = createRouteSchema({
   routeId: "/",
   searchSchema: z.object({
-    name: z.string().optional(),
+    name: z.string(),
   }),
 });
 
-return route.rewrite({ to: "/blog/[postId]", params: { postId: "1" } });
+const { params, search } = route.parse(Astro);
 ---
 
-<div>index</div>
+<Link to="/blog/[postId]" params={{ postId: "1" }} >Blog post</Link>
