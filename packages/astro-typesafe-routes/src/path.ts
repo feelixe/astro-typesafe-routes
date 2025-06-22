@@ -1,7 +1,7 @@
 /// <reference types="vite/client" />
 import { serialize } from "./search-serializer.js";
 
-export type Route = string;
+export type RouteId = string;
 
 export type RouteOptions = {
   to: string;

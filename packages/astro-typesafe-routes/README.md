@@ -26,7 +26,7 @@
 * 🛟 **Typesafe** — Ensures all URLs match a route in your Astro project.
 * 🔗 **Typed Link Component** — Replace your anchor links with the typesafe `Link` component.
 * 🔎 **Typesafe Search Params** — Support for typesafe and JSON serialized search params.
-* 🧩 **Custom Component Support** — Add type safety to custom links `Route` and `RouteOptions`.
+* 🧩 **Custom Component Support** — Add type safety to custom links components.
 * 🤸 **Zero Dependencies** — No 3rd party packages.
 
 ## Requirements
