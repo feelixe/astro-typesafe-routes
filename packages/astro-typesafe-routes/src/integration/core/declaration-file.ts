@@ -77,7 +77,7 @@ declare module "astro-typesafe-routes/params" {
 
 declare module "astro-typesafe-routes/create-route" {
   import type { AstroGlobal } from "astro";
-  import type { Route, Routes } from "astro-typesafe-routes/path";
+  import type { Route, Routes, RouteOptions } from "astro-typesafe-routes/path";
   import type { StandardSchemaV1 } from "astro-typesafe-routes/standard-schema";
 
   export type CreateRouteOpts<S extends StandardSchemaV1> = {
@@ -91,6 +91,8 @@ declare module "astro-typesafe-routes/create-route" {
   ): {
     params: Routes[T]["params"] extends null ? never : Record<Routes[T]["params"][number], string>;
     search: StandardSchemaV1.InferOutput<S>;
+    redirect: <T extends Route>(args: RouteOptions<T>) => Response;
+    rewrite: <T extends Route>(args: RouteOptions<T>) => Promise<Response>;
   };
 }
 

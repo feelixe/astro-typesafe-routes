@@ -8,6 +8,8 @@ const route = createRoute("/", {
     name: z.string().optional(),
   }),
 });
+
+return route.rewrite({ to: "/blog/[postId]", params: { postId: "1" } });
 ---
 
 <div>index</div>
