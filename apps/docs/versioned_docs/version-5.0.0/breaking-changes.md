@@ -2,7 +2,10 @@
 sidebar_position: 4
 ---
 
-# Breaking Changes from v4
+# Breaking Changes
+
+## Astro 4
+Astro version 4 is no longer support.
 
 ## Route Type
 The type `Route` has been renamed to `RouteId`.
