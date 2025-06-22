@@ -6,11 +6,13 @@ import { z } from "astro/zod";
 export const route = createRouteSchema({
   routeId: "/",
   searchSchema: z.object({
-    name: z.string(),
+    name: z.string().catch("hej"),
   }),
 });
 
 const { params, search } = route.parse(Astro);
 ---
 
-<Link to="/blog/[postId]" params={{ postId: "1" }} >Blog post</Link>
+<Link to="/blog/[postId]" params={{ postId: "1" }} search={{ name: "felix" }}>
+  Blog post
+</Link>
