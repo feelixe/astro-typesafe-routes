@@ -2,7 +2,7 @@
 import { createRouteSchema } from "astro-typesafe-routes/route-schema";
 
 export const routeSchema = createRouteSchema({
-  routeId: "/blog/hej/asd/[postId]",
+  routeId: "/blog/[postId]",
 });
 
 const route = routeSchema.parse(Astro);
