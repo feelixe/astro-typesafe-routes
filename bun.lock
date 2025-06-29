@@ -42,6 +42,20 @@
         "@astrojs/compiler": "^2.10.3",
       },
     },
+    "apps/local-example": {
+      "name": "local-example",
+      "dependencies": {
+        "@astrojs/check": "^0.9.4",
+        "@astrojs/node": "^9.0.2",
+        "astro": "^5.10.0",
+        "astro-typesafe-routes": "workspace:*",
+        "typescript": "^5.7.3",
+        "valibot": "^1.0.0-rc.3",
+      },
+      "devDependencies": {
+        "@astrojs/compiler": "^2.10.3",
+      },
+    },
     "e2e-projects/imports": {
       "name": "e2e-project-imports",
       "dependencies": {
@@ -88,7 +102,7 @@
     },
     "packages/astro-typesafe-routes": {
       "name": "astro-typesafe-routes",
-      "version": "5.0.0-rc7",
+      "version": "5.0.0-rc10",
       "devDependencies": {
         "@types/bun": "latest",
         "astro": "^5.0.0",
@@ -104,7 +118,6 @@
       },
       "optionalPeers": [
         "react",
-        "typescript",
       ],
     },
   },
@@ -1752,6 +1765,8 @@
     "loader-runner": ["loader-runner@4.3.0", "", {}, "sha512-3R/1M+yS3j5ou80Me59j7F9IMs4PXs3VqRrm0TU3AbKPxlmpoY1TNscJV/oGJXo8qCatFGTfDbY6W6ipGOYXfg=="],
 
     "loader-utils": ["loader-utils@3.3.1", "", {}, "sha512-FMJTLMXfCLMLfJxcX9PFqX5qD88Z5MRGaZCVzfuqeZSPsyiBzs+pahDQjbIWz2QIzPZz0NX9Zy4FX3lmK6YHIg=="],
+
+    "local-example": ["local-example@workspace:apps/local-example"],
 
     "locate-path": ["locate-path@6.0.0", "", { "dependencies": { "p-locate": "^5.0.0" } }, "sha512-iPZK6eYjbxRu3uB4/WZ3EsEIMJFMqAoopl3R+zuq0UjcAm/MO6KCweDgPfP3elTztoKP3KtnVHxTn2NHBSDVUw=="],
 

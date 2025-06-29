@@ -7,9 +7,17 @@ Astro Typesafe Routes integrates seamlessly into your Astro project, offering au
 
 ## Prerequisites
 1. **Astro** `^5.0.0` is required
-2. **Typescript** must be installed
+2. Install **Typescript** and **Astro Check**
 ```bash
-npm i -D typescript
+npm i -D typescript @astrojs/check
+```
+4. Add `astro check` command to build script in `package.json`
+```json
+{
+  "scripts": {
+    "build": "astro check && astro build",
+  }
+}
 ```
 
 ## Automatic Installation
