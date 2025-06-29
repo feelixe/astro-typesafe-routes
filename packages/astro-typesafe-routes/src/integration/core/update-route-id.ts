@@ -3,32 +3,13 @@ import * as ts from "typescript";
 import { parse } from "@astrojs/compiler";
 import type { ResolvedRoute } from "./types.js";
 import { replaceRange } from "../helpers/string.js";
+import { findNode } from "../helpers/ast.js";
 
 const createRouteSchemaFnName = "createRouteSchema";
 const routeIdFieldName = "routeId";
 
-function getRouteBoilerplate(routeId: string) {
-  return `---
-import { ${createRouteSchemaFnName} } from "astro-typesafe-routes/route-schema";
-
-export const routeSchema = ${createRouteSchemaFnName}({ ${routeIdFieldName}: "${routeId}" });
----
-`;
-}
-
 /**
- * Checks if the node is a call to `createRoute`
- */
-function isCreateRouteCall(node: ts.Node): node is ts.CallExpression {
-  if (!ts.isCallExpression(node)) {
-    return false;
-  }
-  const expr = node.expression;
-  return expr.getText() === createRouteSchemaFnName;
-}
-
-/**
- * Returns the `id` argument of the `createRoute` call
+ * Returns the `id` argument of a `createRoute` call
  */
 function extractRouteIdCallArgumentFromNode(node: ts.CallExpression) {
   const firstArgument = node.arguments[0];
@@ -45,35 +26,25 @@ function extractRouteIdCallArgumentFromNode(node: ts.CallExpression) {
 }
 
 function getRouteIdCallArgument(node: ts.Node): ts.Expression | undefined {
-  const callArg = isCreateRouteCall(node) && extractRouteIdCallArgumentFromNode(node);
-  if (callArg) {
-    return callArg;
-  }
-
-  const children = node.getChildren();
-  for (const child of children) {
-    const result = getRouteIdCallArgument(child);
-    if (result) {
-      return result;
+  return findNode(node, (child) => {
+    if (!ts.isCallExpression(child)) {
+      return;
     }
-  }
-  return undefined;
+    const expr = child.expression;
+    if (expr.getText() !== createRouteSchemaFnName) {
+      return;
+    }
+    const match = extractRouteIdCallArgumentFromNode(child);
+    return match;
+  });
 }
 
 /**
- * - Populates empty route files with boilerplate.
- * - Updates the `routeId` argument of the `createRoute` call.
+ * - Updates the `routeId` argument of `createRoute` calls.
  */
-export async function routeGenerator(route: ResolvedRoute) {
+export async function updateRouteId(route: ResolvedRoute) {
   // Load and parse the Astro route file.
   const astroFile = await fs.readFile(route.absolutePath, "utf-8");
-
-  // Check if the file is empty (assumed to be a new route).
-  if (astroFile.length <= 0) {
-    const boilerplate = getRouteBoilerplate(route.path);
-    await fs.writeFile(route.absolutePath, boilerplate, { encoding: "utf-8" });
-    return;
-  }
 
   const parseResult = await parse(astroFile);
 
@@ -114,7 +85,7 @@ export async function routeGenerator(route: ResolvedRoute) {
     return;
   }
 
-  // Replace the `id` argument with the new routeId.
+  // Replace the `routeId` argument with the new routeId.
   const newContent = replaceRange(astroFile, route.path, replaceStart, replaceEnd);
   await fs.writeFile(route.absolutePath, newContent, { encoding: "utf-8" });
 }

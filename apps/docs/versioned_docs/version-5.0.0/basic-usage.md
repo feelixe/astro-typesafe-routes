@@ -5,12 +5,12 @@ sidebar_position: 2
 # Basic Usage
 
 ## Automatic Generation
-Astro Typesafe Routes will automatically populate new routes with boilerplate and update the `routeId` of changed routes. If you want to disable this, you can set `disableRouteGeneration` in the integration options.
+Astro Typesafe Routes will automatically update the `routeId` of changed routes. If you want to disable this, you can set `disableAutomaticRouteUpdates` in the integration options.
 ```tsx
 export default defineConfig({
   integrations: [
     astroTypesafeRoutes({
-      disableRouteGeneration: true,
+      disableAutomaticRouteUpdates: true,
     }),
   ],
 });

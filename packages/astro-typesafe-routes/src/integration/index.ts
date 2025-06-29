@@ -14,10 +14,10 @@ import {
 } from "./core/declaration-file.js";
 import { DECLARATION_FILENAME } from "./core/constants.js";
 import { getRoutes } from "./core/routes.js";
-import { routeGenerator } from "./core/route-generator.js";
+import { updateRouteId } from "./core/update-route-id.js";
 
 export type AstroTypesafeRoutesParams = {
-  disableRouteGeneration?: boolean;
+  disableAutomaticRouteUpdates?: boolean;
 };
 
 export default function astroTypesafeRoutes(args?: AstroTypesafeRoutesParams): AstroIntegration {
@@ -38,8 +38,8 @@ export default function astroTypesafeRoutes(args?: AstroTypesafeRoutesParams): A
       astroConfig,
     });
 
-    if (!args?.disableRouteGeneration) {
-      await Promise.all(resolvedRoutes.map(routeGenerator));
+    if (!args?.disableAutomaticRouteUpdates) {
+      await Promise.all(resolvedRoutes.map(updateRouteId));
     }
 
     const declarationContent = await getDeclarationContent({
