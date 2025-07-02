@@ -2,4 +2,5 @@
 import Link from "astro-typesafe-routes/link";
 ---
 
-<Link to="/blog/[postId]" params={{ postId: "1" }}>About</Link>
+<Link to="/blog/[postId]" params={{ postId: "1" }} search={{ limit: 10 }}>About</Link>
+

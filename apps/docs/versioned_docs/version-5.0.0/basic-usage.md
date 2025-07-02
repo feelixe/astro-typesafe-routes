@@ -27,17 +27,15 @@ import Link from "astro-typesafe-routes/link";
 ```
 
 ## Reading Params
-To safely read route params with proper types, define a `routeSchema`.
+To safely read route params with proper types, create a `Route`.
 ```tsx
 ---
-import { createRouteSchema } from "astro-typesafe-routes/route-schema";
+import { createRoute } from "astro-typesafe-routes/route-schema";
 
-export const routeSchema = createRouteSchema({
+export const Route = createRoute({
   routeId: "/blog/[postId]",
 });
 
-const route = routeSchema.parse(Astro);
-
-route.params.postId;
+const params = Route.getParams(Astro);
 ---
 ```

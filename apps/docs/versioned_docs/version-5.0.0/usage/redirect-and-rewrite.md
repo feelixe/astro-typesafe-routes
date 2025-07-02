@@ -5,23 +5,21 @@ sidebar_position: 6
 Typesafe redirects and rewrite can be created from the route.
 ```tsx
 ---
-import { createRouteSchema } from "astro-typesafe-routes/route-schema";
+import { createRoute } from "astro-typesafe-routes/route-schema";
 
-export const routeSchema = createRouteSchema({ routeId: "/about" });
-const route = routeSchema.parse(Astro);
+export const Route = createRoute({ routeId: "/about" });
 
-return route.redirect({ to: "/" });
+return Route.redirect(Astro, { to: "/" });
 ---
 ```
 
 ```tsx
 ---
-import { createRouteSchema } from "astro-typesafe-routes/route-schema";
+import { createRoute } from "astro-typesafe-routes/route-schema";
 
-export const routeSchema = createRouteSchema({ routeId: "/about" });
-const route = routeSchema.parse(Astro);
+export const Route = createRoute({ routeId: "/about" });
 
-return route.rewrite({ to: "/" });
+return Route.rewrite(Astro, { to: "/" });
 ---
 ```
 

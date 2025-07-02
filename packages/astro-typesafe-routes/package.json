@@ -17,9 +17,9 @@
       "import": "./dist/index.js",
       "types": "./dist/index.d.ts"
     },
-    "./route-schema": {
-      "import": "./dist/route-schema.js",
-      "types": "./dist/route-schema.d.ts"
+    "./create-route": {
+      "import": "./dist/create-route.js",
+      "types": "./dist/create-route.d.ts"
     },
     "./link": {
       "import": "./dist/components/link/astro/astro-link.astro"

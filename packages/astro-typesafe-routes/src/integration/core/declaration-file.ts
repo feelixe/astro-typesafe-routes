@@ -30,7 +30,7 @@ export async function getDeclarationContent(args: GetDeclarationContentParams) {
       const declarationDir = path.dirname(args.outPath);
       const relativeRoutePath = path.relative(declarationDir, route.absolutePath);
       const normalizedSearchPath = normalizeSeparators(relativeRoutePath);
-      search = `typeof import("${normalizedSearchPath}").routeSchema.searchSchema`;
+      search = `typeof import("${normalizedSearchPath}").Route.searchSchema`;
     }
     return `"${route.path}": { params: ${JSON.stringify(route.params)}; search: ${search} }`;
   });

@@ -19,6 +19,9 @@ export function createRoute(opts: CreateRouteParams) {
     getSearch: (astro: AstroAny) => {
       return opts?.searchSchema ? getSearch(astro, opts.searchSchema) : undefined;
     },
+    getProps: (astro: AstroAny) => {
+      return astro.props;
+    },
     redirect: (astro: AstroAny, link: RouteOptions) => {
       return astro.redirect($path(link));
     },
