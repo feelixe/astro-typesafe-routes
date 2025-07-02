@@ -74,20 +74,29 @@ declare module "astro-typesafe-routes/route-schema" {
   import type { AstroGlobal } from "astro";
   import type { RouteId, Routes, RouteOptions } from "astro-typesafe-routes/path";
   import type { StandardSchemaV1 } from "astro-typesafe-routes/standard-schema";
+  import type { RouteId, ParamsRecord } from "astro-typesafe-routes/path";
 
   export type CreateRouteSchemaParams<T extends RouteId, S extends StandardSchemaV1> = {
     routeId: T;
     searchSchema?: S;
   };
 
+  type Props = Record<string, unknown>;
+
+  type GetStaticPathsItem<T extends RouteId> = {
+    params: ParamsRecord<T>;
+    props?: Props;
+  };
+
   function createRouteSchema<T extends RouteId, S extends StandardSchemaV1>(opts: CreateRouteSchemaParams<T, S>): {
     searchSchema: S;
-    parse: (astro: AstroGlobal) => {
+    parse: (astro: AstroGlobal<any, any, any>) => {
       params: Routes[T]["params"] extends null ? never : { [key in Routes[T]["params"][number]]: string };
       search: StandardSchemaV1.InferOutput<S>;
       redirect: (args: RouteOptions<T>) => Response;
       rewrite: (args: RouteOptions<T>) => Promise<Response>;
     };
+    createGetStaticPaths: (fn: () => Promise<GetStaticPathsItem<T>[]> | GetStaticPathsItem<T>[]) => (() => Promise<GetStaticPathsItem<T>[]> | GetStaticPathsItem<T>[]);
   }
 }
 
