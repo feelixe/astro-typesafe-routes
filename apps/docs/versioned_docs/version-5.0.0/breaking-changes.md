@@ -7,6 +7,18 @@ sidebar_position: 4
 ## Astro 4
 Astro version 4 is no longer support.
 
+## getParams
+Getting typed params now use `createRoute` and `getParams`.
+```tsx
+const id = getParams(Astro, "id");
+```
+```tsx
+const Route = createRoute({
+  routeId: "/blog/[id]"
+});
+const params = Route.getParams();
+```
+
 ## Typed Search Params
 The search schema is now declared inside `createRoute`.
 ```ts

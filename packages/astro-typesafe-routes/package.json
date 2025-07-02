@@ -32,10 +32,6 @@
       "import": "./dist/path.js",
       "types": "./dist/path.d.ts"
     },
-    "./params": {
-      "import": "./dist/params.js",
-      "types": "./dist/params.d.ts"
-    },
     "./standard-schema": {
       "import": "./dist/standard-schema.js",
       "types": "./dist/standard-schema.d.ts"
