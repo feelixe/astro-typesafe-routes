@@ -16,7 +16,7 @@ const id = getParams(Astro, "id");
 const Route = createRoute({
   routeId: "/blog/[id]"
 });
-const params = Route.getParams();
+const params = Route.getParams(Astro);
 ```
 
 ## Typed Search Params
