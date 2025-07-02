@@ -1,13 +1,19 @@
 ---
-import { createRouteSchema } from "astro-typesafe-routes/route-schema";
+import { createRoute } from "astro-typesafe-routes/route-schema";
 
-export const routeSchema = createRouteSchema({
+const route = createRoute({
   routeId: "/blog/[postId]",
 });
 
-const route = routeSchema.parse(Astro);
+export const getStaticPaths = route.createGetStaticPaths(() => {
+  return [
+    {
+      params: { postId: "hej" },
+    },
+  ];
+});
 
-route.params.postId;
+route.rewrite(Astro, { to: "/blog/[postId]", params: { postId: "1" } });
 ---
 
 123

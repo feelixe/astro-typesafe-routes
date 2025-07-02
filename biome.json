@@ -23,7 +23,8 @@
     "rules": {
       "recommended": true,
       "suspicious": {
-        "noConsoleLog": "error"
+        "noConsoleLog": "error",
+        "noExplicitAny": "off"
       },
       "correctness": {
         "useImportExtensions": "error"

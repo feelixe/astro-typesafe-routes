@@ -5,7 +5,7 @@ import type { ResolvedRoute } from "./types.js";
 import { replaceRange } from "../helpers/string.js";
 import { findNode } from "../helpers/ast.js";
 
-const createRouteSchemaFnName = "createRouteSchema";
+const createRouteFnName = "createRoute";
 const routeIdFieldName = "routeId";
 
 /**
@@ -31,7 +31,7 @@ function getRouteIdCallArgument(node: ts.Node): ts.Expression | undefined {
       return;
     }
     const expr = child.expression;
-    if (expr.getText() !== createRouteSchemaFnName) {
+    if (expr.getText() !== createRouteFnName) {
       return;
     }
     const match = extractRouteIdCallArgumentFromNode(child);
