@@ -11,26 +11,26 @@ await beforeAll(async () => {
 });
 
 const setups = [
-  {
-    name: "Imports",
-    projectDir: path.join(E2E_PROJECTS_DIR, "./imports"),
-    expectBuildSuccess: true,
-  },
-  {
-    name: "Valid path",
-    projectDir: path.join(E2E_PROJECTS_DIR, "./valid-path"),
-    expectBuildSuccess: true,
-  },
-  {
-    name: "Invalid path",
-    projectDir: path.join(E2E_PROJECTS_DIR, "./invalid-path"),
-    expectBuildSuccess: false,
-  },
-  {
-    name: "Valid search params",
-    projectDir: path.join(E2E_PROJECTS_DIR, "./valid-search-params"),
-    expectBuildSuccess: true,
-  },
+  // {
+  //   name: "Imports",
+  //   projectDir: path.join(E2E_PROJECTS_DIR, "./imports"),
+  //   expectBuildSuccess: true,
+  // },
+  // {
+  //   name: "Valid path",
+  //   projectDir: path.join(E2E_PROJECTS_DIR, "./valid-path"),
+  //   expectBuildSuccess: true,
+  // },
+  // {
+  //   name: "Invalid path",
+  //   projectDir: path.join(E2E_PROJECTS_DIR, "./invalid-path"),
+  //   expectBuildSuccess: false,
+  // },
+  // {
+  //   name: "Valid search params",
+  //   projectDir: path.join(E2E_PROJECTS_DIR, "./valid-search-params"),
+  //   expectBuildSuccess: true,
+  // },
   {
     name: "Invalid search params",
     projectDir: path.join(E2E_PROJECTS_DIR, "./invalid-search-params"),

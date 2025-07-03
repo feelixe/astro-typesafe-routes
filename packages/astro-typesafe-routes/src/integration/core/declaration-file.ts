@@ -70,7 +70,7 @@ declare module "astro-typesafe-routes/params" {
     : never;
 }
 
-declare module "astro-typesafe-routes/route-schema" {
+declare module "astro-typesafe-routes/create-route" {
   import type { AstroGlobal } from "astro";
   import type { RouteId, Routes, RouteOptions } from "astro-typesafe-routes/path";
   import type { StandardSchemaV1 } from "astro-typesafe-routes/standard-schema";
