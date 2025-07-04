@@ -1,4 +1,4 @@
-import { it, describe, expect, jest, beforeEach } from "bun:test";
+import { it, describe, expect, beforeEach } from "bun:test";
 import { $path } from "../src/path.js";
 
 describe("$path", () => {
