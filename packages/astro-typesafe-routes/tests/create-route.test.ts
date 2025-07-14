@@ -2,6 +2,7 @@ import { beforeEach, describe, expect, it, jest } from "bun:test";
 import { createRoute } from "../src/create-route.js";
 import * as v from "valibot";
 import { createMockAstro } from "./helpers/create-mock-astro.js";
+import type { GetStaticPathsOptions } from "astro";
 
 describe("createRoute", () => {
   beforeEach(() => {
@@ -42,14 +43,14 @@ describe("createRoute", () => {
     it("returns a function that returns the provided value", () => {
       const route = createRoute({ routeId: "/" });
       const returnedValue = route.createGetStaticPaths(() => [{ params: { id: "1" } }]);
-      const result = returnedValue();
+      const result = returnedValue({} as GetStaticPathsOptions);
       expect(result).toEqual([{ params: { id: "1" } }]);
     });
 
     it("can handle an async function", async () => {
       const route = createRoute({ routeId: "/" });
       const returnedValue = route.createGetStaticPaths(async () => [{ params: { id: "1" } }]);
-      const result = await returnedValue();
+      const result = await returnedValue({} as GetStaticPathsOptions);
       expect(result).toEqual([{ params: { id: "1" } }]);
     });
   });

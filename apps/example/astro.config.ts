@@ -5,6 +5,6 @@ import node from "@astrojs/node";
 
 export default defineConfig({
   integrations: [astroTypesafeRoutes()],
-  // output: "server",
-  // adapter: node({ mode: "standalone" }),
+  output: "server",
+  adapter: node({ mode: "standalone" }),
 });

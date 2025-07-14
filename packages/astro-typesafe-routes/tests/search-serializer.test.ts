@@ -39,7 +39,7 @@ describe("serialize", () => {
   });
 });
 
-describe("isNonSpecialString", () => {
+describe("canStringifyBeSkipped", () => {
   it("returns true for non special strings", () => {
     expect(canStringifyBeSkipped("John")).toBe(true);
   });
