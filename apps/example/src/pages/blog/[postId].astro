@@ -1,5 +1,5 @@
 ---
-import { createRoute } from "astro-typesafe-routes/route-schema";
+import { createRoute } from "astro-typesafe-routes/create-route";
 import { z } from "astro/zod";
 
 export const Route = createRoute({
@@ -8,6 +8,24 @@ export const Route = createRoute({
     limit: z.number(),
   }),
 });
+
+export type Props = {
+  content: string;
+};
+
+export const getStaticPaths = Route.createGetStaticPaths<Props>(() => {
+  return [
+    {
+      params: {
+        postId: "1",
+      },
+      props: {
+        content: "123",
+      },
+    },
+  ];
+});
+
 const search = Route.getSearch(Astro);
 ---
 

@@ -1,7 +1,7 @@
 import { type RouteOptions, $path } from "./path.js";
 import { getSearch } from "./search.js";
 import type { StandardSchemaV1 } from "./standard-schema.js";
-import type { AstroGlobal, GetStaticPathsItem } from "astro";
+import type { AstroGlobal, GetStaticPaths } from "astro";
 
 type AstroAny = AstroGlobal<any, any, any>;
 
@@ -28,7 +28,7 @@ export function createRoute(opts: CreateRouteParams) {
     rewrite: (astro: AstroAny, link: RouteOptions) => {
       return astro.rewrite($path(link));
     },
-    createGetStaticPaths: (fn: () => Promise<GetStaticPathsItem[]> | GetStaticPathsItem[]) => {
+    createGetStaticPaths: (fn: GetStaticPaths) => {
       return fn;
     },
   };
