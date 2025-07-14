@@ -76,21 +76,7 @@ export default defineConfig({
 npm run dev
 ```
 ## Basic Usage
-
-### Automatic Route Updates
-Astro Typesafe Routes will automatically update the `routeId` of changed routes. If you want to disable this, you can set `disableAutomaticRouteUpdates` in the integration options.
-```tsx
-export default defineConfig({
-  integrations: [
-    astroTypesafeRoutes({
-      disableAutomaticRouteUpdates: true,
-    }),
-  ],
-});
-```
-
-### Links
-To link to a page with typed URLs, import the `Link` component.
+Import the `Link` component to create a type-safe link
 ```tsx
 ---
 import Link from "astro-typesafe-routes/link";
@@ -113,6 +99,17 @@ const params = Route.getParams(Astro);
 ---
 ```
 
-
 ## Advanced Usage
 For more in-depth information and detailed usage instructions, please refer to the [documentation](https://astro-typesafe-routes-docs.vercel.app/).
+
+## Automatic Route Updates
+Astro Typesafe Routes will automatically update the `routeId` of changed routes. If you want to disable this, you can set `disableAutomaticRouteUpdates` in the integration options.
+```tsx
+export default defineConfig({
+  integrations: [
+    astroTypesafeRoutes({
+      disableAutomaticRouteUpdates: true,
+    }),
+  ],
+});
+```
