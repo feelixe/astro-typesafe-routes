@@ -4,9 +4,6 @@ import { z } from "astro/zod";
 
 export const Route = createRoute({
   routeId: "/blog/[postId]",
-  searchSchema: z.object({
-    limit: z.number(),
-  }),
 });
 
 export type Props = {
@@ -20,13 +17,11 @@ export const getStaticPaths = Route.createGetStaticPaths<Props>(() => {
         postId: "1",
       },
       props: {
-        content: "123",
+        content: "Lorem Ipsum",
       },
     },
   ];
 });
-
-const search = Route.getSearch(Astro);
 ---
 
-{JSON.stringify(Astro.props)}
+{Astro.props.content}

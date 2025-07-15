@@ -76,6 +76,7 @@ export default defineConfig({
 npm run dev
 ```
 ## Basic Usage
+### Link
 Import the `Link` component to create a type-safe link
 ```tsx
 ---
@@ -97,6 +98,37 @@ export const Route = createRoute({
 
 const params = Route.getParams(Astro);
 ---
+```
+
+### Typesafe GetStaticPaths
+```tsx
+---
+import { createRoute } from "astro-typesafe-routes/create-route";
+import { z } from "astro/zod";
+
+export const Route = createRoute({
+  routeId: "/blog/[postId]",
+});
+
+export type Props = {
+  content: string;
+};
+
+export const getStaticPaths = Route.createGetStaticPaths<Props>(() => {
+  return [
+    {
+      params: {
+        postId: "1",
+      },
+      props: {
+        content: "Lorem Ipsum",
+      },
+    },
+  ];
+});
+---
+
+{Astro.props.content}
 ```
 
 ## Advanced Usage
