@@ -10,7 +10,9 @@
   },
   "dependencies": {
     "@astrojs/check": "catalog:",
+    "@tailwindcss/vite": "^4.1.11",
     "astro": "catalog:",
+    "tailwindcss": "^4.1.11",
     "typescript": "catalog:"
   }
 }

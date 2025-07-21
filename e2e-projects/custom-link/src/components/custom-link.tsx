@@ -18,5 +18,9 @@ export function CustomReactLink<T extends RouteId>(props: CustomReactLinkProps<T
 
   const href = $path(link);
 
-  return <a href={href}>123</a>;
+  return (
+    <a href={href} {...rest}>
+      123
+    </a>
+  );
 }
