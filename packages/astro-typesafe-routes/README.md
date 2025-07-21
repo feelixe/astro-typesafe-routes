@@ -27,8 +27,8 @@
 * 🛟 **Typesafe** — Ensures all URLs match a route in your Astro project.
 * 🔗 **Typed Link Component** — Replace your anchor links with the typesafe `Link` component.
 * 🔎 **Typesafe Search Params** — Support for typesafe and JSON serialized search params.
-* 🧩 **Custom Component Support** — Add type safety to custom links components.
-* 🤸 **Zero Dependencies** — No 3rd party packages.
+* 🧩 **Custom Component Support** — Add type safety to custom link components.
+* 🤸 **Zero Dependencies** — No 3rd-party packages.
 
 ## Prerequisites
 1. **Astro** `^5.0.0` is required
@@ -36,7 +36,7 @@
 ```bash
 npm i -D typescript @astrojs/check
 ```
-4. Add `astro check` command to build script in `package.json`
+3. Add `astro check` command to build script in `package.json`
 ```json
 {
   "scripts": {
@@ -56,6 +56,7 @@ npm run dev
 ```
 
 ## Manual Installation
+If automatic installation didn’t work, follow these steps:
 1. Install package:
 ```sh
 npm install astro-typesafe-routes
