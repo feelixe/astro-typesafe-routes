@@ -4,6 +4,7 @@ import { z } from "astro/zod";
 
 export const Route = createRoute({
   routeId: "/blog/[postId]",
+  searchSchema: z.object({ num: z.number() }),
 });
 
 export type Props = {

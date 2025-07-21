@@ -55,10 +55,10 @@
   },
   "devDependencies": {
     "@types/bun": "latest",
-    "astro": "^5.0.0",
+    "astro": "catalog:",
     "prettier": "^3.4.2",
     "react": "^19.0.0",
-    "typescript": "^5.5.4",
-    "valibot": "^1.0.0-rc.3"
+    "typescript": "catalog:",
+    "valibot": "catalog:"
   }
 }
