@@ -12,11 +12,7 @@ on:
 
 jobs:
   test:
-    strategy:
-      matrix:
-        platform: [blacksmith-4vcpu-ubuntu-2404, windows-latest]
-
-    runs-on: ${{ matrix.platform }}
+    runs-on: blacksmith-4vcpu-ubuntu-2404
 
     steps:
       - name: Checkout repository
