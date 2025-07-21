@@ -1,0 +1,16 @@
+{
+  "name": "docs-v2",
+  "type": "module",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro check && astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/check": "catalog:",
+    "astro": "catalog:",
+    "typescript": "catalog:"
+  }
+}

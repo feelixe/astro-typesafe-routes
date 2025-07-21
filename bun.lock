@@ -28,6 +28,15 @@
         "typescript": "~5.6.2",
       },
     },
+    "apps/docs-v2": {
+      "name": "docs-v2",
+      "version": "0.0.1",
+      "dependencies": {
+        "@astrojs/check": "catalog:",
+        "astro": "catalog:",
+        "typescript": "catalog:",
+      },
+    },
     "apps/example": {
       "name": "example",
       "dependencies": {
@@ -1335,6 +1344,8 @@
     "dns-packet": ["dns-packet@5.6.1", "", { "dependencies": { "@leichtgewicht/ip-codec": "^2.0.1" } }, "sha512-l4gcSouhcgIKRvyy99RNVOgxXiicE+2jZoNmaNmZ6JXiGajBOJAesk1OBlJuM5k2c+eudGdLxDqXuPCKIj6kpw=="],
 
     "docs": ["docs@workspace:apps/docs"],
+
+    "docs-v2": ["docs-v2@workspace:apps/docs-v2"],
 
     "docusaurus-plugin-simple-analytics": ["docusaurus-plugin-simple-analytics@1.1.8", "", { "dependencies": { "@docusaurus/core": "^2.4.1", "@docusaurus/types": "^2.4.1", "@docusaurus/utils-validation": "^2.4.1" }, "peerDependencies": { "react": "^16.8.4 || ^17.0.0 || ^18.0.0", "react-dom": "^16.8.4 || ^17.0.0 || ^18.0.0" } }, "sha512-i4qjTVAUZoJ3f+WE0eYHy8R57LgpQKAHAW2NXqwOMZUv3wMw/Om8LoSr0/zblzPP+hjYf90Y0y8GE424n889CA=="],
 
