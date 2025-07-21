@@ -14,7 +14,7 @@ jobs:
   test:
     strategy:
       matrix:
-        platform: [ubuntu-latest, windows-latest]
+        platform: [blacksmith-4vcpu-ubuntu-2404, windows-latest]
 
     runs-on: ${{ matrix.platform }}
 
