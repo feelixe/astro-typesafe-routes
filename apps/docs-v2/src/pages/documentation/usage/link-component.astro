@@ -1,0 +1,24 @@
+---
+import { Button } from "@/components/ui/button.tsx";
+import { Container } from "@/components/ui/container.tsx";
+import { Separator } from "@/components/ui/separator.tsx";
+import DefaultLayout from "@/layouts/default-layout.astro";
+import { ChevronRightIcon } from "lucide-react"
+import { Sidebar, SidebarContent, SidebarWrapper } from "@/components/page/sidebar.tsx"
+---
+
+<DefaultLayout>
+  <Container className="markdown">
+    <SidebarWrapper>
+      <Sidebar client:load activeRouteId="/documentation/usage/link-component" />
+      <SidebarContent>
+        <!-- <InstallationDocs /> -->
+        <Separator className="my-6" />
+        <div class="flex items-center">
+          <div class="grow" />
+          <Button>Path Function <ChevronRightIcon className="size-4" /></Button>
+        </div>
+      </SidebarContent>
+    </SidebarWrapper>
+  </Container>
+</DefaultLayout>

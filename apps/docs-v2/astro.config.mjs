@@ -10,4 +10,9 @@ export default defineConfig({
     plugins: [tailwindcss()],
   },
   integrations: [react(), astroTypesafeRoutes()],
+  markdown: {
+    shikiConfig: {
+      theme: "dark-plus",
+    },
+  },
 });

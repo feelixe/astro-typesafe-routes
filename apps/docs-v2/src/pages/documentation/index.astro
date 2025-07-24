@@ -5,16 +5,21 @@ import { Separator } from "../../components/ui/separator.tsx";
 import DefaultLayout from "../../layouts/default-layout.astro";
 import InstallationDocs from "./_index.md"
 import { ChevronRightIcon } from "lucide-react"
+import { Sidebar, SidebarContent, SidebarWrapper } from "@/components/page/sidebar.tsx"
 ---
 
 <DefaultLayout>
   <Container className="markdown">
-    <InstallationDocs />
-
-    <Separator className="my-6" />
-    <div class="flex items-center">
-      <div class="grow" />
-      <Button>Usage <ChevronRightIcon className="size-4" /></Button>
-    </div>
+    <SidebarWrapper>
+      <Sidebar client:load activeRouteId="/documentation" />
+      <SidebarContent>
+        <InstallationDocs />
+        <Separator className="my-6" />
+        <div class="flex items-center">
+          <div class="grow" />
+          <Button>Link Component <ChevronRightIcon className="size-4" /></Button>
+        </div>
+      </SidebarContent>
+    </SidebarWrapper>
   </Container>
 </DefaultLayout>

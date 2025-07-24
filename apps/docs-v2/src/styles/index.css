@@ -80,7 +80,7 @@
 }
 
 .dark {
-  --background: oklch(0.145 0 0);
+  --background: oklch(17.882% 0.00164 16.627);
   --foreground: oklch(0.985 0 0);
   --card: oklch(0.205 0 0);
   --card-foreground: oklch(0.985 0 0);
@@ -142,7 +142,7 @@
       @apply px-4 py-3 rounded mb-4;
     }
 
-    :not(.astro-code) code {
+    code:not(.astro-code code) {
       @apply bg-foreground/10 px-2 py-1 rounded;
     }
   }

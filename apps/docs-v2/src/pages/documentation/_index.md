@@ -12,7 +12,7 @@ Follow the steps below to set it up and enhance your development experience.
 1. Astro `^5.0.0` is required
 2. Install **Typescript** and **Astro Check**
 
-```
+```bash
 npm i -D typescript @astrojs/check
 ```
 
@@ -32,13 +32,13 @@ npm i -D typescript @astrojs/check
 
 1. Add integration:
 
-```
+```bash
 npx astro add astro-typesafe-routes
 ```
 
 2. Start the Astro development server if it's not already running to run type generation:
 
-```
+```bash
 npm run dev
 ```
 
@@ -50,7 +50,7 @@ If automatic installation didn’t work, follow these steps:
 
 1. Install package:
 
-```
+```bash
 npm install astro-typesafe-routes
 ```
 
@@ -67,6 +67,6 @@ export default defineConfig({
 
 3. Start the Astro development server if it's not already running to run code generation:
 
-```
+```bash
 npm run dev
 ```
