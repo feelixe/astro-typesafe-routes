@@ -1,0 +1,20 @@
+---
+import { Button } from "../../components/ui/button.tsx";
+import { Container } from "../../components/ui/container.tsx";
+import { Separator } from "../../components/ui/separator.tsx";
+import DefaultLayout from "../../layouts/default-layout.astro";
+import InstallationDocs from "./_index.md"
+import { ChevronRightIcon } from "lucide-react"
+---
+
+<DefaultLayout>
+  <Container className="markdown">
+    <InstallationDocs />
+
+    <Separator className="my-6" />
+    <div class="flex items-center">
+      <div class="grow" />
+      <Button>Usage <ChevronRightIcon className="size-4" /></Button>
+    </div>
+  </Container>
+</DefaultLayout>

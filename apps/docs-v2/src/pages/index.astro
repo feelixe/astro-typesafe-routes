@@ -1,7 +1,77 @@
 ---
+import { Container } from "../components/ui/container.tsx";
 import DefaultLayout from "../layouts/default-layout.astro";
+import { Button } from "../components/ui/button.tsx";
+import { ChevronRightIcon } from "lucide-react"
+import { Separator } from "../components/ui/separator.tsx";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../components/ui/card.tsx";
 ---
 
 <DefaultLayout>
-  123123
+  <Container className="mt-10">
+    <h1 class="text-4xl font-semibold mb-3">Astro Typesafe Routes</h1>
+    <p class="mb-4">
+      Enhance your Astro development experience with rigorous type safety
+      for every route in your application. This integration automatically
+      generates TypeScript definitions from your project's route structure.
+    </p>
+    <div class="flex gap-2 items-center">
+      <Button size="sm">
+        Installation
+        <ChevronRightIcon className="size-4" />
+      </Button>
+      <Button size="sm" variant="secondary">
+        Usage
+      </Button>
+    </div>
+
+    <Separator className="my-12" />
+
+    <h2 class="text-3xl font-semibold mb-4">Features</h2>
+    <div class="grid gap-3 grid-cols-2">
+      <Card>
+        <CardHeader>
+          <CardTitle>
+            🛟 Typesafe
+          </CardTitle>
+          <CardDescription>
+            Ensures all URLs match a route in your Astro project.
+          </CardDescription>
+        </CardHeader>
+      </Card>
+
+      <Card>
+        <CardHeader>
+          <CardTitle>
+            🔗 Link Component
+          </CardTitle>
+          <CardDescription>
+            Replace your anchor links with the typesafe Link component.
+          </CardDescription>
+        </CardHeader>
+      </Card>
+
+      <Card>
+        <CardHeader>
+          <CardTitle>
+            🔎 Typesafe Search Params
+          </CardTitle>
+          <CardDescription>
+            Support for typesafe and JSON serialized search params.
+          </CardDescription>
+        </CardHeader>
+      </Card>
+
+      <Card>
+        <CardHeader>
+          <CardTitle>
+            🤸 Zero Dependencies
+          </CardTitle>
+          <CardDescription>
+            No 3rd-party packages.
+          </CardDescription>
+        </CardHeader>
+      </Card>
+    </div>
+  </Container>
 </DefaultLayout>

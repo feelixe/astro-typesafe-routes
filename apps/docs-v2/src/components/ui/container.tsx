@@ -1,0 +1,14 @@
+import type { ComponentProps } from "react";
+import { cn } from "../../lib/utils.ts";
+
+export type ContainerProps = ComponentProps<"div">;
+
+export function Container(props: ContainerProps) {
+  const { children, className, ...rest } = props;
+
+  return (
+    <div className={cn("max-w-2xl mx-auto px-3 py-2", className)} {...rest}>
+      {children}
+    </div>
+  );
+}

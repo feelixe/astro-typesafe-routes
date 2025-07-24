@@ -1,4 +1,5 @@
 ---
+import { Navbar } from "../components/page/navbar.tsx";
 import "../styles/index.css";
 ---
 <html lang="en">
@@ -9,7 +10,8 @@ import "../styles/index.css";
 		<meta name="generator" content={Astro.generator} />
 		<title>Astro Typesafe Routes</title>
 	</head>
-	<body>
+	<body class="dark font-geist pb-8">
+    <Navbar />
 		<slot />
 	</body>
 </html>
