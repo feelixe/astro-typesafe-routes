@@ -10,8 +10,13 @@
   },
   "dependencies": {
     "@astrojs/check": "catalog:",
+    "@astrojs/react": "^4.3.0",
     "@tailwindcss/vite": "^4.1.11",
+    "@types/react": "^19.1.8",
+    "@types/react-dom": "^19.1.6",
     "astro": "catalog:",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
     "tailwindcss": "^4.1.11",
     "typescript": "catalog:"
   }
