@@ -2,7 +2,7 @@
 
 Astro Typesafe Routes integrates seamlessly into your Astro project,
 offering automatic type safety for your routes. Ensure your project
-uses Astro version 4.14.0 or higher (compatible with v4 and v5).
+uses Astro version 5.0.0 or higher.
 Follow the steps below to set it up and enhance your development experience.
 
 <br />

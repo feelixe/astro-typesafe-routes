@@ -7,6 +7,9 @@ import astroTypesafeRoutes from "astro-typesafe-routes";
 // https://astro.build/config
 export default defineConfig({
   prefetch: true,
+  server: {
+    host: true,
+  },
   vite: {
     plugins: [tailwindcss()],
   },

@@ -7,7 +7,7 @@ export function Container(props: ContainerProps) {
   const { children, className, ...rest } = props;
 
   return (
-    <div className={cn("max-w-4xl mx-auto px-3 py-2", className)} {...rest}>
+    <div className={cn("max-w-4xl mx-auto px-6 py-2", className)} {...rest}>
       {children}
     </div>
   );

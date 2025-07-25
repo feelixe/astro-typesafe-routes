@@ -79,7 +79,7 @@ export function AutocompletePopup(props: AutocompletePopupProps) {
   return (
     <div
       className={cn(
-        "min-w-sm inline-block rounded border-2 border-[#454545] bg-[#202020]",
+        "min-w-60 sm:min-w-sm inline-block rounded border-2 border-[#454545] bg-[#202020]",
         className,
       )}
       {...rest}
@@ -99,7 +99,7 @@ export function AutocompletePopupLine(props: AutocompletePopupLineProps) {
   return (
     <div
       className={cn(
-        "flex px-1.5 py-0.5 items-center gap-2 text-sm text-[#cccccc]",
+        "flex px-1.5 py-0.5 items-center gap-1.5 text-sm text-[#cccccc]",
         active && "bg-[#16385b] text-white",
         className,
       )}
