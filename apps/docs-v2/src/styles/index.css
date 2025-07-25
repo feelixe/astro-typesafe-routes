@@ -135,6 +135,21 @@
     animation: caret-blink 1s steps(1) infinite;
   }
 
+  @keyframes float-away {
+    0% {
+      opacity: 1;
+      top: -10px;
+    }
+    100% {
+      opacity: 0;
+      top: -60px;
+    }
+  }
+
+  .float-away {
+    animation: float-away 0.7s linear forwards;
+  }
+
   .markdown {
     h1 {
       @apply mb-3 text-3xl font-semibold tracking-tight;

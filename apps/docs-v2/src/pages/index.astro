@@ -6,6 +6,7 @@ import { ChevronRightIcon } from "lucide-react"
 import { Separator } from "../components/ui/separator.tsx";
 import { Card, CardDescription, CardHeader, CardTitle } from "../components/ui/card.tsx";
 import { CodeDisplay } from "../components/showcase/code-display.tsx";
+import { QuickStart } from "@/components/showcase/quick-start.tsx"
 ---
 
 <DefaultLayout>
@@ -28,6 +29,11 @@ import { CodeDisplay } from "../components/showcase/code-display.tsx";
         Usage
       </LinkButton>
     </div>
+
+    <Separator className="my-12" />
+
+    <h2 class="text-3xl font-semibold mb-4">Quick Start</h2>
+    <QuickStart client:load />
 
     <Separator className="my-12" />
 
