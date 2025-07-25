@@ -5,7 +5,6 @@ import { GitHubIcon } from "../icons/github-icon.tsx";
 import { Button } from "../ui/button.tsx";
 import { NpmIcon } from "../icons/npm-icon.tsx";
 import Link from "astro-typesafe-routes/link/react";
-import { Sidebar } from "./sidebar.tsx";
 
 export type NavbarProps = ComponentProps<"div">;
 

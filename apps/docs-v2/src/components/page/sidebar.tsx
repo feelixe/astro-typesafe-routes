@@ -2,8 +2,7 @@ import type { ComponentProps } from "react";
 import { cn } from "../../lib/utils.ts";
 import { Button } from "../ui/button.tsx";
 import { $path, type RouteId, type RouteOptions } from "astro-typesafe-routes/path";
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "../ui/collapsible.tsx";
-import { ChevronDownIcon } from "lucide-react";
+import { ChevronUpIcon } from "lucide-react";
 
 export type SidebarProps = Omit<ComponentProps<"div">, "children"> & {
   activeRouteId: RouteId;
@@ -13,17 +12,24 @@ export function Sidebar(props: SidebarProps) {
   const { className, activeRouteId, ...rest } = props;
 
   return (
-    <div className={cn("w-64 shrink-0", className)} {...rest}>
+    <div className={cn("w-64 flex flex-col gap-1 shrink-0", className)} {...rest}>
       <SidebarButton activeRouteId={activeRouteId} link={{ to: "/documentation" }}>
         Installation
       </SidebarButton>
       <SidebarGroupButton title="Usage">
         <SidebarButton
           activeRouteId={activeRouteId}
-          link={{ to: "/documentation/usage/link-component" }}
+          link={{ to: "/documentation/usage/link/astro-link" }}
         >
-          Link Component
+          Astro Link
         </SidebarButton>
+        <SidebarButton
+          activeRouteId={activeRouteId}
+          link={{ to: "/documentation/usage/link/react-link" }}
+        >
+          React Link
+        </SidebarButton>
+
         <SidebarButton activeRouteId={activeRouteId} link={{ to: "/" }}>
           Path Function
         </SidebarButton>
@@ -37,6 +43,12 @@ export function Sidebar(props: SidebarProps) {
           Read Params
         </SidebarButton>
       </SidebarGroupButton>
+      <SidebarButton activeRouteId={activeRouteId} link={{ to: "/" }}>
+        Configuration
+      </SidebarButton>
+      <SidebarButton activeRouteId={activeRouteId} link={{ to: "/" }}>
+        Migrating from 4.0.0
+      </SidebarButton>
     </div>
   );
 }
@@ -90,7 +102,7 @@ export function SidebarButton<T extends RouteId>(props: SidebarButtonProps<T>) {
   );
 }
 
-export type SidebarGroupButtonProps = ComponentProps<typeof Collapsible> & {
+export type SidebarGroupButtonProps = ComponentProps<"div"> & {
   title: string;
 };
 
@@ -98,14 +110,14 @@ export function SidebarGroupButton(props: SidebarGroupButtonProps) {
   const { children, title, className, ...rest } = props;
 
   return (
-    <Collapsible defaultOpen className={cn("group", className)} {...rest}>
-      <CollapsibleTrigger asChild>
-        <Button variant="ghost" size="lg" className={cn("w-full justify-between")}>
-          {title}
-          <ChevronDownIcon className="size-4 transition-transform group-data-[state='open']:rotate-180" />
-        </Button>
-      </CollapsibleTrigger>
-      <CollapsibleContent className="pl-2">{children}</CollapsibleContent>
-    </Collapsible>
+    <div className="">
+      <Button disabled variant="ghost" size="lg" className="w-full justify-between">
+        {title}
+        <ChevronUpIcon className="size-4" />
+      </Button>
+      <div className={cn("pl-2", className)} {...rest}>
+        {children}
+      </div>
+    </div>
   );
 }

@@ -122,22 +122,22 @@ declare module "astro-typesafe-routes/path" {
 
   export type RouteOptions<T extends RouteId> = {
     to: T;
-    hash?: string;
-    trailingSlash?: boolean;
-    searchParams?: ConstructorParameters<typeof URLSearchParams>[0];
+    hash?: string | undefined;
+    trailingSlash?: boolean | undefined;
+    searchParams?: ConstructorParameters<typeof URLSearchParams>[0] | undefined;
   } & (Routes[T]["search"] extends null
-    ? { search?: never }
+    ? { search?: undefined }
     : AreAllFieldsOptional<
           StandardSchemaV1.InferInput<Routes[T]["search"]>
         > extends true
       ? {
-          search?: StandardSchemaV1.InferInput<Routes[T]["search"]>;
+          search?: StandardSchemaV1.InferInput<Routes[T]["search"]> | undefined;
         }
       : {
           search: StandardSchemaV1.InferInput<Routes[T]["search"]>;
         }) &
     (Routes[T]["params"] extends null
-      ? { params?: never }
+      ? { params?: undefined }
       : { params: ParamsRecord<T> });
 
   export function $path<T extends RouteId>(args: RouteOptions<T>): string;

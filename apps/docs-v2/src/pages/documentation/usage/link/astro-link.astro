@@ -1,0 +1,32 @@
+---
+import { LinkButton } from "@/components/ui/button.tsx";
+import { Container } from "@/components/ui/container.tsx";
+import { Separator } from "@/components/ui/separator.tsx";
+import DefaultLayout from "@/layouts/default-layout.astro";
+import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react"
+import { Sidebar, SidebarContent, SidebarWrapper } from "@/components/page/sidebar.tsx"
+import Markdown from "./_astro-link.md"
+---
+
+<DefaultLayout>
+  <Container className="markdown">
+    <SidebarWrapper>
+      <Sidebar client:load activeRouteId="/documentation/usage/link/astro-link" />
+      <SidebarContent>
+        <Markdown />
+        <Separator className="my-6" />
+        <div class="flex items-center">
+          <LinkButton to="/documentation" variant="secondary" asChild>
+            <ChevronLeftIcon className="size-4" />
+            Installation
+          </LinkButton>
+          <div class="grow" />
+          <LinkButton to="/documentation/usage/link/astro-link">
+            React Link
+            <ChevronRightIcon className="size-4" />
+          </LinkButton>
+        </div>
+      </SidebarContent>
+    </SidebarWrapper>
+  </Container>
+</DefaultLayout>
