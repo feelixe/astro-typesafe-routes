@@ -38,7 +38,7 @@ export function Sidebar(props: SidebarProps) {
           Read Params
         </SidebarButton>
       </SidebarGroupButton>
-      <SidebarButton activeRouteId={activeRouteId} link={{ to: "/" }}>
+      <SidebarButton activeRouteId={activeRouteId} link={{ to: "/documentation/configuration" }}>
         <SettingsIcon className="size-5" />
         Configuration
       </SidebarButton>
@@ -46,7 +46,7 @@ export function Sidebar(props: SidebarProps) {
         <HandHelpingIcon className="size-5" />
         Contributing
       </SidebarButton>
-      <SidebarButton activeRouteId={activeRouteId} link={{ to: "/" }}>
+      <SidebarButton activeRouteId={activeRouteId} link={{ to: "/documentation/migrating" }}>
         <FolderUpIcon className="size-5" />
         Migrating from 4.0.0
       </SidebarButton>

@@ -1,7 +1,7 @@
 ---
 import { Container } from "../components/ui/container.tsx";
 import DefaultLayout from "../layouts/default-layout.astro";
-import { Button } from "../components/ui/button.tsx";
+import { LinkButton } from "../components/ui/button.tsx";
 import { ChevronRightIcon } from "lucide-react"
 import { Separator } from "../components/ui/separator.tsx";
 import { Card, CardDescription, CardHeader, CardTitle } from "../components/ui/card.tsx";
@@ -20,13 +20,13 @@ import { CodeDisplay } from "../components/showcase/code-display.tsx";
     </p>
 
     <div class="flex gap-2 items-center justify-center">
-      <Button size="sm">
+      <LinkButton to="/documentation" size="sm">
         Installation
         <ChevronRightIcon className="size-4" />
-      </Button>
-      <Button size="sm" variant="secondary">
+      </LinkButton>
+      <LinkButton to="/documentation/usage/link" size="sm" variant="secondary">
         Usage
-      </Button>
+      </LinkButton>
     </div>
 
     <Separator className="my-12" />
@@ -36,7 +36,7 @@ import { CodeDisplay } from "../components/showcase/code-display.tsx";
       <Card>
         <CardHeader>
           <CardTitle>
-            🛟 Typesafe
+            🔒 Typesafe
           </CardTitle>
           <CardDescription>
             Ensures all URLs match a route in your Astro project.
