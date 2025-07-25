@@ -5,18 +5,44 @@ import { Button } from "../components/ui/button.tsx";
 import { ChevronRightIcon } from "lucide-react"
 import { Separator } from "../components/ui/separator.tsx";
 import { Card, CardDescription, CardHeader, CardTitle } from "../components/ui/card.tsx";
+import { CodeBlock, Code, Caret, AutocompletePopup, AutocompletePopupLine } from "../components/showcase/code-block.tsx";
 ---
 
 <DefaultLayout>
-  <Container className="mt-10">
-    <h1 class="text-4xl font-semibold mb-3">Astro Typesafe Routes</h1>
-    <p class="mb-4">
+  <Container className="mt-10 max-w-3xl">
+    <CodeBlock className="max-w-lg mx-auto mb-16">
+      <Code c="darkGreen">---</Code>
+      <br />
+      <Code c="pink">import</Code>
+      <Code c="blue">Link</Code>
+      <Code c="pink">from</Code>
+      <Code c="orange">"astro-typesafe-routes/link"</Code><Code c="white">;</Code>
+      <br />
+      <Code c="darkGreen">---</Code>
+      <br />
+      <br />
+      <div class="relative">
+        <Code c="gray">&lt;</Code><Code c="green">Link</Code>
+        <Code c="blue">to</Code><Code c="white">=</Code><Code c="orange">"</Code><Caret />
+        <AutocompletePopup className="absolute top-7 left-22">
+          <AutocompletePopupLine active>/</AutoCompletePopupLine>
+          <AutocompletePopupLine>/blog</AutoCompletePopupLine>
+          <AutocompletePopupLine>/blog/[slug]</AutoCompletePopupLine>
+        </AutocompletePopup>
+      </div>
+      &nbsp;&nbsp;<Code c="white">Blog</Code>
+      <br />
+      <Code c="gray">&lt;/</Code><Code c="green">Link</Code><Code c="gray">&gt;</Code>
+    </CodeBlock>
+
+    <h1 class="text-4xl font-semibold mb-3 text-center">Typesafe Routing for Astro Projects</h1>
+    <p class="mb-4 text-center">
       Enhance your Astro development experience with rigorous type safety
       for every route in your application. This integration automatically
       generates TypeScript definitions from your project's route structure.
     </p>
 
-    <div class="flex gap-2 items-center">
+    <div class="flex gap-2 items-center justify-center">
       <Button size="sm">
         Installation
         <ChevronRightIcon className="size-4" />

@@ -121,6 +121,20 @@
     @apply bg-background text-foreground;
   }
 
+  @keyframes caret-blink {
+    0%,
+    100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0;
+    }
+  }
+
+  .caret-blink {
+    animation: caret-blink 1s steps(1) infinite;
+  }
+
   .markdown {
     h1 {
       @apply mb-3 text-3xl font-semibold tracking-tight;
