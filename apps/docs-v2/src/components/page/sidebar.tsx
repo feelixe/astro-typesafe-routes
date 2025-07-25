@@ -9,6 +9,7 @@ import {
   PackagePlusIcon,
   SettingsIcon,
 } from "lucide-react";
+import { Badge } from "../ui/badge.tsx";
 
 export type SidebarProps = Omit<ComponentProps<"div">, "children"> & {
   activeRouteId: RouteId;
@@ -31,9 +32,19 @@ export function Sidebar(props: SidebarProps) {
         <SidebarButton activeRouteId={activeRouteId} link={{ to: "/documentation/usage/path" }}>
           Path Function
         </SidebarButton>
+
+        <SidebarButton
+          activeRouteId={activeRouteId}
+          link={{ to: "/documentation/usage/create-route" }}
+        >
+          Create Route
+          <Badge variant="outline">New</Badge>
+        </SidebarButton>
+
         <SidebarButton activeRouteId={activeRouteId} link={{ to: "/" }}>
           Typed Search Params
         </SidebarButton>
+
         <SidebarButton activeRouteId={activeRouteId} link={{ to: "/" }}>
           Read Params
         </SidebarButton>

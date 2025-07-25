@@ -1,31 +1,17 @@
 ---
 import { createRoute } from "astro-typesafe-routes/create-route";
-import { z } from "astro/zod";
 
 export const Route = createRoute({
   routeId: "/blog/[postId]",
-  searchSchema: z.object({ num: z.number() }),
 });
 
-export type Props = {
-  content: string;
-};
-
-export const getStaticPaths = Route.createGetStaticPaths<Props>(() => {
-  return [
-    {
-      params: {
-        postId: "1",
-      },
-      props: {
-        content: "Lorem Ipsum",
-      },
-    },
-  ];
-});
-
-const search = Route.getSearch(Astro);
-
+export const getStaticPaths = Route.createGetStaticPaths(() => [
+  {
+    params: {
+      postId: "1"
+    }
+  }
+])
 ---
 
 {Astro.props.content}

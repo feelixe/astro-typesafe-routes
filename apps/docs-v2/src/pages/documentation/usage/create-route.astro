@@ -3,7 +3,7 @@ import { LinkButton } from "@/components/ui/button.tsx";
 import { Container } from "@/components/ui/container.tsx";
 import { Separator } from "@/components/ui/separator.tsx";
 import DefaultLayout from "@/layouts/default-layout.astro";
-import InstallationDocs from "./_index.md"
+import Markdown from "./_create-route.md"
 import { ChevronRightIcon } from "lucide-react"
 import { Sidebar, SidebarContent, SidebarWrapper } from "@/components/page/sidebar.tsx"
 ---
@@ -11,9 +11,9 @@ import { Sidebar, SidebarContent, SidebarWrapper } from "@/components/page/sideb
 <DefaultLayout>
   <Container className="markdown">
     <SidebarWrapper>
-      <Sidebar client:load activeRouteId="/documentation" />
+      <Sidebar client:load activeRouteId="/documentation/usage/create-route" />
       <SidebarContent>
-        <InstallationDocs />
+        <Markdown />
         <Separator className="my-6" />
         <div class="flex items-center">
           <div class="grow" />
