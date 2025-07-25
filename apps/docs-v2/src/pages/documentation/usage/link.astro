@@ -5,24 +5,24 @@ import { Separator } from "@/components/ui/separator.tsx";
 import DefaultLayout from "@/layouts/default-layout.astro";
 import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react"
 import { Sidebar, SidebarContent, SidebarWrapper } from "@/components/page/sidebar.tsx"
-import Markdown from "./_react-link.md"
+import Markdown from "./_link.md"
 ---
 
 <DefaultLayout>
   <Container className="markdown">
     <SidebarWrapper>
-      <Sidebar client:load activeRouteId="/documentation/usage/link/react-link" />
+      <Sidebar client:load activeRouteId="/documentation/usage/link" />
       <SidebarContent>
         <Markdown />
         <Separator className="my-6" />
         <div class="flex items-center">
           <LinkButton to="/documentation" variant="secondary" asChild>
             <ChevronLeftIcon className="size-4" />
-            Astro Link
+            Installation
           </LinkButton>
           <div class="grow" />
-          <LinkButton to="/documentation/usage/link/astro-link">
-            Custom Link
+          <LinkButton to="/documentation/usage/path">
+            Path Function
             <ChevronRightIcon className="size-4" />
           </LinkButton>
         </div>

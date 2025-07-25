@@ -1,8 +1,8 @@
 ---
-import { Button } from "../../components/ui/button.tsx";
-import { Container } from "../../components/ui/container.tsx";
-import { Separator } from "../../components/ui/separator.tsx";
-import DefaultLayout from "../../layouts/default-layout.astro";
+import { LinkButton } from "@/components/ui/button.tsx";
+import { Container } from "@/components/ui/container.tsx";
+import { Separator } from "@/components/ui/separator.tsx";
+import DefaultLayout from "@/layouts/default-layout.astro";
 import InstallationDocs from "./_index.md"
 import { ChevronRightIcon } from "lucide-react"
 import { Sidebar, SidebarContent, SidebarWrapper } from "@/components/page/sidebar.tsx"
@@ -17,7 +17,10 @@ import { Sidebar, SidebarContent, SidebarWrapper } from "@/components/page/sideb
         <Separator className="my-6" />
         <div class="flex items-center">
           <div class="grow" />
-          <Button>Link Component <ChevronRightIcon className="size-4" /></Button>
+          <LinkButton to="/documentation/usage/link">
+            Link Component
+            <ChevronRightIcon className="size-4" />
+          </LinkButton>
         </div>
       </SidebarContent>
     </SidebarWrapper>

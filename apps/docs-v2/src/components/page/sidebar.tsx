@@ -17,24 +17,12 @@ export function Sidebar(props: SidebarProps) {
         Installation
       </SidebarButton>
       <SidebarGroupButton title="Usage">
-        <SidebarButton
-          activeRouteId={activeRouteId}
-          link={{ to: "/documentation/usage/link/astro-link" }}
-        >
-          Astro Link
-        </SidebarButton>
-        <SidebarButton
-          activeRouteId={activeRouteId}
-          link={{ to: "/documentation/usage/link/react-link" }}
-        >
-          React Link
+        <SidebarButton activeRouteId={activeRouteId} link={{ to: "/documentation/usage/link" }}>
+          Link
         </SidebarButton>
 
-        <SidebarButton activeRouteId={activeRouteId} link={{ to: "/" }}>
+        <SidebarButton activeRouteId={activeRouteId} link={{ to: "/documentation/usage/path" }}>
           Path Function
-        </SidebarButton>
-        <SidebarButton activeRouteId={activeRouteId} link={{ to: "/" }}>
-          Optional Fields
         </SidebarButton>
         <SidebarButton activeRouteId={activeRouteId} link={{ to: "/" }}>
           Typed Search Params
