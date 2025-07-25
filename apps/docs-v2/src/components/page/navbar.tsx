@@ -6,6 +6,7 @@ import { Button } from "../ui/button.tsx";
 import { NpmIcon } from "../icons/npm-icon.tsx";
 import Link from "astro-typesafe-routes/link/react";
 import { MenuIcon, XIcon } from "lucide-react";
+import { DataSelect } from "../ui/select.tsx";
 
 export type NavbarProps = ComponentProps<"div">;
 
@@ -14,12 +15,29 @@ export function Navbar(props: NavbarProps) {
 
   const [open, setOpen] = useState(false);
 
+  const value = "5.0.0";
+
   return (
     <div className={cn("", className)} {...rest}>
       <Container className="py-5 flex items-center gap-1">
-        <Link to="/" className="font-semibold tracking-tight">
+        <Link to="/" className="font-semibold tracking-tight mr-3">
           Astro Typesafe Routes
         </Link>
+
+        <DataSelect
+          value={value}
+          items={[
+            {
+              value: "4.0.0",
+              label: "v4.0.0",
+            },
+            {
+              value: "5.0.0",
+              label: "v5.0.0",
+            },
+          ]}
+        />
+
         <div className="grow" />
 
         <div className="hidden sm:block">
