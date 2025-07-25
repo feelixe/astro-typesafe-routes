@@ -12,8 +12,8 @@ export function CodeSuggestionIcon(props: ComponentProps<"svg">) {
     >
       <title>Code Suggestion Icon</title>
       <path
-        fill-rule="evenodd"
-        clip-rule="evenodd"
+        fillRule="evenodd"
+        clipRule="evenodd"
         d="M26 0C27.1046 3.86553e-07 28 0.895431 28 2V18C28 19.1046 27.1046 20 26 20H2C0.895431 20 1.61067e-08 19.1046 0 18V2C2.57706e-07 0.895431 0.895431 4.83192e-08 2 0H26ZM2 2V18H26V2H2Z"
         fill="#C4C4C4"
       />

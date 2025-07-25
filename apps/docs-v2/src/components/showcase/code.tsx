@@ -89,7 +89,7 @@ export function AutocompletePopup(props: AutocompletePopupProps) {
   );
 }
 
-export type AutocompletePopupLineProps = ComponentProps<"div"> & {
+export type AutocompletePopupLineProps = ComponentProps<"button"> & {
   active?: boolean;
 };
 
@@ -97,9 +97,10 @@ export function AutocompletePopupLine(props: AutocompletePopupLineProps) {
   const { className, children, active, ...rest } = props;
 
   return (
-    <div
+    <button
+      type="button"
       className={cn(
-        "flex px-1.5 py-0.5 items-center gap-1.5 text-sm text-[#cccccc]",
+        "flex px-1.5 py-0.5 items-center gap-1.5 text-sm text-[#cccccc] cursor-pointer w-full",
         active && "bg-[#16385b] text-white",
         className,
       )}
@@ -107,6 +108,6 @@ export function AutocompletePopupLine(props: AutocompletePopupLineProps) {
     >
       <CodeSuggestionIcon className="size-5" />
       {children}
-    </div>
+    </button>
   );
 }

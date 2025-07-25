@@ -2,7 +2,13 @@ import type { ComponentProps } from "react";
 import { cn } from "../../lib/utils.ts";
 import { Button } from "../ui/button.tsx";
 import { $path, type RouteId, type RouteOptions } from "astro-typesafe-routes/path";
-import { ChevronUpIcon } from "lucide-react";
+import {
+  ChevronUpIcon,
+  FolderUpIcon,
+  HandHelpingIcon,
+  PackagePlusIcon,
+  SettingsIcon,
+} from "lucide-react";
 
 export type SidebarProps = Omit<ComponentProps<"div">, "children"> & {
   activeRouteId: RouteId;
@@ -14,6 +20,7 @@ export function Sidebar(props: SidebarProps) {
   return (
     <div className={cn("w-64 flex flex-col gap-1 shrink-0", className)} {...rest}>
       <SidebarButton activeRouteId={activeRouteId} link={{ to: "/documentation" }}>
+        <PackagePlusIcon className="size-5" />
         Installation
       </SidebarButton>
       <SidebarGroupButton title="Usage">
@@ -32,9 +39,15 @@ export function Sidebar(props: SidebarProps) {
         </SidebarButton>
       </SidebarGroupButton>
       <SidebarButton activeRouteId={activeRouteId} link={{ to: "/" }}>
+        <SettingsIcon className="size-5" />
         Configuration
       </SidebarButton>
+      <SidebarButton activeRouteId={activeRouteId} link={{ to: "/documentation/contributing" }}>
+        <HandHelpingIcon className="size-5" />
+        Contributing
+      </SidebarButton>
       <SidebarButton activeRouteId={activeRouteId} link={{ to: "/" }}>
+        <FolderUpIcon className="size-5" />
         Migrating from 4.0.0
       </SidebarButton>
     </div>
@@ -103,7 +116,7 @@ export function SidebarGroupButton(props: SidebarGroupButtonProps) {
         {title}
         <ChevronUpIcon className="size-4" />
       </Button>
-      <div className={cn("pl-2", className)} {...rest}>
+      <div className={cn("pl-5", className)} {...rest}>
         {children}
       </div>
     </div>
