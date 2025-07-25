@@ -1,4 +1,4 @@
-import { CopyIcon } from "lucide-react";
+import { CopyIcon, XIcon } from "lucide-react";
 import { cn } from "../../lib/utils.ts";
 import { Button } from "../ui/button.tsx";
 import { Separator } from "../ui/separator.tsx";
@@ -10,6 +10,7 @@ import { BunIcon } from "../icons/bun-icon.tsx";
 import { usePreferredPackageManager } from "../../hooks/use-preferred-package-manager.ts";
 import { useEffect, useState } from "react";
 import seedrandom from "seedrandom";
+import { Badge } from "../ui/badge.tsx";
 
 export type QuickStartProps = CodeBlockProps;
 
@@ -77,22 +78,29 @@ export function QuickStart(props: QuickStartProps) {
           <Button size="icon" className="relative" variant="ghost" onClick={copyToClipboard}>
             {copyIds.map((copyId) => {
               const randomRot = seedrandom(copyId.toString())();
-              const amplification = Math.min(20, copyId * 2);
+              const amplification = Math.min(20, (copyId - 1) * 2);
               const rotation = Math.floor(randomRot * amplification - amplification / 2);
               const fontSize = Math.min(30, copyId + 14);
+              const fontSizeCss = `${fontSize}px`;
 
               return (
-                <div
-                  className="absolute right-0 float-away pointer-events-none font-geist font-normal"
+                <Badge
+                  variant="secondary"
+                  className="absolute right-0 float-away pointer-events-none font-geist font-normal border border-border"
                   style={{
                     transform: `rotate(${rotation}deg)`,
-                    fontSize: `${fontSize}px`,
+                    fontSize: fontSizeCss,
                   }}
                   key={copyId}
                 >
                   Copied to clipboard!
-                  {copyId > 1 && ` x${copyId}`}
-                </div>
+                  {copyId > 1 && (
+                    <>
+                      <XIcon style={{ width: "0.8em", height: "0.8em" }} />
+                      {copyId}
+                    </>
+                  )}
+                </Badge>
               );
             })}
 

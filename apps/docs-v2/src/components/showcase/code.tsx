@@ -9,10 +9,7 @@ export function CodeBlock(props: CodeBlockProps) {
 
   return (
     <div
-      className={cn(
-        "font-mono bg-card border border-border rounded px-4 py-3 bg-[#202020]",
-        className,
-      )}
+      className={cn("font-mono bg-card border border-border rounded px-4 py-3 bg-card", className)}
       {...rest}
     >
       {children}

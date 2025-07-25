@@ -1,10 +1,14 @@
 # Contributing
 
+Contributions are welcome and appreciated! Reporting bugs, requesting features or creating a pull request are great ways to contribute.
+
 ## Open a bug report or feature request
 
 If you encounter a bug or have an idea for a new feature, feel free to open an issue on GitHub.
 For bugs, include steps to reproduce the issue.
 For feature requests, describe the use case and, if possible, suggest how it could work.
+
+<br />
 
 ## Open a Pull Request
 

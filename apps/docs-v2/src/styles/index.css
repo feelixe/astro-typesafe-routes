@@ -81,9 +81,11 @@
 
 .dark {
   --background: oklch(17.882% 0.00164 16.627);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.205 0 0);
+  --foreground: oklch(91.542% 0.01201 16.901);
+
+  --card: oklch(0.2435 0 0);
   --card-foreground: oklch(0.985 0 0);
+
   --popover: oklch(0.205 0 0);
   --popover-foreground: oklch(0.985 0 0);
   --primary: oklch(0.922 0 0);
@@ -168,7 +170,8 @@
     }
 
     .astro-code {
-      @apply px-4 py-3 rounded mb-4;
+      @apply px-5 pt-4 pb-4.5 rounded mb-4 border border-border;
+      background-color: var(--card) !important;
     }
 
     code:not(.astro-code code) {
