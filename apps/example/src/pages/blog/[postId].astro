@@ -5,13 +5,7 @@ export const Route = createRoute({
   routeId: "/blog/[postId]",
 });
 
-export const getStaticPaths = Route.createGetStaticPaths(() => [
-  {
-    params: {
-      postId: "1"
-    }
-  }
-])
+const params = Route.getParams(Astro);
 ---
 
 {Astro.props.content}

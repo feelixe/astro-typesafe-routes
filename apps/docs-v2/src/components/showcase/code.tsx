@@ -76,7 +76,7 @@ export function AutocompletePopup(props: AutocompletePopupProps) {
   return (
     <div
       className={cn(
-        "min-w-60 sm:min-w-sm inline-block rounded border-2 border-[#454545] bg-[#202020]",
+        "min-w-60 sm:min-w-sm inline-block rounded border-2 border-[#454545] bg-card",
         className,
       )}
       {...rest}
