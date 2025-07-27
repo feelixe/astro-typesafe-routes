@@ -1,27 +1,23 @@
 import type { ComponentProps } from "react";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select.tsx";
-import { $path } from "astro-typesafe-routes/path";
-
-export const versions = ["v4.0.0", "v5.0.0"] as const;
-
-export type Version = (typeof versions)[number];
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../../ui/select.tsx";
+import { $path, type RouteId } from "astro-typesafe-routes/path";
+import { resolveVersionedRoute, versions, type Version } from "@/lib/version.ts";
 
 export type ChangeVersionProps = Partial<ComponentProps<typeof Select>> & {
   value: Version;
+  activeRouteId: RouteId;
 };
 
 export function ChangeVersion(props: ChangeVersionProps) {
   const navigateToVersion = (version: Version) => {
-    if (version === "v4.0.0") {
-      window.location.href = $path({ to: "/4.0.0/documentation" });
-      return;
-    }
-    window.location.href = $path({ to: "/documentation" });
+    const matchingRoute = resolveVersionedRoute(props.activeRouteId, version);
+
+    window.location.href = $path({ to: matchingRoute });
   };
 
   return (
-    <Select onValueChange={navigateToVersion}>
-      <SelectTrigger className="w-[90px]">
+    <Select value={props.value} onValueChange={navigateToVersion}>
+      <SelectTrigger size="sm" className="w-[90px]">
         <SelectValue placeholder={props.value} />
       </SelectTrigger>
       <SelectContent>

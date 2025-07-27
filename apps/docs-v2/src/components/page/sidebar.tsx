@@ -2,15 +2,9 @@ import type { ComponentProps } from "react";
 import { cn } from "../../lib/utils.ts";
 import { Button } from "../ui/button.tsx";
 import { $path, type RouteId, type RouteOptions } from "astro-typesafe-routes/path";
-import {
-  ChevronUpIcon,
-  FolderUpIcon,
-  HandHelpingIcon,
-  PackagePlusIcon,
-  SettingsIcon,
-} from "lucide-react";
+import { FolderUpIcon, HandHelpingIcon, PackagePlusIcon, SettingsIcon } from "lucide-react";
 import { Badge } from "../ui/badge.tsx";
-import type { Version } from "../change-version.tsx";
+import type { Version } from "@/lib/version.ts";
 
 export type SidebarProps = Omit<ComponentProps<"div">, "children"> & {
   activeRouteId: RouteId;
@@ -28,7 +22,7 @@ export function Sidebar(props: SidebarProps) {
           Installation
         </SidebarButton>
 
-        <SidebarGroupButton title="Usage">
+        <SidebarGroup title="usage">
           <SidebarButton
             activeRouteId={activeRouteId}
             link={{ to: "/4.0.0/documentation/usage/link" }}
@@ -59,7 +53,7 @@ export function Sidebar(props: SidebarProps) {
           >
             Get Params
           </SidebarButton>
-        </SidebarGroupButton>
+        </SidebarGroup>
 
         <SidebarButton
           activeRouteId={activeRouteId}
@@ -85,7 +79,7 @@ export function Sidebar(props: SidebarProps) {
         <PackagePlusIcon className="size-5" />
         Installation
       </SidebarButton>
-      <SidebarGroupButton title="Usage">
+      <SidebarGroup title="usage">
         <SidebarButton activeRouteId={activeRouteId} link={{ to: "/documentation/usage/link" }}>
           Link
         </SidebarButton>
@@ -108,7 +102,7 @@ export function Sidebar(props: SidebarProps) {
         >
           Typed Search Params
         </SidebarButton>
-      </SidebarGroupButton>
+      </SidebarGroup>
       <SidebarButton activeRouteId={activeRouteId} link={{ to: "/documentation/configuration" }}>
         <SettingsIcon className="size-5" />
         Configuration
@@ -174,20 +168,17 @@ export function SidebarButton<T extends RouteId>(props: SidebarButtonProps<T>) {
   );
 }
 
-export type SidebarGroupButtonProps = ComponentProps<"div"> & {
+export type SidebarGroupProps = ComponentProps<"div"> & {
   title: string;
 };
 
-export function SidebarGroupButton(props: SidebarGroupButtonProps) {
+export function SidebarGroup(props: SidebarGroupProps) {
   const { children, title, className, ...rest } = props;
 
   return (
-    <div className="">
-      <Button disabled variant="ghost" size="lg" className="w-full justify-between">
-        {title}
-        <ChevronUpIcon className="size-4" />
-      </Button>
-      <div className={cn("pl-5", className)} {...rest}>
+    <div className="mt-2 mb-2">
+      <div className="text-xs pl-3 mb-3">{title}/</div>
+      <div className={cn("pl-2 border-l border-border ml-4", className)} {...rest}>
         {children}
       </div>
     </div>

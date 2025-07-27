@@ -3,12 +3,13 @@ import type { RouteId } from "astro-typesafe-routes/path";
 import { Navbar } from "../components/page/navbar.tsx";
 import "../styles/index.css";
 import { cn } from "../lib/utils.ts";
-import type { Version } from "../components/change-version.tsx";
+import type { Version } from "@/lib/version.ts";
 
 export type Props = {
   activeRouteId: RouteId;
   fixedHeight?: boolean;
   version?: Version | undefined;
+  hideChangeVersion?: boolean;
 }
 
 ---
@@ -21,7 +22,7 @@ export type Props = {
 		<title>Astro Typesafe Routes</title>
 	</head>
 	<body class={cn("dark font-geist", Astro.props.fixedHeight && "h-svh flex flex-col" )}>
-    <Navbar client:load activeRouteId={Astro.props.activeRouteId} version={Astro.props.version} />
+    <Navbar client:load activeRouteId={Astro.props.activeRouteId} version={Astro.props.version} hideChangeVersion={Astro.props.hideChangeVersion ?? true} />
 		<slot />
 	</body>
 </html>

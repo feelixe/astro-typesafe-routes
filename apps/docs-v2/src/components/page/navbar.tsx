@@ -8,15 +8,24 @@ import Link from "astro-typesafe-routes/link/react";
 import { HomeIcon, MenuIcon, XIcon } from "lucide-react";
 import { Sidebar } from "./sidebar.tsx";
 import type { RouteId } from "astro-typesafe-routes/path";
-import { ChangeVersion, type Version } from "../change-version.tsx";
+import { ChangeVersion } from "../utils/change-version/index.tsx";
+import type { Version } from "@/lib/version.ts";
 
 export type NavbarProps = ComponentProps<"div"> & {
   activeRouteId: RouteId;
   version?: Version | undefined;
+  hideChangeVersion?: boolean;
 };
 
 export function Navbar(props: NavbarProps) {
-  const { activeRouteId, children, className, version = "v5.0.0", ...rest } = props;
+  const {
+    activeRouteId,
+    children,
+    className,
+    hideChangeVersion,
+    version = "v5.0.0",
+    ...rest
+  } = props;
 
   const [open, setOpen] = useState(false);
 
@@ -27,21 +36,21 @@ export function Navbar(props: NavbarProps) {
           Astro Typesafe Routes
         </Link>
 
-        <ChangeVersion value={version} />
+        {!hideChangeVersion && <ChangeVersion activeRouteId={activeRouteId} value={version} />}
 
         <div className="grow" />
 
-        <div className="hidden sm:block">
-          <Button variant="ghost" asChild>
+        <div className="hidden sm:flex items-center gap-2">
+          <Button variant="ghost" asChild className="" size="sm">
             <Link to="/documentation">Documentation</Link>
           </Button>
-          <Button variant="ghost" asChild>
+          <Button variant="outline" size="sm" asChild>
             <a href="https://www.npmjs.com/package/astro-typesafe-routes">
               <NpmIcon className="size-3.5" />
               npm
             </a>
           </Button>
-          <Button variant="ghost" asChild>
+          <Button variant="outline" size="sm" asChild>
             <a href="https://github.com/feelixe/astro-typesafe-routes">
               <GitHubIcon className="size-3.5" />
               Github
@@ -91,7 +100,11 @@ export function Navbar(props: NavbarProps) {
             </Button>
           </div>
 
-          <button type="button" className="size-16 p-2" onClick={() => setOpen(false)}>
+          <button
+            type="button"
+            className="size-16 p-2 cursor-pointer"
+            onClick={() => setOpen(false)}
+          >
             <XIcon className="size-full" />
           </button>
         </div>
