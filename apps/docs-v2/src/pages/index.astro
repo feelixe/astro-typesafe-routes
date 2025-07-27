@@ -1,0 +1,82 @@
+---
+import { Container } from "../components/ui/container.tsx";
+import DefaultLayout from "../layouts/default-layout.astro";
+import { LinkButton } from "../components/ui/button.tsx";
+import { ChevronRightIcon } from "lucide-react"
+import { Card, CardDescription, CardHeader, CardTitle } from "../components/ui/card.tsx";
+import { CodeDisplay } from "../components/showcase/code-display.tsx";
+import { QuickStart } from "@/components/showcase/quick-start.tsx"
+---
+
+<DefaultLayout activeRouteId="/">
+  <Container className="mt-2 sm:mt-10 max-w-3xl">
+    <CodeDisplay client:load />
+
+    <h1 class="text-4xl font-semibold mb-3 text-center">Typesafe Routing for Astro Projects</h1>
+    <p class="mb-4 text-center">
+      Enhance your Astro development experience with rigorous type safety
+      for every route in your application. This integration automatically
+      generates TypeScript definitions from your project's route structure.
+    </p>
+
+    <div class="flex gap-2 items-center justify-center mb-18">
+      <LinkButton to="/documentation" size="sm">
+        Installation
+        <ChevronRightIcon className="size-4" />
+      </LinkButton>
+      <LinkButton to="/documentation/usage/link" size="sm" variant="secondary">
+        Usage
+      </LinkButton>
+    </div>
+
+    <h2 class="text-3xl font-semibold mb-4">Quick Start</h2>
+    <QuickStart client:load className="mb-18" />
+
+    <h2 class="text-3xl font-semibold mb-4">Features</h2>
+    <div class="grid gap-3 grid-cols-2 mb-24">
+      <Card>
+        <CardHeader>
+          <CardTitle>
+            🔒 Typesafe
+          </CardTitle>
+          <CardDescription>
+            Ensures all URLs match a route in your Astro project.
+          </CardDescription>
+        </CardHeader>
+      </Card>
+
+      <Card>
+        <CardHeader>
+          <CardTitle>
+            🔗 Link Component
+          </CardTitle>
+          <CardDescription>
+            Replace your anchor links with the typesafe Link component.
+          </CardDescription>
+        </CardHeader>
+      </Card>
+
+      <Card>
+        <CardHeader>
+          <CardTitle>
+            🔎 Typesafe Search Params
+          </CardTitle>
+          <CardDescription>
+            Support for typesafe and JSON serialized search params.
+          </CardDescription>
+        </CardHeader>
+      </Card>
+
+      <Card>
+        <CardHeader>
+          <CardTitle>
+            🤸 Zero Dependencies
+          </CardTitle>
+          <CardDescription>
+            No 3rd-party packages.
+          </CardDescription>
+        </CardHeader>
+      </Card>
+    </div>
+  </Container>
+</DefaultLayout>

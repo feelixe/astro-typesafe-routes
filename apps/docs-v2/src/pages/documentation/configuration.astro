@@ -1,0 +1,8 @@
+---
+import Markdown from "./_configuration.md"
+import MarkdownString from "./_configuration.md?raw"
+import DocumentationLayout from "../../layouts/documentation-layout.astro";
+---
+<DocumentationLayout activeRouteId="/documentation/configuration" markdownString={MarkdownString}>
+  <Markdown />
+</DocumentationLayout>

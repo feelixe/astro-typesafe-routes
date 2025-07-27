@@ -5,7 +5,7 @@ export type CustomReactLinkProps<T extends RouteId> = Omit<ComponentProps<"a">, 
   RouteOptions<T>;
 
 export function CustomReactLink<T extends RouteId>(props: CustomReactLinkProps<T>) {
-  const { to, params, search, searchParams, hash, trailingSlash, ...rest } = props;
+  const { to, params, search, searchParams, hash, trailingSlash, children, ...rest } = props;
 
   const link = {
     to,
@@ -18,5 +18,9 @@ export function CustomReactLink<T extends RouteId>(props: CustomReactLinkProps<T
 
   const href = $path(link);
 
-  return <a href={href}>123</a>;
+  return (
+    <a href={href} {...rest}>
+      {children}
+    </a>
+  );
 }
