@@ -3,7 +3,7 @@ import { createRoute } from "astro-typesafe-routes/create-route";
 import { z } from "astro:content";
 
 export const Route = createRoute({
-  routeId: "/",
+  routeId: "/blog/[postId]",
   searchSchema: z.object({
     limit: z.number(),
     filter: z.string(),

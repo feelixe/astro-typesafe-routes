@@ -58,18 +58,6 @@ declare module "astro-typesafe-routes/link/react" {
   export default function Link<T extends RouteId>(props: LinkProps<T>): any;
 }
 
-declare module "astro-typesafe-routes/params" {
-  import type { AstroGlobal } from "astro";
-  import type { RouteId, Routes } from "astro-typesafe-routes/path";
-
-  export function getParams<T extends RouteId>(
-    astro: AstroGlobal,
-    route: T,
-  ): Routes[T]["params"] extends Array<unknown>
-    ? { [key in Routes[T]["params"][number]]: string }
-    : never;
-}
-
 declare module "astro-typesafe-routes/create-route" {
   import type { AstroGlobal, GetStaticPaths } from "astro";
   import type { RouteId, Routes, RouteOptions } from "astro-typesafe-routes/path";
