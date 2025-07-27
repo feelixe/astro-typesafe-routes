@@ -176,5 +176,13 @@
     code:not(.astro-code code) {
       @apply bg-foreground/10 px-1 py-0.5 rounded;
     }
+
+    blockquote {
+      @apply bg-card px-3 py-2 rounded block mb-4 border-l-4;
+    }
+
+    blockquote p {
+      @apply mb-0;
+    }
   }
 }

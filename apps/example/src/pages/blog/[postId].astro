@@ -1,11 +1,14 @@
 ---
 import { createRoute } from "astro-typesafe-routes/create-route";
+import { z } from "astro:content";
 
 export const Route = createRoute({
-  routeId: "/blog/[postId]",
+  routeId: "/",
+  searchSchema: z.object({
+    limit: z.number(),
+    filter: z.string(),
+  })
 });
 
-const params = Route.getParams(Astro);
+const search = Route.getSearch(Astro);
 ---
-
-{Astro.props.content}

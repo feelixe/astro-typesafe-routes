@@ -17,16 +17,29 @@ export function CodeBlock(props: CodeBlockProps) {
   );
 }
 
-type CodeColor = "darkGreen" | "green" | "pink" | "blue" | "orange" | "white" | "gray";
+type CodeColor =
+  | "darkGreen"
+  | "green"
+  | "pink"
+  | "lightBlue"
+  | "blue"
+  | "darkBlue"
+  | "orange"
+  | "white"
+  | "gray"
+  | "yellow";
 
 const codeColors: Record<CodeColor, string> = {
   darkGreen: "#74985d",
   green: "#71c6b1",
   pink: "#bc89bd",
-  blue: "#aadafa",
+  lightBlue: "#aadafa",
+  blue: "#6fbff9",
+  darkBlue: "#679ad1",
   orange: "#c5947c",
   white: "#cccccc",
   gray: "#808080",
+  yellow: "#dcdcaf",
 };
 
 export type CodeProps = ComponentProps<"span"> & {

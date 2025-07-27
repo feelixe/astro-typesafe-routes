@@ -24,7 +24,7 @@ export function CodeDisplay() {
       <Code c="darkGreen">---</Code>
       <br />
       <Code c="pink">import </Code>
-      <Code c="blue">Link </Code>
+      <Code c="lightBlue">Link </Code>
       <Code c="pink">from </Code>
       <Code c="orange">"astro-typesafe-routes/link"</Code>
       <Code c="white">;</Code>
@@ -35,7 +35,7 @@ export function CodeDisplay() {
       <div className="relative">
         <Code c="gray">&lt;</Code>
         <Code c="green">Link </Code>
-        <Code c="blue">to</Code>
+        <Code c="lightBlue">to</Code>
         <Code c="white">=</Code>
         <Code c="orange">"</Code>
         {selected && <Code c="orange">{selected}</Code>}
@@ -57,7 +57,7 @@ export function CodeDisplay() {
           </AutocompletePopup>
         )}
       </div>
-      &nbsp;&nbsp;<Code c="white">Blog</Code>
+      &nbsp;&nbsp;<Code c="white">About</Code>
       <br />
       <Code c="gray">&lt;/</Code>
       <Code c="green">Link</Code>

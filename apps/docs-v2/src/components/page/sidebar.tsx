@@ -41,7 +41,10 @@ export function Sidebar(props: SidebarProps) {
           <Badge variant="outline">New</Badge>
         </SidebarButton>
 
-        <SidebarButton activeRouteId={activeRouteId} link={{ to: "/" }}>
+        <SidebarButton
+          activeRouteId={activeRouteId}
+          link={{ to: "/documentation/usage/typed-search-params" }}
+        >
           Typed Search Params
         </SidebarButton>
 
@@ -83,7 +86,7 @@ export function SidebarContent(props: SidebarContentProps) {
   const { className, children, ...rest } = props;
 
   return (
-    <div className={cn("grow overflow-y-scroll", className)} {...rest}>
+    <div className={cn("overflow-y-scroll", className)} {...rest}>
       {children}
     </div>
   );
