@@ -13,7 +13,10 @@ export function CodeDisplay() {
 
   return (
     <CodeBlock
-      className="max-w-lg mx-auto mb-16"
+      className="max-w-lg mx-auto mb-20"
+      style={{
+        boxShadow: "0px 0px 80px -10px oklch(91.542% 0.07 16.901 / 0.07)",
+      }}
       onClick={() => {
         setSelectVisible(true);
       }}

@@ -1,33 +1,9 @@
 ---
-import { LinkButton } from "@/components/ui/button.tsx";
-import { Container } from "@/components/ui/container.tsx";
-import { Separator } from "@/components/ui/separator.tsx";
-import DefaultLayout from "@/layouts/default-layout.astro";
-import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react"
-import { Sidebar, SidebarContent, SidebarWrapper } from "@/components/page/sidebar.tsx"
 import Markdown from "./_path.md"
-
+import MarkdownString from "./_link.md?raw"
+import DocumentationLayout from "@/layouts/documentation-layout.astro";
 ---
 
-<DefaultLayout>
-  <Container className="markdown">
-    <SidebarWrapper>
-      <Sidebar client:load activeRouteId="/documentation/usage/path" />
-      <SidebarContent>
-        <Markdown />
-        <Separator className="my-6" />
-        <div class="flex items-center">
-          <LinkButton to="/documentation/usage/link" variant="secondary" asChild>
-            <ChevronLeftIcon className="size-4" />
-            Link
-          </LinkButton>
-          <div class="grow" />
-          <LinkButton to="/documentation">
-            Typed Search Params
-            <ChevronRightIcon className="size-4" />
-          </LinkButton>
-        </div>
-      </SidebarContent>
-    </SidebarWrapper>
-  </Container>
-</DefaultLayout>
+<DocumentationLayout activeRouteId="/documentation/usage/path" markdownString={MarkdownString}>
+  <Markdown />
+</DocumentationLayout>

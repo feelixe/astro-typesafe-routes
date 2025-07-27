@@ -1,28 +1,9 @@
 ---
-import { LinkButton } from "@/components/ui/button.tsx";
-import { Container } from "@/components/ui/container.tsx";
-import { Separator } from "@/components/ui/separator.tsx";
-import DefaultLayout from "@/layouts/default-layout.astro";
 import Markdown from "./_create-route.md"
-import { ChevronRightIcon } from "lucide-react"
-import { Sidebar, SidebarContent, SidebarWrapper } from "@/components/page/sidebar.tsx"
+import MarkdownString from "./_create-route.md?raw"
+import DocumentationLayout from "@/layouts/documentation-layout.astro";
 ---
 
-<DefaultLayout>
-  <Container className="markdown">
-    <SidebarWrapper>
-      <Sidebar client:load activeRouteId="/documentation/usage/create-route" />
-      <SidebarContent>
-        <Markdown />
-        <Separator className="my-6" />
-        <div class="flex items-center">
-          <div class="grow" />
-          <LinkButton to="/documentation/usage/link">
-            Link Component
-            <ChevronRightIcon className="size-4" />
-          </LinkButton>
-        </div>
-      </SidebarContent>
-    </SidebarWrapper>
-  </Container>
-</DefaultLayout>
+<DocumentationLayout activeRouteId="/documentation/usage/create-route" markdownString={MarkdownString}>
+  <Markdown />
+</DocumentationLayout>

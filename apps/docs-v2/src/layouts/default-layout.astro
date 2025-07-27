@@ -1,17 +1,25 @@
 ---
+import type { RouteId } from "astro-typesafe-routes/path";
 import { Navbar } from "../components/page/navbar.tsx";
 import "../styles/index.css";
+import { cn } from "../lib/utils.ts";
+
+export type Props = {
+  activeRouteId: RouteId;
+  fixedHeight?: boolean;
+}
+
 ---
 <html lang="en">
 	<head>
 		<meta charset="utf-8" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
+		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<meta name="generator" content={Astro.generator} />
 		<title>Astro Typesafe Routes</title>
 	</head>
-	<body class="dark font-geist pb-8">
-    <Navbar client:load />
+	<body class={cn("dark font-geist", Astro.props.fixedHeight && "h-svh flex flex-col" )}>
+    <Navbar client:load activeRouteId={Astro.props.activeRouteId} />
 		<slot />
 	</body>
 </html>

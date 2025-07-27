@@ -122,7 +122,6 @@
   body {
     @apply bg-background text-foreground;
   }
-
   @keyframes caret-blink {
     0%,
     100% {
@@ -170,7 +169,7 @@
     }
 
     .astro-code {
-      @apply px-5 pt-4 pb-4.5 rounded mb-4 border border-border;
+      @apply px-5 pt-4 pb-4.5 rounded mb-4 border border-border whitespace-break-spaces;
       background-color: var(--card) !important;
     }
 

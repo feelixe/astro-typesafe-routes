@@ -3,14 +3,13 @@ import { Container } from "../components/ui/container.tsx";
 import DefaultLayout from "../layouts/default-layout.astro";
 import { LinkButton } from "../components/ui/button.tsx";
 import { ChevronRightIcon } from "lucide-react"
-import { Separator } from "../components/ui/separator.tsx";
 import { Card, CardDescription, CardHeader, CardTitle } from "../components/ui/card.tsx";
 import { CodeDisplay } from "../components/showcase/code-display.tsx";
 import { QuickStart } from "@/components/showcase/quick-start.tsx"
 ---
 
-<DefaultLayout>
-  <Container className="mt-2 sm:mt-10 max-w-3xl overflow-x-hidden">
+<DefaultLayout activeRouteId="/">
+  <Container className="mt-2 sm:mt-10 max-w-3xl">
     <CodeDisplay client:load />
 
     <h1 class="text-4xl font-semibold mb-3 text-center">Typesafe Routing for Astro Projects</h1>
@@ -20,7 +19,7 @@ import { QuickStart } from "@/components/showcase/quick-start.tsx"
       generates TypeScript definitions from your project's route structure.
     </p>
 
-    <div class="flex gap-2 items-center justify-center">
+    <div class="flex gap-2 items-center justify-center mb-18">
       <LinkButton to="/documentation" size="sm">
         Installation
         <ChevronRightIcon className="size-4" />
@@ -30,15 +29,11 @@ import { QuickStart } from "@/components/showcase/quick-start.tsx"
       </LinkButton>
     </div>
 
-    <Separator className="my-12" />
-
     <h2 class="text-3xl font-semibold mb-4">Quick Start</h2>
-    <QuickStart client:load />
-
-    <Separator className="my-12" />
+    <QuickStart client:load className="mb-18" />
 
     <h2 class="text-3xl font-semibold mb-4">Features</h2>
-    <div class="grid gap-3 grid-cols-2">
+    <div class="grid gap-3 grid-cols-2 mb-24">
       <Card>
         <CardHeader>
           <CardTitle>

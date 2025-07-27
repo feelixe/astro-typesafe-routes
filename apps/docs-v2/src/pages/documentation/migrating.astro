@@ -1,28 +1,9 @@
 ---
-import { LinkButton } from "@/components/ui/button.tsx";
-import { Container } from "@/components/ui/container.tsx";
-import { Separator } from "@/components/ui/separator.tsx";
-import DefaultLayout from "@/layouts/default-layout.astro";
-import { ChevronRightIcon } from "lucide-react"
-import { Sidebar, SidebarContent, SidebarWrapper } from "@/components/page/sidebar.tsx"
 import Markdown from "./_migrating.md"
+import MarkdownString from "./_migrating.md?raw"
+import DocumentationLayout from "../../layouts/documentation-layout.astro";
 ---
 
-<DefaultLayout>
-  <Container className="markdown">
-    <SidebarWrapper>
-      <Sidebar client:load activeRouteId="/documentation/migrating" />
-      <SidebarContent>
-        <Markdown />
-        <Separator className="my-6" />
-        <div class="flex items-center">
-          <div class="grow" />
-          <LinkButton to="/documentation/usage/link">
-            Migrating from 4.0.0
-            <ChevronRightIcon className="size-4" />
-          </LinkButton>
-        </div>
-      </SidebarContent>
-    </SidebarWrapper>
-  </Container>
-</DefaultLayout>
+<DocumentationLayout activeRouteId="/documentation/migrating" markdownString={MarkdownString}>
+  <Markdown />
+</DocumentationLayout>

@@ -28,7 +28,7 @@ npm i -D typescript @astrojs/check
 
 <br />
 
-## Installation
+## Automatic Installation
 
 1. Add integration:
 

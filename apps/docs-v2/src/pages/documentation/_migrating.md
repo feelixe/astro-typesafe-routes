@@ -4,7 +4,7 @@ This section outlines the breaking changes introduced since version 4 of Astro T
 
 <br />
 
-## Astro
+## Astro 4
 
 Support for Astro `^4.0.0` has been dropped. Please upgrade to `^5.0.0` to stay compatible.
 

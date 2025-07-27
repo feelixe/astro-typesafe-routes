@@ -1,0 +1,25 @@
+---
+import type { RouteId } from "astro-typesafe-routes/path";
+import { Sidebar, SidebarContent, SidebarWrapper } from "../components/page/sidebar.tsx";
+import { Container } from "../components/ui/container.tsx";
+import DefaultLayout from "./default-layout.astro";
+import { TocSidebar } from "../components/page/toc-sidebar.tsx";
+
+export type Props = {
+  activeRouteId: RouteId;
+  markdownString?: string;
+}
+
+---
+
+<DefaultLayout activeRouteId={Astro.props.activeRouteId} fixedHeight>
+  <Container className="markdown flex-1 min-h-0">
+    <SidebarWrapper className="h-full">
+      <Sidebar client:load className="hidden sm:flex" activeRouteId={Astro.props.activeRouteId} />
+      <SidebarContent className="overflow-y-scroll pr-4">
+        <slot />
+      </SidebarContent>
+      { Astro.props.markdownString && <TocSidebar markdownString={Astro.props.markdownString} />}
+    </SidebarWrapper>
+  </Container>
+</DefaultLayout>

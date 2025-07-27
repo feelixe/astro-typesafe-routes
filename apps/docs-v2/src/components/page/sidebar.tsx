@@ -83,7 +83,7 @@ export function SidebarContent(props: SidebarContentProps) {
   const { className, children, ...rest } = props;
 
   return (
-    <div className={cn("grow", className)} {...rest}>
+    <div className={cn("grow overflow-y-scroll", className)} {...rest}>
       {children}
     </div>
   );

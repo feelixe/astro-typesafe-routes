@@ -5,17 +5,18 @@ import { GitHubIcon } from "../icons/github-icon.tsx";
 import { Button } from "../ui/button.tsx";
 import { NpmIcon } from "../icons/npm-icon.tsx";
 import Link from "astro-typesafe-routes/link/react";
-import { MenuIcon, XIcon } from "lucide-react";
-import { DataSelect } from "../ui/select.tsx";
+import { HomeIcon, MenuIcon, XIcon } from "lucide-react";
+import { Sidebar } from "./sidebar.tsx";
+import type { RouteId } from "astro-typesafe-routes/path";
 
-export type NavbarProps = ComponentProps<"div">;
+export type NavbarProps = ComponentProps<"div"> & {
+  activeRouteId: RouteId;
+};
 
 export function Navbar(props: NavbarProps) {
-  const { children, className, ...rest } = props;
+  const { activeRouteId, children, className, ...rest } = props;
 
   const [open, setOpen] = useState(false);
-
-  const value = "5.0.0";
 
   return (
     <div className={cn("", className)} {...rest}>
@@ -23,20 +24,6 @@ export function Navbar(props: NavbarProps) {
         <Link to="/" className="font-semibold tracking-tight mr-3">
           Astro Typesafe Routes
         </Link>
-
-        <DataSelect
-          value={value}
-          items={[
-            {
-              value: "4.0.0",
-              label: "v4.0.0",
-            },
-            {
-              value: "5.0.0",
-              label: "v5.0.0",
-            },
-          ]}
-        />
 
         <div className="grow" />
 
@@ -70,26 +57,31 @@ export function Navbar(props: NavbarProps) {
             open ? "flex" : "hidden",
           )}
         >
-          <div className="w-full grow flex flex-col gap-3">
+          <div className="w-full grow flex flex-col gap-1">
             <div className="font-semibold tracking-tight mb-6">Astro Typesafe Routes</div>
-
-            <Button variant="secondary" size="xl" asChild className="w-full">
-              <Link to="/">Home</Link>
+            <Button
+              variant={activeRouteId === "/" ? "default" : "ghost"}
+              size="lg"
+              asChild
+              className="w-full justify-start"
+            >
+              <Link to="/">
+                <HomeIcon className="size-5" />
+                Home
+              </Link>
             </Button>
 
-            <Button variant="secondary" size="xl" asChild className="w-full">
-              <Link to="/documentation">Documentation</Link>
-            </Button>
+            <Sidebar className="w-full" activeRouteId={activeRouteId} />
 
-            <Button variant="secondary" size="xl" asChild className="w-full">
+            <Button variant="ghost" size="lg" asChild className="w-full justify-start">
               <a href="https://www.npmjs.com/package/astro-typesafe-routes">
-                <NpmIcon className="size-3.5" />
+                <NpmIcon className="size-5" />
                 npm
               </a>
             </Button>
-            <Button variant="secondary" size="xl" asChild className="w-full">
+            <Button variant="ghost" size="lg" asChild className="w-full justify-start">
               <a href="https://github.com/feelixe/astro-typesafe-routes">
-                <GitHubIcon className="size-3.5" />
+                <GitHubIcon className="size-5" />
                 Github
               </a>
             </Button>

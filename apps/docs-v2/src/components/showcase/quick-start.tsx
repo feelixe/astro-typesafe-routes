@@ -78,9 +78,9 @@ export function QuickStart(props: QuickStartProps) {
           <Button size="icon" className="relative" variant="ghost" onClick={copyToClipboard}>
             {copyIds.map((copyId) => {
               const randomRot = seedrandom(copyId.toString())();
-              const amplification = Math.min(20, (copyId - 1) * 2);
+              const amplification = Math.min(10, (copyId - 1) * 2);
               const rotation = Math.floor(randomRot * amplification - amplification / 2);
-              const fontSize = Math.min(30, copyId + 14);
+              const fontSize = Math.min(22, copyId + 14);
               const fontSizeCss = `${fontSize}px`;
 
               return (

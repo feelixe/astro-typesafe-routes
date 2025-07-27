@@ -2,7 +2,7 @@
 
 ## Astro Link
 
-Use the Link component from astro-typesafe-routes to enable type-safe navigation.
+Use the `Link` component from `astro-typesafe-routes` to enable typesafe navigation.
 
 ```tsx
 ---
@@ -32,7 +32,34 @@ export default function Component() {
 
 ## Custom Astro Link
 
-todo
+You can create a customized and typed link component like this:
+
+```tsx
+---
+import type { HTMLAttributes } from "astro/types";
+import type { RouteOptions, RouteId } from "astro-typesafe-routes/path";
+import { $path } from "astro-typesafe-routes/path";
+
+export type Props<T extends RouteId> = Omit<HTMLAttributes<"a">, "href"> &
+  RouteOptions<T>;
+
+const {
+  to,
+  params,
+  search,
+  searchParams,
+  hash,
+  trailingSlash,
+  ...anchorProps
+} = Astro.props;
+
+const href = $path({ to, params, search, searchParams, hash, trailingSlash });
+---
+
+<a href={href} {...anchorProps}>
+  <slot />
+</a>
+```
 
 <br />
 
