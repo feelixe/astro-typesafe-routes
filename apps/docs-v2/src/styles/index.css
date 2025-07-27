@@ -172,6 +172,10 @@
       @apply list-decimal pl-6 mb-3 grid gap-2;
     }
 
+    ul {
+      @apply list-disc pl-6 mb-3 grid gap-2;
+    }
+
     .astro-code {
       @apply px-5 pt-4 pb-4.5 rounded mb-4 border border-border whitespace-break-spaces;
       background-color: var(--card) !important;

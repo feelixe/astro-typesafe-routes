@@ -8,13 +8,15 @@ import Link from "astro-typesafe-routes/link/react";
 import { HomeIcon, MenuIcon, XIcon } from "lucide-react";
 import { Sidebar } from "./sidebar.tsx";
 import type { RouteId } from "astro-typesafe-routes/path";
+import { ChangeVersion, type Version } from "../change-version.tsx";
 
 export type NavbarProps = ComponentProps<"div"> & {
   activeRouteId: RouteId;
+  version?: Version | undefined;
 };
 
 export function Navbar(props: NavbarProps) {
-  const { activeRouteId, children, className, ...rest } = props;
+  const { activeRouteId, children, className, version = "v5.0.0", ...rest } = props;
 
   const [open, setOpen] = useState(false);
 
@@ -24,6 +26,8 @@ export function Navbar(props: NavbarProps) {
         <Link to="/" className="font-semibold tracking-tight mr-3">
           Astro Typesafe Routes
         </Link>
+
+        <ChangeVersion value={version} />
 
         <div className="grow" />
 

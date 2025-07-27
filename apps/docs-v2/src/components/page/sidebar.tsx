@@ -10,13 +10,74 @@ import {
   SettingsIcon,
 } from "lucide-react";
 import { Badge } from "../ui/badge.tsx";
+import type { Version } from "../change-version.tsx";
 
 export type SidebarProps = Omit<ComponentProps<"div">, "children"> & {
   activeRouteId: RouteId;
+  version?: Version | undefined;
 };
 
 export function Sidebar(props: SidebarProps) {
-  const { className, activeRouteId, ...rest } = props;
+  const { className, activeRouteId, version = "v5.0.0", ...rest } = props;
+
+  if (version === "v4.0.0") {
+    return (
+      <div className={cn("w-64 flex flex-col gap-1 shrink-0", className)} {...rest}>
+        <SidebarButton activeRouteId={activeRouteId} link={{ to: "/4.0.0/documentation" }}>
+          <PackagePlusIcon className="size-5" />
+          Installation
+        </SidebarButton>
+
+        <SidebarGroupButton title="Usage">
+          <SidebarButton
+            activeRouteId={activeRouteId}
+            link={{ to: "/4.0.0/documentation/usage/link" }}
+          >
+            Link
+          </SidebarButton>
+          <SidebarButton
+            activeRouteId={activeRouteId}
+            link={{ to: "/4.0.0/documentation/usage/path" }}
+          >
+            Path Function
+          </SidebarButton>
+          <SidebarButton
+            activeRouteId={activeRouteId}
+            link={{ to: "/4.0.0/documentation/usage/optional-fields" }}
+          >
+            Optional Fields
+          </SidebarButton>
+          <SidebarButton
+            activeRouteId={activeRouteId}
+            link={{ to: "/4.0.0/documentation/usage/typed-search-params" }}
+          >
+            Typed Search Param
+          </SidebarButton>
+          <SidebarButton
+            activeRouteId={activeRouteId}
+            link={{ to: "/4.0.0/documentation/usage/get-params" }}
+          >
+            Get Params
+          </SidebarButton>
+        </SidebarGroupButton>
+
+        <SidebarButton
+          activeRouteId={activeRouteId}
+          link={{ to: "/4.0.0/documentation/configuration" }}
+        >
+          <SettingsIcon className="size-5" />
+          Configuration
+        </SidebarButton>
+        <SidebarButton
+          activeRouteId={activeRouteId}
+          link={{ to: "/4.0.0/documentation/migrating" }}
+        >
+          <FolderUpIcon className="size-5" />
+          Migrating from 3.0.0
+        </SidebarButton>
+      </div>
+    );
+  }
 
   return (
     <div className={cn("w-64 flex flex-col gap-1 shrink-0", className)} {...rest}>
