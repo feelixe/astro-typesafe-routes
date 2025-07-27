@@ -1,12 +1,14 @@
 # Typed Search Params
 
-> Astro only supports search params on routes that are server-side rendered.
+> Astro only supports search params on routes that are server-side-rendered.
 
 You can add typed search params in your project by adding a `searchSchema` in the route.
 
+<br />
+
 ## Declaring Search Schema
 
-Start by adding any Standard Schema compliant schema to your route.
+Start by adding any [Standard Schema](https://github.com/standard-schema/standard-schema?tab=readme-ov-file#what-schema-libraries-implement-the-spec) compliant schema to your route.
 
 The schema must be an object at the root, but that fields inside that object can be any JSON serializable type.
 

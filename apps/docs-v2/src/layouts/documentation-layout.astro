@@ -13,10 +13,10 @@ export type Props = {
 ---
 
 <DefaultLayout activeRouteId={Astro.props.activeRouteId} fixedHeight>
-  <Container className="markdown flex-1 min-h-0">
+  <Container className="flex-1 min-h-0">
     <SidebarWrapper className="h-full">
       <Sidebar client:load className="hidden sm:flex" activeRouteId={Astro.props.activeRouteId} />
-      <SidebarContent className="overflow-y-scroll pr-4">
+      <SidebarContent className="overflow-y-scroll pr-4 markdown">
         <slot />
       </SidebarContent>
       { Astro.props.markdownString && <TocSidebar markdownString={Astro.props.markdownString} />}

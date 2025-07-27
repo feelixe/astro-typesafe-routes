@@ -3,7 +3,25 @@
 With `createRoute` you get access to typesafe params,
 search params, `redirect`, `rewrite` and even `getStaticPaths`.
 
+<br />
+
+## Creating a Route
+
+To create a route, export a constant called `Route` so Astro Typesafe Routes can detect it.
+
+```ts
+import { createRoute } from "astro-typesafe-routes/create-route";
+
+export const Route = createRoute({
+  routeId: "/blog/[postId]",
+});
+```
+
+<br />
+
 ## Reading Params
+
+You can read typed params by calling `getParams` on your created route.
 
 ```ts
 import { createRoute } from "astro-typesafe-routes/create-route";
@@ -19,17 +37,8 @@ const { postId } = Route.getParams(Astro);
 
 ## Search Params
 
-```ts
-import { createRoute } from "astro-typesafe-routes/create-route";
-import { z } from "astro/zod";
-
-export const Route = createRoute({
-  routeId: "/blog/[postId]",
-  searchSchema: z.object({ num: z.number() }),
-});
-
-const search = Route.getSearch(Astro);
-```
+Add typed and JSON serialized search params to your route by adding a searchSchema.
+More details can be found <a href="/documentation/usage/typed-search-params">here</a>.
 
 <br />
 

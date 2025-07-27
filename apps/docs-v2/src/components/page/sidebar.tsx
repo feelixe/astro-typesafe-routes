@@ -47,10 +47,6 @@ export function Sidebar(props: SidebarProps) {
         >
           Typed Search Params
         </SidebarButton>
-
-        <SidebarButton activeRouteId={activeRouteId} link={{ to: "/" }}>
-          Read Params
-        </SidebarButton>
       </SidebarGroupButton>
       <SidebarButton activeRouteId={activeRouteId} link={{ to: "/documentation/configuration" }}>
         <SettingsIcon className="size-5" />

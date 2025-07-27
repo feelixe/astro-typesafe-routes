@@ -151,6 +151,10 @@
     animation: float-away 0.7s linear forwards;
   }
 
+  .markdown a {
+    @apply text-sky-400 hover:underline;
+  }
+
   .markdown {
     h1 {
       @apply mb-3 text-3xl font-semibold tracking-tight;
