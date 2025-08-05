@@ -1,6 +1,6 @@
 # Path Function
 
-For cases like redirects or when the `Link` component isn’t suitable, use the `$path` function to get type-safe URLs.
+For cases like redirects or when the `Link` component isn’t suitable, use the `$path` function to get typesafe URLs.
 
 ```jsx
 ---

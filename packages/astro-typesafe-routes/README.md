@@ -94,7 +94,7 @@ npm run dev
 
 ### Link
 
-Import the `Link` component to create a type-safe link
+Import the `Link` component to create a typesafe link
 
 ```tsx
 ---

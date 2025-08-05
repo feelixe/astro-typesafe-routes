@@ -2,7 +2,7 @@
 
 ## Astro Link
 
-Replace your standard links with the Link component from astro-typesafe-routes for type-safe navigation. Simply import it and use it with route parameters for a seamless experience.
+Replace your standard links with the Link component from astro-typesafe-routes for typesafe navigation. Simply import it and use it with route parameters for a seamless experience.
 
 ```jsx
 ---
@@ -32,7 +32,7 @@ export default function Component() {
 
 ## Custom Link Component
 
-Sometimes, you may need to create your own custom `Link` component while still maintaining type safety. To achieve this, you can import the `Route` and `RouteOptions` types, which allow you to add type-safe routing to your custom implementation.
+Sometimes, you may need to create your own custom `Link` component while still maintaining type safety. To achieve this, you can import the `Route` and `RouteOptions` types, which allow you to add typesafe routing to your custom implementation.
 
 ```tsx
 ---
