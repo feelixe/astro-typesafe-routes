@@ -7,12 +7,13 @@
   },
   "files": {
     "ignoreUnknown": false,
-    "ignore": ["dist", ".astro"]
+    "ignore": ["dist", ".astro", ".docusaurus", "**/*.astro"]
   },
   "formatter": {
     "enabled": true,
     "indentStyle": "space",
-    "indentWidth": 2
+    "indentWidth": 2,
+    "lineWidth": 100
   },
   "organizeImports": {
     "enabled": true
@@ -22,7 +23,12 @@
     "rules": {
       "recommended": true,
       "suspicious": {
-        "noConsoleLog": "error"
+        "noConsoleLog": "error",
+        "noExplicitAny": "off"
+      },
+      "correctness": {
+        "useImportExtensions": "error",
+        "noUnusedVariables": "error"
       }
     }
   },

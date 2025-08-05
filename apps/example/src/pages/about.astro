@@ -1,5 +1,5 @@
 ---
-import Link from "astro-typesafe-routes/link";
----
+import { $path } from "astro-typesafe-routes/path";
 
-<Link to="/" search={{ name: "John Doe", page: 30 }}>Hit me!</Link>
+return Astro.redirect($path({ to: "/" }));
+---

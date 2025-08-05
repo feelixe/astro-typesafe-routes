@@ -1,5 +1,12 @@
 import { it, describe, expect, afterEach, jest } from "bun:test";
-import { serialize } from "../src/search-serializer.ts";
+import { canStringifyBeSkipped, deserialize, serialize } from "../src/search-serializer.ts";
+
+describe("deserialize", () => {
+  it("returns correct values", () => {
+    const search = deserialize(new URLSearchParams({ isActive: "true", foo: "bar" }));
+    expect(search).toEqual({ isActive: true, foo: "bar" });
+  });
+});
 
 describe("serialize", () => {
   afterEach(() => {
@@ -20,10 +27,28 @@ describe("serialize", () => {
     const searchParams = serialize({
       age: 10,
       name: "John",
+      isActive: true,
+      string: "true",
     });
 
-    expect(searchParams.size).toBe(2);
+    expect(searchParams.size).toBe(4);
     expect(searchParams.get("age")).toBe("10");
-    expect(searchParams.get("name")).toBe('"John"');
+    expect(searchParams.get("name")).toBe("John");
+    expect(searchParams.get("isActive")).toBe("true");
+    expect(searchParams.get("string")).toBe('"true"');
+  });
+});
+
+describe("canStringifyBeSkipped", () => {
+  it("returns true for non special strings", () => {
+    expect(canStringifyBeSkipped("John")).toBe(true);
+  });
+
+  it("returns false for strings that can be parsed", () => {
+    expect(canStringifyBeSkipped("true")).toBe(false);
+  });
+
+  it("returns false for strings that can be parsed", () => {
+    expect(canStringifyBeSkipped("4.44")).toBe(false);
   });
 });

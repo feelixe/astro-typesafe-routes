@@ -1,6 +1,7 @@
 <h1 align="center">Astro Typesafe Routes</h1>
 <p align="center">
-  Enhance your Astro development experience with rigorous type safety for every route in your application. This integration automatically generates TypeScript definitions from your project's route structure.
+  <sub>Enhance your Astro development experience with rigorous type safety for every route in your application. This integration automatically generates TypeScript definitions from your project's route structure.
+  </sub>
   <br />
   <br />
   <a href="https://www.npmjs.com/package/astro-typesafe-routes"><img src="https://badge.fury.io/js/astro-typesafe-routes.svg?icon=si%3Anpm" alt="npm version" height="18"></a>
@@ -23,14 +24,26 @@
 
 
 ## Features
-* 🛟 **Typesafe:** Ensures all URLs matches a route in your Astro project.
-* 🔗 **Typed Link Component:** Replace your anchor links with the typesafe `Link` component.
-* 🔎 **Typesafe Search Params**: Support for typesafe and JSON serialized search params when using a SSR adapter.
-* 🛠️ **Automatic Type Generation**: Simple installation as an Astro integration.
-* 🧩 **Custom Component Support**: Add type safety to custom links with the types `Route` and `RouteOptions`.
+* 🛟 **Typesafe** — Ensures all URLs match a route in your Astro project.
+* 🔗 **Typed Link Component** — Replace your anchor links with the typesafe `Link` component.
+* 🔎 **Typesafe Search Params** — Support for typesafe and JSON serialized search params.
+* 🧩 **Custom Component Support** — Add type safety to custom link components.
+* 🤸 **Zero Dependencies** — No 3rd-party packages.
 
-## Requirements
-Compatible with Astro version 4 and 5, with a minimum of `4.14.0`.
+## Prerequisites
+1. **Astro** `^5.0.0` is required
+2. Install **Typescript** and **Astro Check**
+```bash
+npm i -D typescript @astrojs/check
+```
+3. Add `astro check` command to build script in `package.json`
+```json
+{
+  "scripts": {
+    "build": "astro check && astro build",
+  }
+}
+```
 
 ## Installation
 1. Add integration:
@@ -43,6 +56,7 @@ npm run dev
 ```
 
 ## Manual Installation
+If automatic installation didn’t work, follow these steps:
 1. Install package:
 ```sh
 npm install astro-typesafe-routes
@@ -62,15 +76,73 @@ export default defineConfig({
 ```bash
 npm run dev
 ```
-### Usage
-Import the Link component and enjoy typesafe urls.
+## Basic Usage
+### Link
+Import the `Link` component to create a type-safe link
 ```tsx
 ---
 import Link from "astro-typesafe-routes/link";
 ---
 
-<Link to="/blog/[id]" params={{ id: "4" }}>Blog post</Link>
+<Link to="/blog/[postId]" params={{ postId: "1" }}>Post</Link>
 ```
 
-### Advanced Usage
+### Reading Params
+To safely read route params with proper types, create a `Route`.
+```tsx
+---
+import { createRoute } from "astro-typesafe-routes/route-schema";
+
+export const Route = createRoute({
+  routeId: "/blog/[postId]",
+});
+
+const params = Route.getParams(Astro);
+---
+```
+
+### Typesafe GetStaticPaths
+```tsx
+---
+import { createRoute } from "astro-typesafe-routes/create-route";
+import { z } from "astro/zod";
+
+export const Route = createRoute({
+  routeId: "/blog/[postId]",
+});
+
+export type Props = {
+  content: string;
+};
+
+export const getStaticPaths = Route.createGetStaticPaths<Props>(() => {
+  return [
+    {
+      params: {
+        postId: "1",
+      },
+      props: {
+        content: "Lorem Ipsum",
+      },
+    },
+  ];
+});
+---
+
+{Astro.props.content}
+```
+
+## Advanced Usage
 For more in-depth information and detailed usage instructions, please refer to the [documentation](https://astro-typesafe-routes-docs.vercel.app/).
+
+## Automatic Route Updates
+Astro Typesafe Routes will automatically update the `routeId` of changed routes. If you want to disable this, you can set `disableAutomaticRouteUpdates` in the integration options.
+```tsx
+export default defineConfig({
+  integrations: [
+    astroTypesafeRoutes({
+      disableAutomaticRouteUpdates: true,
+    }),
+  ],
+});
+```

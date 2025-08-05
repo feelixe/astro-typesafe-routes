@@ -40,14 +40,12 @@ async function tagAndPush(version: string) {
 }
 
 async function createRelease(version: string, isPreRelease: boolean) {
-  await $`gh release create v${version} --generate-notes ${
-    isPreRelease ? "--prerelease" : ""
-  }`;
+  await $`gh release create v${version} --generate-notes ${isPreRelease ? "--prerelease" : ""}`;
 }
 
 async function getVersionAndTag(version: string) {
   const parsedVersion = semver.valid(version);
-  if (parsedVersion === null) {
+  if (!parsedVersion) {
     throw new Error(`Invalid version: ${version}`);
   }
   const tag = version.split("-").at(1);

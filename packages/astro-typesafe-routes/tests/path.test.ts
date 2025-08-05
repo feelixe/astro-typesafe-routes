@@ -1,29 +1,49 @@
-import { it, describe, expect } from "bun:test";
-import { $path } from "../src/path";
+import { it, describe, expect, beforeEach } from "bun:test";
+import { $path } from "../src/path.js";
 
 import.meta.env.BASE_URL = "/";
 
 describe("$path", () => {
+  beforeEach(() => {
+    import.meta.env.BASE_URL = "/";
+    import.meta.env.TRAILING_SLASH = "ignore";
+  });
+
   it("returns pathname", () => {
     expect($path({ to: "/test" })).toBe("/test");
   });
 
+  it("adds base url", () => {
+    import.meta.env.BASE_URL = "/base";
+    expect($path({ to: "/test" })).toBe("/base/test");
+  });
+
+  it("adds base url with trailing slash", () => {
+    import.meta.env.BASE_URL = "/base/";
+    expect($path({ to: "/test" })).toBe("/base/test");
+  });
+
   it("replaces dynamic paths with params", () => {
-    expect($path({ to: "/test/[id]", params: { id: "123" } })).toBe(
-      "/test/123",
-    );
+    expect($path({ to: "/test/[id]", params: { id: "123" } })).toBe("/test/123");
   });
 
   it("replaces multiple dynamic paths with params", () => {
+    expect($path({ to: "/test/[lang]/[id]", params: { id: "123", lang: "sv" } })).toBe(
+      "/test/sv/123",
+    );
+  });
+
+  it("handles spread params correctly", () => {
     expect(
-      $path({ to: "/test/[lang]/[id]", params: { id: "123", lang: "sv" } }),
-    ).toBe("/test/sv/123");
+      $path({
+        to: "/test/[...rest]",
+        params: { rest: "a/b/c" },
+      }),
+    ).toBe("/test/a/b/c");
   });
 
   it("adds search params", () => {
-    expect($path({ to: "/test", searchParams: { key: "value" } })).toBe(
-      "/test?key=value",
-    );
+    expect($path({ to: "/test", searchParams: { key: "value" } })).toBe("/test?key=value");
   });
 
   it("does not add search params if size is zero", () => {
@@ -35,12 +55,22 @@ describe("$path", () => {
   });
 
   it("adds hash and search param in correct order", () => {
-    expect(
-      $path({ to: "/test", hash: "hash", searchParams: { key: "value" } }),
-    ).toBe("/test?key=value#hash");
+    expect($path({ to: "/test", hash: "hash", searchParams: { key: "value" } })).toBe(
+      "/test?key=value#hash",
+    );
   });
 
-  it("adds a trailing slash", () => {
+  it("does not add trailing slash if not configured", () => {
+    import.meta.env.TRAILING_SLASH = "ignore";
+    expect($path({ to: "/test" })).toBe("/test");
+  });
+
+  it("adds trailing slash if configured", () => {
+    import.meta.env.TRAILING_SLASH = "always";
+    expect($path({ to: "/test" })).toBe("/test/");
+  });
+
+  it("adds a trailing slash if explicitly requested", () => {
     expect($path({ to: "/test", trailingSlash: true })).toBe("/test/");
   });
 
@@ -72,7 +102,9 @@ describe("$path", () => {
       person: {
         name: "John",
       },
+      job: "developer",
     };
+
     const url = $path({
       to: "/test",
       search,
@@ -81,8 +113,10 @@ describe("$path", () => {
     const searchParams = new URLSearchParams({
       age: JSON.stringify(search.age),
       person: JSON.stringify(search.person),
+      job: "developer",
     });
     const expectedUrl = `/test?${searchParams.toString()}`;
+
     expect(url).toBe(expectedUrl);
   });
 });

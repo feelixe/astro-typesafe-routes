@@ -1,0 +1,15 @@
+---
+import { z } from "zod";
+import { createRoute } from "astro-typesafe-routes/create-route";
+
+export const Route = createRoute({
+  routeId: "/page-with-search-schema",
+  searchSchema: z.object({
+    page: z.number().int(),
+  }),
+});
+
+const search = Route.getSearch(Astro);
+---
+
+{JSON.stringify(search)}

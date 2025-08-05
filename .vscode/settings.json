@@ -1,6 +1,9 @@
 {
   "editor.formatOnSave": true,
   "editor.defaultFormatter": "biomejs.biome",
+  "[jsonc]": {
+    "editor.defaultFormatter": "biomejs.biome"
+  },
   "[json]": {
     "editor.defaultFormatter": "biomejs.biome"
   },
@@ -17,5 +20,9 @@
     "editor.defaultFormatter": "biomejs.biome"
   },
   "typescript.preferences.importModuleSpecifierEnding": "js",
-  "typescript.preferences.importModuleSpecifier": "relative"
+  "typescript.preferences.importModuleSpecifier": "relative",
+  "css.lint.unknownAtRules": "ignore",
+  "[markdown]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  }
 }

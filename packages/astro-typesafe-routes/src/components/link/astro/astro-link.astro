@@ -1,18 +1,10 @@
 ---
 import type { HTMLAttributes } from "astro/types";
-import { $path, type RouteOptions } from "../../../path";
+import { $path, type RouteOptions } from "../../../path.js";
 
 export type Props = Omit<HTMLAttributes<"a">, "href"> & RouteOptions;
 
-const {
-  to,
-  params,
-  search,
-  searchParams,
-  hash,
-  trailingSlash,
-  ...anchorProps
-} = Astro.props;
+const { to, params, search, searchParams, hash, trailingSlash, ...anchorProps } = Astro.props;
 
 const href = $path({ to, params, search, searchParams, hash, trailingSlash });
 ---
