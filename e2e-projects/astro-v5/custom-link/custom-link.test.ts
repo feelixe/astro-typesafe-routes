@@ -1,5 +1,5 @@
 import { beforeAll, describe } from "bun:test";
-import { expectBuildSuccess, setupTestProject } from "../../utils";
+import { expectBuildSuccess, setupTestProject } from "../../utils.ts";
 
 describe("e2e - custom link", async () => {
   beforeAll(async () => {

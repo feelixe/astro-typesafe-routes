@@ -59,6 +59,8 @@
     "prettier": "^3.4.2",
     "react": "^19.0.0",
     "typescript": "catalog:",
-    "valibot": "catalog:"
+    "valibot": "catalog:",
+    "@types/react": "^19.0.0",
+    "vite": "^8.0.0"
   }
 }
