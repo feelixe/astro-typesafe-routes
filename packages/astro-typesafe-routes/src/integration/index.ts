@@ -1,40 +1,32 @@
 import type {
+  AstroConfig,
   AstroIntegration,
   AstroIntegrationLogger,
-  InjectedType,
   IntegrationResolvedRoute,
 } from "astro";
-import type { RequiredAstroConfig } from "./core/types.js";
 import { fileURLToPath } from "node:url";
-import { AstroConfigDidNotResolveError, AstroRoutesDidNotResolveError } from "./core/errors.js";
-import {
-  getDeclarationContent,
-  logSuccess,
-  writeDeclarationFile,
-} from "./core/declaration-file.js";
+import { AstroConfigDidNotResolveError } from "./core/errors.js";
+import { getDeclarationContent, logSuccess } from "./core/declaration-file.js";
 import { DECLARATION_FILENAME } from "./core/constants.js";
 import { getRoutes } from "./core/routes.js";
 import { updateRouteId } from "./core/update-route-id.js";
+import { mkdir, writeFile } from "node:fs/promises";
+import path from "node:path";
 
 export type AstroTypesafeRoutesParams = {
   disableAutomaticRouteUpdates?: boolean;
 };
 
 export default function astroTypesafeRoutes(args?: AstroTypesafeRoutesParams): AstroIntegration {
-  let astroRoutes: IntegrationResolvedRoute[] | undefined;
   let declarationPath: string | undefined;
-  let astroConfig: RequiredAstroConfig;
+  let astroConfig: AstroConfig;
 
-  async function generate(
-    logger: AstroIntegrationLogger,
-    injectFn?: (injectedType: InjectedType) => unknown,
-  ) {
+  async function generate(logger: AstroIntegrationLogger, routes: IntegrationResolvedRoute[]) {
     if (!declarationPath) return;
-    if (!astroRoutes) throw new AstroRoutesDidNotResolveError();
     if (!astroConfig) throw new AstroConfigDidNotResolveError();
 
     const resolvedRoutes = await getRoutes({
-      routes: astroRoutes,
+      routes,
       astroConfig,
     });
 
@@ -47,18 +39,10 @@ export default function astroTypesafeRoutes(args?: AstroTypesafeRoutesParams): A
       outPath: declarationPath,
     });
 
-    if (!injectFn) {
-      await writeDeclarationFile({
-        filename: declarationPath,
-        content: declarationContent,
-      });
-    } else {
-      await injectFn({
-        content: declarationContent,
-        filename: DECLARATION_FILENAME,
-      });
-    }
+    const directory = path.dirname(declarationPath);
 
+    await mkdir(directory, { recursive: true });
+    await writeFile(declarationPath, declarationContent);
     logSuccess(logger);
   }
 
@@ -66,22 +50,18 @@ export default function astroTypesafeRoutes(args?: AstroTypesafeRoutesParams): A
     name: "astro-typesafe-routes",
     hooks: {
       "astro:routes:resolved": async (args) => {
-        astroRoutes = args.routes;
-        await generate(args.logger);
+        console.info("astro:routes:resolved");
+
+        await generate(args.logger, args.routes);
       },
       "astro:config:done": async (args) => {
-        astroConfig = {
-          rootDir: fileURLToPath(args.config.root),
-          buildOutput: args.buildOutput,
-        };
-
+        console.info("astro:config:done");
+        astroConfig = args.config;
         const declarationUrl = args.injectTypes({
           filename: DECLARATION_FILENAME,
           content: "",
         });
-
         declarationPath = fileURLToPath(declarationUrl);
-        await generate(args.logger, args.injectTypes);
       },
       "astro:config:setup": (args) => {
         const trailingSlash = args.config.trailingSlash;

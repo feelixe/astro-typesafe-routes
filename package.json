@@ -3,10 +3,10 @@
   "workspaces": {
     "packages": ["packages/*", "apps/*", "e2e-projects/*"],
     "catalog": {
-      "astro": "5.12.0",
-      "@astrojs/check": "0.9.4",
+      "astro": "^6.0.3",
+      "@astrojs/check": "0.9.7",
       "typescript": "5.8.3",
-      "@astrojs/node": "9.3.0",
+      "@astrojs/node": "10.0.0",
       "valibot": "1.1.0"
     }
   },
