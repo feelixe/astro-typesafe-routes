@@ -6,12 +6,12 @@ import { segmentsToPath } from "./segment.js";
 import { fileURLToPath } from "node:url";
 
 export type GetRoutesParams = {
-  routes: IntegrationResolvedRoute[];
+  resolvedRoutes: IntegrationResolvedRoute[];
   astroConfig: AstroConfig;
 };
 
 export async function getRoutes(args: GetRoutesParams): Promise<ResolvedRoute[]> {
-  const withoutInternal = args.routes.filter(
+  const withoutInternal = args.resolvedRoutes.filter(
     (route) => route.origin !== "internal" && route.type !== "redirect",
   );
   const promises = withoutInternal.map(async (route) => {

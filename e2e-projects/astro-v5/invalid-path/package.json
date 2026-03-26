@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "@astrojs/check": "catalog:",
-    "astro": "catalog:",
+    "astro": "^5.0.0",
     "typescript": "catalog:",
     "astro-typesafe-routes": "workspace:*"
   }
