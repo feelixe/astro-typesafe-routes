@@ -1,7 +1,7 @@
 import { beforeAll, describe } from "bun:test";
-import { expectBuildSuccess, setupTestProject } from "../utils.ts";
+import { expectBuildSuccess, setupTestProject } from "../../utils.ts";
 
-describe("e2e - valid search params", async () => {
+describe("e2e - custom link", async () => {
   beforeAll(async () => {
     await setupTestProject({
       projectDir: import.meta.dir,

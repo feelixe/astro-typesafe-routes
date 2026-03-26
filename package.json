@@ -1,13 +1,14 @@
 {
   "name": "astro-typesafe-routes-workspace",
   "workspaces": {
-    "packages": ["packages/*", "apps/*", "e2e-projects/*"],
+    "packages": ["packages/*", "apps/*", "e2e-projects/**/*"],
     "catalog": {
       "astro": "^6.0.3",
       "@astrojs/check": "0.9.7",
       "typescript": "5.8.3",
       "@astrojs/node": "10.0.0",
-      "valibot": "1.1.0"
+      "valibot": "1.1.0",
+      "zod": "4.3.6"
     }
   },
   "private": true,
