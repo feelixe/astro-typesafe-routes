@@ -20,16 +20,19 @@ export type AstroTypesafeRoutesParams = {
 export default function astroTypesafeRoutes(args?: AstroTypesafeRoutesParams): AstroIntegration {
   let declarationPath: string | undefined;
   let astroConfig: AstroConfig;
-  let resolvedRoutes: IntegrationResolvedRoute[] | undefined;
+  let routes: IntegrationResolvedRoute[] | undefined;
 
   async function generate(logger: AstroIntegrationLogger) {
     if (!declarationPath) return;
     if (!astroConfig) throw new AstroConfigDidNotResolveError();
-    if (!resolvedRoutes) throw new AstroRoutesDidNotResolveError();
+    if (!routes) throw new AstroRoutesDidNotResolveError();
 
-    // todo
+    const resolvedRoutes = await getRoutes({
+      routes: routes,
+      astroConfig,
+    });
     if (!args?.disableAutomaticRouteUpdates) {
-      await Promise.all(resolvedRoutes.map((route) => updateRouteId(route as ResolvedRoute)));
+      await Promise.all(resolvedRoutes.map((route) => updateRouteId(route)));
     }
 
     const declarationContent = await getDeclarationContent({
@@ -49,7 +52,7 @@ export default function astroTypesafeRoutes(args?: AstroTypesafeRoutesParams): A
     name: "astro-typesafe-routes",
     hooks: {
       "astro:routes:resolved": async (args) => {
-        resolvedRoutes = args.routes;
+        routes = args.routes;
         await generate(args.logger);
       },
       "astro:config:done": async (args) => {
@@ -59,7 +62,7 @@ export default function astroTypesafeRoutes(args?: AstroTypesafeRoutesParams): A
           content: "",
         });
         declarationPath = fileURLToPath(declarationUrl);
-        if (resolvedRoutes) {
+        if (routes) {
           await generate(args.logger);
         }
       },

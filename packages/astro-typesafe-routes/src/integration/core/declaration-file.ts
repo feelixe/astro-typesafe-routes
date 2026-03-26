@@ -1,9 +1,9 @@
 import * as fs from "node:fs/promises";
 import * as path from "node:path";
-import type { AstroConfig, AstroIntegrationLogger, IntegrationResolvedRoute } from "astro";
+import type { AstroConfig, AstroIntegrationLogger } from "astro";
 import { tryFormatPrettier } from "../helpers/format.js";
 import { normalizeSeparators } from "../helpers/path.js";
-import { getRoutes } from "./routes.js";
+import type { ResolvedRoute } from "./types.js";
 
 type WriteDeclarationFileParams = {
   filename: string;
@@ -19,15 +19,13 @@ export function logSuccess(logger: AstroIntegrationLogger) {
 }
 
 export type GetDeclarationContentParams = {
-  resolvedRoutes: IntegrationResolvedRoute[];
+  resolvedRoutes: ResolvedRoute[];
   outPath: string;
   astroConfig: AstroConfig;
 };
 
 export async function getDeclarationContent(args: GetDeclarationContentParams) {
-  const resolvedRoutes = await getRoutes(args);
-
-  const rows = resolvedRoutes.map((route) => {
+  const rows = args.resolvedRoutes.map((route) => {
     let search = "null";
     if (route.hasSearchSchema) {
       const declarationDir = path.dirname(args.outPath);
