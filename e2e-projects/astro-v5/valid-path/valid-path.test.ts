@@ -1,7 +1,7 @@
 import { beforeAll, describe } from "bun:test";
 import { expectBuildSuccess, setupTestProject } from "../../utils.ts";
 
-describe("e2e - valid path", async () => {
+describe("e2e - astro v5 - valid path", async () => {
   beforeAll(async () => {
     await setupTestProject({
       projectDir: import.meta.dir,
