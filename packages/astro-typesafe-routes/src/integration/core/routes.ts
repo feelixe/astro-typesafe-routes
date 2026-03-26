@@ -1,12 +1,13 @@
-import type { IntegrationResolvedRoute } from "astro";
-import type { RequiredAstroConfig, ResolvedRoute } from "./types.js";
+import type { AstroConfig, IntegrationResolvedRoute } from "astro";
+import type { ResolvedRoute } from "./types.js";
 import * as path from "node:path";
 import { doesRouteHaveSearchSchema } from "./search-params.js";
 import { segmentsToPath } from "./segment.js";
+import { fileURLToPath } from "node:url";
 
 export type GetRoutesParams = {
   routes: IntegrationResolvedRoute[];
-  astroConfig: RequiredAstroConfig;
+  astroConfig: AstroConfig;
 };
 
 export async function getRoutes(args: GetRoutesParams): Promise<ResolvedRoute[]> {
@@ -14,10 +15,12 @@ export async function getRoutes(args: GetRoutesParams): Promise<ResolvedRoute[]>
     (route) => route.origin !== "internal" && route.type !== "redirect",
   );
   const promises = withoutInternal.map(async (route) => {
-    const absolutePath = path.join(args.astroConfig.rootDir, route.entrypoint);
+    const rootDir = fileURLToPath(args.astroConfig.root);
+    const absolutePath = path.join(rootDir, route.entrypoint);
 
     // Search params have no effect on static builds.
-    const shouldCheckForSearchSchemas = args.astroConfig.buildOutput === "server";
+    const shouldCheckForSearchSchemas = args.astroConfig.output === "server";
+
     const hasSearchSchema = shouldCheckForSearchSchemas
       ? await doesRouteHaveSearchSchema(absolutePath)
       : false;

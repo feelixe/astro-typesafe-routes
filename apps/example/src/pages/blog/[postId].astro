@@ -1,6 +1,6 @@
 ---
 import { createRoute } from "astro-typesafe-routes/create-route";
-import { z } from "astro:content";
+import { z } from "astro/zod";
 
 export const Route = createRoute({
   routeId: "/blog/[postId]",

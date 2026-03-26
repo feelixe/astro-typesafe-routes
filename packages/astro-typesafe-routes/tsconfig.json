@@ -12,6 +12,7 @@
     "outDir": "./dist",
     "baseUrl": "./src",
     "typeRoots": ["./node_modules/@types", "./src/@types"],
+    "types": ["vite/client"],
     "allowSyntheticDefaultImports": true,
     "strictNullChecks": true,
     "strictFunctionTypes": true,

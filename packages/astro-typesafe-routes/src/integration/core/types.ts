@@ -4,8 +4,3 @@ export type ResolvedRoute = {
   path: string;
   params: string[] | null;
 };
-
-export type RequiredAstroConfig = {
-  rootDir: string;
-  buildOutput: "static" | "server";
-};

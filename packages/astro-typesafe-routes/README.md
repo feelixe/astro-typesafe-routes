@@ -1,4 +1,5 @@
 <h1 align="center">Astro Typesafe Routes</h1>
+
 <p align="center">
   <sub>Enhance your Astro development experience with rigorous type safety for every route in your application. This integration automatically generates TypeScript definitions from your project's route structure.
   </sub>
@@ -24,6 +25,7 @@
 
 ## Features
 
+- 👾 **Astro** — Compatible with version 5 and 6 of Astro.
 - 🛟 **Typesafe** — Ensures all URLs match a route in your Astro project.
 - 🔗 **Typed Link Component** — Replace your anchor links with the typesafe `Link` component.
 - 🔎 **Typesafe Search Params** — Support for typesafe and JSON serialized search params.
@@ -32,7 +34,7 @@
 
 ## Prerequisites
 
-1. **Astro** `^5.0.0` is required
+1. **Astro** `^5.0.0` or `^6.0.0` is required
 2. Install **Typescript** and **Astro Check**
 
 ```bash

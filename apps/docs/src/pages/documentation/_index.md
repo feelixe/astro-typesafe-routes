@@ -9,7 +9,7 @@ Follow the steps below to set it up and enhance your development experience.
 
 ## Prerequisites
 
-1. Astro `^5.0.0` is required
+1. Astro `^5.0.0` or `^6.0.0` is required
 2. Install **Typescript** and **Astro Check**
 
 ```bash
