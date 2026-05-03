@@ -1,18 +1,8 @@
-import * as fs from "node:fs/promises";
 import * as path from "node:path";
 import type { AstroConfig, AstroIntegrationLogger } from "astro";
 import { tryFormatPrettier } from "../helpers/format.js";
 import { normalizeSeparators } from "../helpers/path.js";
 import type { ResolvedRoute } from "./types.js";
-
-type WriteDeclarationFileParams = {
-  filename: string;
-  content: string;
-};
-
-export async function writeDeclarationFile(args: WriteDeclarationFileParams) {
-  return await fs.writeFile(args.filename, args.content, { encoding: "utf-8" });
-}
 
 export function logSuccess(logger: AstroIntegrationLogger) {
   logger.info("Generated route type");
