@@ -7,7 +7,7 @@ export async function tryFormatPrettier(content: string) {
       parser: "typescript",
       plugins: [],
     });
-    return content;
+    return formatted;
   } catch {}
   return formatted;
 }
