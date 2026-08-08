@@ -46,7 +46,7 @@
     }
   },
   "scripts": {
-    "dev": "tsc -w --incremental --preserveWatchOutput",
+    "dev": "tsc -p tsconfig.build.json -w --incremental --preserveWatchOutput",
     "build": "bun build.ts",
     "lint": "oxlint --type-aware"
   },

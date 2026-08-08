@@ -8,9 +8,8 @@
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-    "declaration": true,
-    "outDir": "./dist",
-    "rootDir": "./src",
+    "noEmit": true,
+    "allowImportingTsExtensions": true,
     "allowSyntheticDefaultImports": true,
     "strictNullChecks": true,
     "strictFunctionTypes": true,
@@ -24,10 +23,8 @@
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "strictBindCallApply": true,
-    "strictPropertyInitialization": true,
-    "declarationMap": false,
-    "sourceMap": false
+    "strictPropertyInitialization": true
   },
-  "include": ["src/**/*"],
+  "include": ["src/**/*", "tests/**/*", "build.ts"],
   "exclude": ["node_modules"]
 }
