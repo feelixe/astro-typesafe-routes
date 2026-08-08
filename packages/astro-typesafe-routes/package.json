@@ -1,6 +1,6 @@
 {
   "name": "astro-typesafe-routes",
-  "version": "5.2.1",
+  "version": "5.2.2",
   "description": "Astro Integration for typesafe URLs",
   "keywords": [
     "astro-integration"
