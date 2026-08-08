@@ -22,10 +22,10 @@ export function createRoute(opts: CreateRouteParams) {
     getProps: (astro: AstroAny) => {
       return astro.props;
     },
-    redirect: (astro: AstroAny, link: RouteOptions) => {
+    redirect: (astro: AstroAny, link: RouteOptions<any>) => {
       return astro.redirect($path(link));
     },
-    rewrite: (astro: AstroAny, link: RouteOptions) => {
+    rewrite: (astro: AstroAny, link: RouteOptions<any>) => {
       return astro.rewrite($path(link));
     },
     createGetStaticPaths: (fn: GetStaticPaths) => {
