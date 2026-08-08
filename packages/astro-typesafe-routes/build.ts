@@ -17,7 +17,7 @@ async function cleanOutDirectory() {
 
 async function build() {
   await cleanOutDirectory();
-  await $`tsc`;
+  await $`tsc -p tsconfig.build.json`;
   for (const fileToCopy of FILES_TO_COPY) {
     await cp(fileToCopy.src, fileToCopy.dest, { recursive: true });
   }
@@ -27,7 +27,7 @@ try {
   await build();
   console.info("✅ Build completed");
 } catch (error) {
-  cleanOutDirectory();
+  await cleanOutDirectory();
   console.error("❌ Build failed");
   throw error;
 }

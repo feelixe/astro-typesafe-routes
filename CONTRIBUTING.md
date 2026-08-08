@@ -1,4 +1,5 @@
 # Contributing
+
 1. Fork repository
 2. Checkout a feature branch from the `develop` branch
 3. Install [Bun](https://bun.sh/docs/installation)

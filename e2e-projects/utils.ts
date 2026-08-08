@@ -46,8 +46,26 @@ export function expectBuildSuccess(directory: string) {
 
 export function expectBuildFailure(directory: string) {
   it("builds with error", async () => {
-    await expect(async () => {
-      await $`bun run build`.cwd(directory);
-    }).toThrow();
+    const result = await $`bun run build`.cwd(directory).nothrow();
+    expect(result.exitCode).not.toBe(0);
   }, 60_000);
+}
+
+const versionOutputRegex = /v(\d+\.\d+\.\d+)/;
+
+export type AssertAstroVersionArgs = {
+  projectDir: string;
+  range: string;
+};
+
+export async function assertAstroVersion(args: AssertAstroVersionArgs) {
+  const output = await $`bunx astro --version`.cwd(args.projectDir).text();
+  const match = output.match(versionOutputRegex);
+  if (!match) {
+    throw new Error(`Unable to parse Astro version from output: ${output}`);
+  }
+  const version = match[1];
+  if (!Bun.semver.satisfies(version, args.range)) {
+    throw new Error(`Expected Astro version matching "${args.range}", but found ${version}`);
+  }
 }

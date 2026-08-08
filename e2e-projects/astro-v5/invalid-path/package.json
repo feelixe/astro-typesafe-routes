@@ -1,7 +1,7 @@
 {
   "name": "e2e-project-invalid-path",
-  "type": "module",
   "private": true,
+  "type": "module",
   "scripts": {
     "dev": "astro dev",
     "build": "astro check && astro build",
@@ -11,7 +11,7 @@
   "dependencies": {
     "@astrojs/check": "catalog:",
     "astro": "^5.0.0",
-    "typescript": "catalog:",
-    "astro-typesafe-routes": "workspace:*"
+    "astro-typesafe-routes": "workspace:*",
+    "typescript": "catalog:"
   }
 }

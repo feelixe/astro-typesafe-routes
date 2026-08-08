@@ -2,17 +2,14 @@
   "compilerOptions": {
     "jsx": "react-jsx",
     "target": "esnext",
-    "module": "esnext",
-    "moduleResolution": "node",
+    "module": "nodenext",
+    "moduleResolution": "nodenext",
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-    "declaration": true,
-    "outDir": "./dist",
-    "baseUrl": "./src",
-    "typeRoots": ["./node_modules/@types", "./src/@types"],
-    "types": ["vite/client"],
+    "noEmit": true,
+    "allowImportingTsExtensions": true,
     "allowSyntheticDefaultImports": true,
     "strictNullChecks": true,
     "strictFunctionTypes": true,
@@ -26,11 +23,8 @@
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "strictBindCallApply": true,
-    "strictPropertyInitialization": true,
-    "downlevelIteration": true,
-    "declarationMap": false,
-    "sourceMap": false
+    "strictPropertyInitialization": true
   },
-  "include": ["src/**/*"],
+  "include": ["src/**/*", "tests/**/*", "build.ts"],
   "exclude": ["node_modules"]
 }

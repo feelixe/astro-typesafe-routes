@@ -3,7 +3,8 @@ import { serialize } from "./search-serializer.js";
 
 export type RouteId = string;
 
-export type RouteOptions = {
+// oxlint-disable-next-line no-unused-vars
+export type RouteOptions<_T> = {
   to: string;
   searchParams?: ConstructorParameters<typeof URLSearchParams>[0];
   search?: Record<string, unknown>;
@@ -12,7 +13,7 @@ export type RouteOptions = {
   params?: Record<string, string | number>;
 };
 
-export function $path(args: RouteOptions) {
+export function $path(args: RouteOptions<any>) {
   const baseUrl = import.meta.env.BASE_URL;
   let url = baseUrl.replace(/\/$/, "") + args.to;
 

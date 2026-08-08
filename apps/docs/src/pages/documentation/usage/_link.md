@@ -68,32 +68,14 @@ const href = $path({ to, params, search, searchParams, hash, trailingSlash });
 If you need to create a React component that accepts a link, add `RouteOptions` to your props like this:
 
 ```tsx
-import {
-  $path,
-  type RouteId,
-  type RouteOptions,
-} from "astro-typesafe-routes/path";
+import { $path, type RouteId, type RouteOptions } from "astro-typesafe-routes/path";
 import type { ComponentProps } from "react";
 
-export type CustomReactLinkProps<T extends RouteId> = Omit<
-  ComponentProps<"a">,
-  "href"
-> &
+export type CustomReactLinkProps<T extends RouteId> = Omit<ComponentProps<"a">, "href"> &
   RouteOptions<T>;
 
-export function CustomReactLink<T extends RouteId>(
-  props: CustomReactLinkProps<T>,
-) {
-  const {
-    to,
-    params,
-    search,
-    searchParams,
-    hash,
-    trailingSlash,
-    children,
-    ...rest
-  } = props;
+export function CustomReactLink<T extends RouteId>(props: CustomReactLinkProps<T>) {
+  const { to, params, search, searchParams, hash, trailingSlash, children, ...rest } = props;
 
   const link = {
     to,

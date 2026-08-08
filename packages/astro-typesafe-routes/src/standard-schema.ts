@@ -66,6 +66,6 @@ export declare namespace StandardSchemaV1 {
     Schema["~standard"]["types"]
   >["output"];
 
-  // biome-ignore lint/complexity/noUselessEmptyExport: needed for granular visibility control of TS namespace
+  // oxlint-disable-next-line typescript/no-useless-empty-export, unicorn/require-module-specifiers -- needed for granular visibility control of TS namespace
   export {};
 }

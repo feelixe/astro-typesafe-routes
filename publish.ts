@@ -40,7 +40,11 @@ async function tagAndPush(version: string) {
 }
 
 async function createRelease(version: string, isPreRelease: boolean) {
-  await $`gh release create v${version} --generate-notes ${isPreRelease ? "--prerelease" : ""}`;
+  const commandParts = ["release", "create", `v${version}`, "--generate-notes"];
+  if (isPreRelease) {
+    commandParts.push("--prerelease");
+  }
+  await $`gh ${commandParts}`;
 }
 
 async function getVersionAndTag(version: string) {

@@ -121,12 +121,12 @@ describe("createRoute", () => {
   });
 
   describe("rewrite", () => {
-    it("calls Astro.write with correct path", () => {
+    it("calls Astro.write with correct path", async () => {
       const route = createRoute({ routeId: "/" });
       const Astro = createMockAstro({
         rewrite: jest.fn(),
       });
-      route.rewrite(Astro, { to: "/about" });
+      await route.rewrite(Astro, { to: "/about" });
       expect(Astro.rewrite).toHaveBeenCalledWith("/about");
     });
   });

@@ -1,7 +1,12 @@
 {
   "name": "astro-typesafe-routes-workspace",
+  "private": true,
   "workspaces": {
-    "packages": ["packages/*", "apps/*", "e2e-projects/**/*"],
+    "packages": [
+      "packages/*",
+      "apps/*",
+      "e2e-projects/**/*"
+    ],
     "catalog": {
       "astro": "^6.0.3",
       "@astrojs/check": "0.9.7",
@@ -11,17 +16,21 @@
       "zod": "4.3.6"
     }
   },
-  "private": true,
   "scripts": {
     "build": "bun run --filter ./packages/* build",
     "dev": "bun run --filter ./packages/* dev",
-    "lint": "biome lint",
-    "format": "biome format",
+    "lint": "oxlint --type-aware",
+    "format": "oxfmt --check",
+    "format:fix": "oxfmt",
     "publish": "bun publish.ts"
   },
   "devDependencies": {
-    "@biomejs/biome": "1.9.4",
+    "@types/bun": "latest",
+    "@types/semver": "latest",
+    "oxfmt": "^0.62.0",
+    "oxlint": "^1.77.0",
+    "oxlint-tsgolint": "^7.0.2001",
     "prompts": "^2.4.2",
-    "@types/bun": "latest"
+    "semver": "latest"
   }
 }

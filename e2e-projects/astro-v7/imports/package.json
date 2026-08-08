@@ -1,0 +1,17 @@
+{
+  "name": "e2e-project-astro-v7-imports",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro check && astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/check": "^0.9.8",
+    "astro": "^7.0.0",
+    "astro-typesafe-routes": "workspace:*",
+    "typescript": "catalog:"
+  }
+}
