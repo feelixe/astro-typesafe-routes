@@ -44,8 +44,7 @@ async function createRelease(version: string, isPreRelease: boolean) {
   if(isPreRelease) {
     commandParts.push("--prerelease")
   }
-  const command = commandParts.join(" ")
-  await $`gh ${command}`;
+  await $`gh ${commandParts}`;
 }
 
 async function getVersionAndTag(version: string) {
