@@ -5,7 +5,7 @@ export function CodeDisplay() {
   const [selectVisible, setSelectVisible] = useState(true);
   const [selected, setSelected] = useState<string | null>(null);
 
-  const select = (e: ReactMouseEvent<HTMLButtonElement, MouseEvent>, value: string) => {
+  const select = (e: ReactMouseEvent<HTMLButtonElement>, value: string) => {
     e.stopPropagation();
     setSelected(value);
     setSelectVisible(false);

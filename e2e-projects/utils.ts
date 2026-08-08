@@ -46,9 +46,8 @@ export function expectBuildSuccess(directory: string) {
 
 export function expectBuildFailure(directory: string) {
   it("builds with error", async () => {
-    await expect(async () => {
-      await $`bun run build`.cwd(directory);
-    }).toThrow();
+    const result = await $`bun run build`.cwd(directory).nothrow();
+    expect(result.exitCode).not.toBe(0);
   }, 60_000);
 }
 
@@ -67,8 +66,6 @@ export async function assertAstroVersion(args: AssertAstroVersionArgs) {
   }
   const version = match[1];
   if (!Bun.semver.satisfies(version, args.range)) {
-    throw new Error(
-      `Expected Astro version matching "${args.range}", but found ${version}`,
-    );
+    throw new Error(`Expected Astro version matching "${args.range}", but found ${version}`);
   }
 }

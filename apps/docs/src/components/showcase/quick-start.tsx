@@ -48,7 +48,7 @@ export function QuickStart(props: QuickStartProps) {
     if (!selectedOption) {
       return;
     }
-    navigator.clipboard.writeText(selectedOption.command);
+    void navigator.clipboard.writeText(selectedOption.command);
     setCopyCount((p) => p + 1);
   };
 

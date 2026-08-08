@@ -1,0 +1,22 @@
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "plugins": ["typescript", "unicorn", "oxc", "import"],
+  "categories": {
+    "correctness": "error",
+    "suspicious": "warn"
+  },
+  "rules": {
+    "no-console": [
+      "error",
+      { "allow": ["warn", "error", "info", "debug", "trace", "table", "assert"] }
+    ],
+    "no-unused-vars": ["error", { "ignoreRestSiblings": true }],
+    "typescript/no-explicit-any": "off",
+    "typescript/no-unsafe-type-assertion": "off",
+    "typescript/no-unnecessary-type-parameters": "off",
+    "no-shadow": "off",
+    "no-underscore-dangle": "off",
+    "import/extensions": ["error", "ignorePackages"]
+  },
+  "ignorePatterns": ["**/dist/", "**/.astro/", "**/.docusaurus/", "**/*.astro"]
+}

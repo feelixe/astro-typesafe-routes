@@ -27,7 +27,7 @@ try {
   await build();
   console.info("✅ Build completed");
 } catch (error) {
-  cleanOutDirectory();
+  await cleanOutDirectory();
   console.error("❌ Build failed");
   throw error;
 }

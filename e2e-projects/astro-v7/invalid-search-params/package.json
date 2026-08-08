@@ -1,7 +1,7 @@
 {
   "name": "e2e-project-astro-v7-invalid-search-params",
-  "type": "module",
   "private": true,
+  "type": "module",
   "scripts": {
     "dev": "astro dev",
     "build": "astro check && astro build",
@@ -10,10 +10,10 @@
   },
   "dependencies": {
     "@astrojs/check": "^0.9.8",
-    "astro": "^7.0.0",
-    "typescript": "catalog:",
-    "astro-typesafe-routes": "workspace:*",
     "@astrojs/node": "catalog:",
+    "astro": "^7.0.0",
+    "astro-typesafe-routes": "workspace:*",
+    "typescript": "catalog:",
     "zod": "catalog:"
   }
 }
