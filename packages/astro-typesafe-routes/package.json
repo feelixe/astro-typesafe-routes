@@ -12,6 +12,9 @@
     "type": "git",
     "url": "git+https://github.com/feelixe/astro-typesafe-routes"
   },
+  "bugs": {
+    "url": "https://github.com/feelixe/astro-typesafe-routes/issues"
+  },
   "files": [
     "dist",
     "README.md",
