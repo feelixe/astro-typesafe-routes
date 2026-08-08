@@ -51,3 +51,24 @@ export function expectBuildFailure(directory: string) {
     }).toThrow();
   }, 60_000);
 }
+
+const versionOutputRegex = /v(\d+\.\d+\.\d+)/;
+
+export type AssertAstroVersionArgs = {
+  projectDir: string;
+  range: string;
+};
+
+export async function assertAstroVersion(args: AssertAstroVersionArgs) {
+  const output = await $`bunx astro --version`.cwd(args.projectDir).text();
+  const match = output.match(versionOutputRegex);
+  if (!match) {
+    throw new Error(`Unable to parse Astro version from output: ${output}`);
+  }
+  const version = match[1];
+  if (!Bun.semver.satisfies(version, args.range)) {
+    throw new Error(
+      `Expected Astro version matching "${args.range}", but found ${version}`,
+    );
+  }
+}
