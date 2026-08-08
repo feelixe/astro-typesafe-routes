@@ -3,6 +3,7 @@ import { serialize } from "./search-serializer.js";
 
 export type RouteId = string;
 
+// oxlint-disable-next-line no-unused-vars
 export type RouteOptions<_T> = {
   to: string;
   searchParams?: ConstructorParameters<typeof URLSearchParams>[0];
